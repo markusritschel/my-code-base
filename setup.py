@@ -13,7 +13,7 @@ setup(
     version='0.1.0',
     author='Markus Ritschel',
     author_email='git@markusritschel.de',
-    description='This is a collection of routines that I've developed over time and that I use in my daily work.',
+    description="This is a collection of routines that I've developed over time and that I use in my daily work.",
     long_description=readme,
     license="MIT license",
     keywords=(
