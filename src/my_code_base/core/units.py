@@ -6,6 +6,7 @@
 #
 from copy import copy
 import logging
+import pandas as pd
 
 import numpy as np
 
@@ -73,4 +74,26 @@ def pressure2mbar(p):
     else:
         raise IOError("Pressure must be given in hPa, Pa or atm")
     return p
+
+
+
+def temperature2K(T):
+    """Convert temperatures given in °C into Kelvin.
+    If `T` is a :meth:`pandas.Series` object, only values larger than 200 are converted. All others are expected to be
+    already in Kelvin.
+
+    Examples
+    --------
+    >>> temperature2K(10)
+    283.15
+    """
+    T = copy(T)
+    if isinstance(T, pd.Series):
+        if len(T[T > 200]) != 0:
+            log.warning("Some values seem to be already in Kelvin")
+        # TODO: find a better way for this?
+        T.loc[T < 200] += 273.15
+    elif T < 200:
+        T += 273.15
+    return T
 
