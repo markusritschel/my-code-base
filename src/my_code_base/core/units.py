@@ -97,3 +97,20 @@ def temperature2K(T):
         T += 273.15
     return T
 
+
+def temperature2C(T):
+    """Convert temperatures given in Kelvin into °C.
+    If `T` is a :meth:`pandas.Series` object, only values less than 200 are converted. All others are expected to be
+    already in °C.
+
+    Examples
+    --------
+    >>> temperature2C(283.15)
+    10.0
+    """
+    T = copy(T)
+    if isinstance(T, pd.Series):
+        T.loc[T > 200] -= 273.15
+    elif T > 200:
+        T -= 273.15
+    return T
