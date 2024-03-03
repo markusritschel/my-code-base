@@ -17,7 +17,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
           architecture: x64
       - name: Cache pip
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ~/.cache/pip     # This path is specific to Ubuntu
           # Look to see if there is a cache hit for the corresponding requirements file
