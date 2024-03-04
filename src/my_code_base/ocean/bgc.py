@@ -8,7 +8,7 @@ import logging
 
 import numpy as np
 
-from my_code_base.core.units import pressure2atm, temperature2K
+from ..core.units import pressure2atm, temperature2K
 
 
 log = logging.getLogger(__name__)
