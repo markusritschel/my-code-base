@@ -1,6 +1,6 @@
 {
   "template": "/home/markusritschel/PycharmProjects/cookiecutter-pypackage",
-  "commit": "bee2d3e7e374c4597f866989a0975538262f0875",
+  "commit": "214196b542b789df2f5e6508f5698962bc3c5b32",
   "checkout": null,
   "context": {
     "cookiecutter": {
@@ -17,7 +17,7 @@
       "create_author_file": "y",
       "project_license": "MIT license",
       "_copy_without_render": [
-        ".github/workflows"
+        ".github/workflows/*"
       ],
       "_template": "/home/markusritschel/PycharmProjects/cookiecutter-pypackage"
     }
