@@ -1,5 +1,3 @@
-# !/usr/bin/env python3
-#
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # Author: Markus Ritschel
 # eMail:  kontakt@markusritschel.de
