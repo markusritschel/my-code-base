@@ -8,6 +8,8 @@ from abc import ABC
 import functools
 import cartopy
 import logging
+import numpy as np
+import matplotlib.path as mpath
 
 
 log = logging.getLogger(__name__)
@@ -81,4 +83,19 @@ class StereographicAxisAccessor(GeoAxesAccessor):
         super().__init__(ax)
         self._pole = {cartopy.crs.SouthPolarStereo: 'south',
                       cartopy.crs.NorthPolarStereo: 'north'}[self._projection]
+
+    def make_circular(self):
+        log.debug("Make circular boundary")
+        set_circular_boundary(self.geo_axes)
+
+
+def set_circular_boundary(ax):
+    """Compute a circle in axes coordinates, which we can use as a boundary for the map.
+    We can pan/zoom as much as we like – the boundary will be permanently circular."""
+    theta = np.linspace(0, 2*np.pi, 100)
+    center, radius = [0.5, 0.5], 0.5
+    vertices = np.vstack([np.sin(theta), np.cos(theta)]).T
+    circle = mpath.Path(vertices*radius + center)
+    ax.set_boundary(circle, transform=ax.transAxes)
+    return
 
