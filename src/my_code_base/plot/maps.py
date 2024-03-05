@@ -101,6 +101,38 @@ class StereographicAxisAccessor(GeoAxesAccessor):
                             'north': [50, 90]}[self._pole]
         return getattr(self.geo_axes, '_lat_limits', default_lat_lims)
 
+
+    def add_gridlines(self, **kwargs):
+        kwargs.setdefault('zorder', 1)
+        kwargs.setdefault('linestyle', '-')
+        kwargs.setdefault('linewidth', 0.5)
+        kwargs.setdefault('color', 'gray')
+        kwargs.setdefault('alpha', 0.7)
+
+        lat0, lat1 = self.lat_limits
+        lat_grid_spacing = 10
+        ygrid_locs = np.arange(lat0, lat1 + 1, lat_grid_spacing)
+        fac1, fac2 = {'north': [1, 2], 
+                      'south': [2, 1]}[self._pole]
+
+        def create_gridlines(x_spacing_factor, ylim):
+            return self.geo_axes.gridlines(
+                xlocs=np.arange(-180, 180, x_spacing_factor * self._lon_grid_spacing),
+                ylim=ylim,
+                ylocs=ygrid_locs,
+                draw_labels=self._draw_labels if x_spacing_factor == 1 else False,
+                **kwargs
+            )
+
+        gl1 = create_gridlines(fac1, [lat0, self._lat_breakpoint])
+        gl2 = create_gridlines(fac2, [self._lat_breakpoint, lat1])
+
+        self._gl = {'north': gl1, 'south': gl2}[self._pole]
+
+        return self._gl
+
+
+
     def add_ruler(self, **kwargs):
         log.debug("Add circular ruler")
         kwargs.setdefault('segment_length', self._lon_grid_spacing)
