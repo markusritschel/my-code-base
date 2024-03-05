@@ -165,6 +165,29 @@ def add_circular_ruler(ax, segment_length=30, offset=0, primary_color='k', secon
     plot_circle(segments_array, color=secondary_color, lw=width * 2, zorder=1000, ax=ax)
 
 
+def rotate_polar_plot_lat_labels(gl, target_lon=118, orig_lon=150):
+    """Move the latitude labels to another longitude.
+
+    Parameters
+    ----------
+    gl : gridlines
+        The gridlines object holding the labels.
+    target_lon : int
+        The longitude to which the labels should be moved.
+    orig_lon : int
+        The longitude at which the labels are located per default [default: 150].
+
+    Following the solution on https://stackoverflow.com/a/66587492/5925453 with some minor adaptions.
+    """
+    plt.draw()
+    for tx in gl.label_artists:
+        xy = tx.get_position()
+        if xy[0]==orig_lon:
+            tx.set_position([target_lon, xy[1]])
+            tx.set_size('small')
+    return
+
+
 def set_circular_boundary(ax):
     """Compute a circle in axes coordinates, which we can use as a boundary for the map.
     We can pan/zoom as much as we like – the boundary will be permanently circular."""
