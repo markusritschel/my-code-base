@@ -79,3 +79,6 @@ class StereographicAxisAccessor(GeoAxesAccessor):
     Can handle both :class:`ccrs.NorthPolarStereo` and :class:`ccrs.SouthPolarStereo` projections."""
     def __init__(self, ax):
         super().__init__(ax)
+        self._pole = {cartopy.crs.SouthPolarStereo: 'south',
+                      cartopy.crs.NorthPolarStereo: 'north'}[self._projection]
+
