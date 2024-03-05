@@ -188,6 +188,64 @@ def rotate_polar_plot_lat_labels(gl, target_lon=118, orig_lon=150):
     return
 
 
+def rotate_polar_plot_lon_labels(gl, pole='north'):
+    """
+    Rotate the longitude labels of a stereographic plot for better readability and nicer look.
+    
+    Parameters
+    ----------
+    gl : gridlines
+        The gridlines object holding the labels.
+    pole : str (optional)
+        The pole to rotate the labels towards. Can be either 'north' or 'south' [default: 'north'].
+    """
+    gl.rotate_labels = False
+    plt.gcf().canvas.draw()
+
+    # all_label_artists = gl.geo_label_artists + gl.bottom_label_artists + gl.top_label_artists
+    all_label_artists = [label for label in gl.label_artists if label.get_text()[-1] in ['E','W']]
+    for label in all_label_artists:
+        alphanumeric_label = label.get_text()
+        longitude = _str2float(alphanumeric_label)
+        rot_degree = _lon2rot(longitude)
+        if pole == 'south':
+            rot_degree = 360 - rot_degree
+            if np.abs(longitude)==90:
+                rot_degree -= 180
+        # rotation_mode='anchor' aligns the unrotated text first and then rotates the text around the point of alignment.
+        label.set_rotation_mode('anchor')
+        label.set_rotation(rot_degree)
+        label.set_size('small')
+        label.set_horizontalalignment('center')
+        label.set_verticalalignment('center')
+
+        less_or_greater = np.greater_equal if pole=='north' else np.less_equal
+        if less_or_greater(abs(longitude), 90):
+            label.set_verticalalignment('bottom')
+        else:
+            label.set_verticalalignment('top')
+    return
+
+
+def _str2float(label):
+    """Turn geographic longitude grid labels into numeric values of degrees east."""
+    # Extract the numbers from the label
+    number = label.split('°')[0]
+    number = float(number)
+    # Turn longitudes west of the meridian into negative numbers
+    if 'W' in label:
+        number = -number
+    return number
+
+
+def _lon2rot(lon):
+    """Turn longitude value into rotation for polar stereographic plots."""
+    rot_rad = lon
+    if abs(lon) >= 90:
+        rot_rad = lon - 180
+    return rot_rad
+
+
 def set_circular_boundary(ax):
     """Compute a circle in axes coordinates, which we can use as a boundary for the map.
     We can pan/zoom as much as we like – the boundary will be permanently circular."""
