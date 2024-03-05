@@ -5,6 +5,10 @@
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
 import logging
+import warnings
+
+import numpy as np
+
 
 log = logging.getLogger(__name__)
 
@@ -45,6 +49,17 @@ _RENAME_DICT = {
         ],
     "time_bounds": ["time_bounds", "time_bnds"],
     }
+
+
+def compute_weighted_mean(ds):
+    """Compute the weighted mean"""
+    # Compute weights based on the xarray you pass
+    weights = np.cos(np.deg2rad(ds['lat']))
+    weights.name = "weights"
+    # Compute weighted mean
+    weighted = ds.weighted(weights)
+    weighted_mean = weighted.mean(("lon", "lat"))
+    return weighted_mean
 
 
 def rename_obs(ds, rename_dict=None):
