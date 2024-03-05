@@ -272,23 +272,8 @@ def rotate_polar_plot_lon_labels(gl, pole='north'):
     for label in all_label_artists:
         alphanumeric_label = label.get_text()
         longitude = _str2float(alphanumeric_label)
-        rot_degree = _lon2rot(longitude)
-        if pole == 'south':
-            rot_degree = 360 - rot_degree
-            if np.abs(longitude)==90:
-                rot_degree -= 180
-        # rotation_mode='anchor' aligns the unrotated text first and then rotates the text around the point of alignment.
-        label.set_rotation_mode('anchor')
-        label.set_rotation(rot_degree)
-        label.set_size('small')
-        label.set_horizontalalignment('center')
-        label.set_verticalalignment('center')
-
-        less_or_greater = np.greater_equal if pole=='north' else np.less_equal
-        if less_or_greater(abs(longitude), 90):
-            label.set_verticalalignment('bottom')
-        else:
-            label.set_verticalalignment('top')
+        rot_degree = _lon2rot(longitude, pole)
+        _rotate_and_align_label(label, longitude, rot_degree, pole=pole)
     return
 
 
@@ -303,12 +288,34 @@ def _str2float(label):
     return number
 
 
-def _lon2rot(lon):
+def _lon2rot(lon, pole):
     """Turn longitude value into rotation for polar stereographic plots."""
     rot_rad = lon
     if abs(lon) >= 90:
         rot_rad = lon - 180
+
+    if pole == 'south':
+        rot_rad = 0 - rot_rad
+        if np.abs(lon)==90:
+            rot_rad -= 180
+
     return rot_rad
+
+
+def _rotate_and_align_label(label, longitude, rot_degree, pole):
+    """Rotate and align longitude labels."""
+    label.set_rotation_mode('anchor')  # rotation_mode='anchor' aligns the unrotated text first and then rotates the text around the point of alignment.
+    label.set_rotation(rot_degree)
+    label.set_size('small')
+    label.set_horizontalalignment('center')
+
+    if pole=='north':
+        alignment = 'top' if abs(longitude) < 90 else 'bottom'
+    elif pole == 'south':
+        alignment = 'top' if abs(longitude) > 90 else 'bottom'
+    label.set_verticalalignment(alignment)
+
+    return label
 
 
 def set_circular_boundary(ax):
