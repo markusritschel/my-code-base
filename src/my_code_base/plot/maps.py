@@ -268,7 +268,7 @@ def rotate_polar_plot_lon_labels(gl, pole='north'):
     plt.gcf().canvas.draw()
 
     # all_label_artists = gl.geo_label_artists + gl.bottom_label_artists + gl.top_label_artists
-    all_label_artists = [label for label in gl.label_artists if label.get_text()[-1] in ['E','W']]
+    all_label_artists = [label for label in gl.label_artists if label.get_text()[-1] in ['E','W','°']]
     for label in all_label_artists:
         alphanumeric_label = label.get_text()
         longitude = _str2float(alphanumeric_label)
