@@ -15,6 +15,10 @@ class GeoAxesAccessor(ABC):
     def __init__(self, ax):
         log.debug('Initialize accessor')
         self.geo_axes = ax
+        self._projection = self._get_cartopy_projection()
+
+    def _get_cartopy_projection(self):
+        return type(self.geo_axes._projection_init[1]['projection'])
 
     def add_ocean(self, **kwargs):
         log.debug('Add ocean to axis')
