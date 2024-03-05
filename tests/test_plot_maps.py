@@ -6,6 +6,7 @@
 #
 import pytest
 from my_code_base.plot.maps import *
+from my_code_base.plot.maps import _lon2rot, _str2float
 
 import cartopy.crs as ccrs
 from matplotlib import pyplot as plt
@@ -37,3 +38,9 @@ def test_geoaxes_latlimits(ax_northpolar, ax_southpolar):
     assert ax_northpolar.polar.lat_limits == [50, 90], "Expected different latitude limits"
     assert ax_southpolar.polar.lat_limits == [-90, -50], "Expected different latitude limits"
     
+
+def test_helper():
+    assert _lon2rot(30) == 30, "Incorrect rotation of longitude value"
+    assert _lon2rot(60) == 60, "Incorrect rotation of longitude value"
+    assert _lon2rot(120) == -60, "Incorrect rotation of longitude value"
+    assert _lon2rot(160) == -20, "Incorrect rotation of longitude value"
