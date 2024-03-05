@@ -86,7 +86,11 @@ class StereographicAxisAccessor(GeoAxesAccessor):
         self._pole = {cartopy.crs.SouthPolarStereo: 'south',
                       cartopy.crs.NorthPolarStereo: 'north'}[self._projection]
         self._lat_limits = None
-
+        self._lat_breakpoint = {'south': -80,
+                                'north': 80}[self._pole]
+        self._lon_grid_spacing = 30
+        self._draw_labels = True  # or should this rather be an attribute of self.geo_axes._draw_labels ?
+        
     @property
     def lat_limits(self):
         return self.geo_axes._lat_limits
@@ -100,6 +104,27 @@ class StereographicAxisAccessor(GeoAxesAccessor):
         default_lat_lims = {'south': [-90, -50],
                             'north': [50, 90]}[self._pole]
         return getattr(self.geo_axes, '_lat_limits', default_lat_lims)
+
+
+    def add_features(self, gridlines=True, ruler=True, **kwargs):
+        coastlines_kwargs = kwargs.pop('coastlines_kwargs', {})
+        ruler_kwargs = kwargs.pop('ruler_kwargs', {})
+        ocean_kwargs = kwargs.pop('ocean_kwargs', {})
+        land_kwargs = kwargs.pop('land_kwargs', {})
+        gridlines_kwargs = kwargs.pop('gridlines_kwargs', {})
+        self._lon_grid_spacing = ruler_kwargs.get('segment_length', 30)
+
+        self.set_extent([-180, 180, *self.lat_limits])
+        self.add_ocean(**ocean_kwargs)
+        self.add_land(**land_kwargs)
+        self.add_coastlines(**coastlines_kwargs)
+        self.make_circular()
+        if ruler:
+            self.add_ruler(**ruler_kwargs)
+        if gridlines:
+            gl = self.add_gridlines(**gridlines_kwargs)
+            rotate_polar_plot_lat_labels(gl, target_lon=118)
+            rotate_polar_plot_lon_labels(gl, pole=self._pole)
 
 
     def add_gridlines(self, **kwargs):
