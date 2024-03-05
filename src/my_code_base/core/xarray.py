@@ -5,6 +5,7 @@
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
 import logging
+import warnings
 import xarray as xr
 
 log = logging.getLogger(__name__)
@@ -52,3 +53,31 @@ def compress_xarray(data: xr.Dataset | xr.DataArray, complevel: int) -> xr.Datas
     return data
 
 
+def get_dim_index(da: xr.DataArray, dim: str) -> int:
+    """Get the index of a dimension in a DataArray.
+
+    Parameters
+    ----------
+    da : xr.DataArray
+        DataArray to get the dimension index from.
+    dim : str
+        Dimension name.
+
+    Returns
+    -------
+    Index of the dimension in the DataArray. Can be used for specifying the axis in a numpy operation.
+    
+    Examples
+    --------
+    >>> da = xr.DataArray(np.random.rand(2, 3, 4), dims=['time', 'lat', 'lon'])
+    >>> get_dim_index(da, 'lat')
+    1
+    """
+    warnings.warn(
+        "Will be removed in a future version."
+        "Use xr.DataArray.get_dim_index(dim) instead.",
+        DeprecationWarning,
+        stacklevel=2
+    )
+    assert isinstance(da, xr.DataArray), "First argument must be of type xr.DataArray."
+    return da.dims.index(dim)
