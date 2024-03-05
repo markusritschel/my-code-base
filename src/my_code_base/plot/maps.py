@@ -71,3 +71,11 @@ class GeoAxesAccessor(ABC):
     def set_extent(self, extent, crs=cartopy.crs.PlateCarree()):
         log.debug('Set axis extent to %s', extent)
         self.geo_axes.set_extent(extent, crs)
+
+
+@register_geoaxes_accessor("polar")
+class StereographicAxisAccessor(GeoAxesAccessor):
+    """An accessor to handle features and finishing of stereographic plots produced with `cartopy`.
+    Can handle both :class:`ccrs.NorthPolarStereo` and :class:`ccrs.SouthPolarStereo` projections."""
+    def __init__(self, ax):
+        super().__init__(ax)
