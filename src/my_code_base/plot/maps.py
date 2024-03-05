@@ -10,6 +10,7 @@ import cartopy
 import cartopy.mpl.geoaxes
 import logging
 import numpy as np
+import matplotlib.pyplot as plt
 import matplotlib.path as mpath
 
 
@@ -100,9 +101,68 @@ class StereographicAxisAccessor(GeoAxesAccessor):
                             'north': [50, 90]}[self._pole]
         return getattr(self.geo_axes, '_lat_limits', default_lat_lims)
 
+    def add_ruler(self, **kwargs):
+        log.debug("Add circular ruler")
+        kwargs.setdefault('segment_length', self._lon_grid_spacing)
+        add_circular_ruler(self.geo_axes, **kwargs)
+
+
     def make_circular(self):
         log.debug("Make circular boundary")
         set_circular_boundary(self.geo_axes)
+
+
+def add_circular_ruler(ax, segment_length=30, offset=0, primary_color='k', secondary_color='w', width=1):
+    """Add a ruler around a polar stereographic plot.
+
+    Parameters
+    ----------
+    ax : GeoAxes
+        The GeoAxes object to which the ruler should be added
+    segment_length : int
+        The length of each segment in degrees
+    offset : int
+        An optional offset
+    primary_color : str
+        The color of the background ruler segments
+    secondary_color : str
+        The color of the top ruler segments
+    width : float
+        The scaled thickness of the ruler. Defaults to 1/80 of the axes' width.
+    """
+    def plot_circle(degrees, radius=0.5, **kwargs):
+        """Plot a circle of given radius (based on Axis dimensions) for a list of degree segments."""
+        ax = kwargs.pop("ax", plt.gca())
+        arc_angles = np.deg2rad(degrees)
+        arc_xs = radius * np.cos(arc_angles) + 0.5
+        arc_ys = radius * np.sin(arc_angles) + 0.5
+        ax.plot(arc_xs, arc_ys, transform=ax.transAxes, solid_capstyle="butt", **kwargs)
+
+    width = ax.bbox.width / 80 * width
+
+    if (360 / segment_length) % 2 != 0:
+        raise Warning(
+            "`segment_length` must fit 2n times into 360 so that the segments of the "
+            "ruler can be equally distributed on a circle."
+        )
+
+    # plot background circle (default: black, slightly broader)
+    segments_array = np.linspace(0, 360, 361, endpoint=True)
+    plot_circle(segments_array, color=primary_color, lw=width * 2 + 1, zorder=999, ax=ax)
+
+    # plot white circle segments on top
+    segment_bnds_array = (
+        np.arange(0, 360, segment_length).reshape((-1, 2))
+        + 90  # to start at the top instead of at the right
+        + offset
+    )
+    segments_array = np.hstack(
+        [
+            np.hstack([np.linspace(*bnds, segment_length, endpoint=True), np.array(np.nan)])
+            for bnds in segment_bnds_array
+        ]
+    )
+    plot_circle(segments_array, color=secondary_color, lw=width * 2, zorder=1000, ax=ax)
 
 
 def set_circular_boundary(ax):
