@@ -7,6 +7,7 @@
 from abc import ABC
 import functools
 import cartopy
+import cartopy.mpl.geoaxes
 import logging
 import numpy as np
 import matplotlib.path as mpath
