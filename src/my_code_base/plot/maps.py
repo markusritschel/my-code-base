@@ -84,6 +84,21 @@ class StereographicAxisAccessor(GeoAxesAccessor):
         super().__init__(ax)
         self._pole = {cartopy.crs.SouthPolarStereo: 'south',
                       cartopy.crs.NorthPolarStereo: 'north'}[self._projection]
+        self._lat_limits = None
+
+    @property
+    def lat_limits(self):
+        return self.geo_axes._lat_limits
+
+    @lat_limits.setter
+    def lat_limits(self, lat_lim):
+        self.geo_axes._lat_limits = lat_lim
+
+    @lat_limits.getter
+    def lat_limits(self):
+        default_lat_lims = {'south': [-90, -50],
+                            'north': [50, 90]}[self._pole]
+        return getattr(self.geo_axes, '_lat_limits', default_lat_lims)
 
     def make_circular(self):
         log.debug("Make circular boundary")

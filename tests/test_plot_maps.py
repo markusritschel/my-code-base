@@ -33,3 +33,7 @@ def test_projection_class(ax_northpolar, ax_southpolar):
     assert ax_southpolar.polar._pole == 'south', "Expected `south` as pole name"
 
 
+def test_geoaxes_latlimits(ax_northpolar, ax_southpolar):
+    assert ax_northpolar.polar.lat_limits == [50, 90], "Expected different latitude limits"
+    assert ax_southpolar.polar.lat_limits == [-90, -50], "Expected different latitude limits"
+    
