@@ -4,7 +4,7 @@
 # Date:   2024-03-04
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
-from abc import ABC
+from abc import ABC, abstractmethod
 import functools
 import cartopy
 import cartopy.mpl.geoaxes
@@ -75,6 +75,15 @@ class GeoAxesAccessor(ABC):
     def set_extent(self, extent, crs=cartopy.crs.PlateCarree()):
         log.debug('Set axis extent to %s', extent)
         self.geo_axes.set_extent(extent, crs)
+
+    @abstractmethod
+    def add_gridlines(self):
+        pass
+
+    @abstractmethod
+    def add_features(self):
+        pass
+
 
 
 @register_geoaxes_accessor("polar")
