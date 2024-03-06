@@ -116,6 +116,14 @@ class StereographicAxisAccessor(GeoAxesAccessor):
 
 
     def add_features(self, gridlines=True, ruler=True, **kwargs):
+        """Perform the following steps:
+        - add ocean
+        - add land
+        - add coastlines
+        - add ruler
+        - make the boundary circular
+        - add gridlines
+        """
         coastlines_kwargs = kwargs.pop('coastlines_kwargs', {})
         ruler_kwargs = kwargs.pop('ruler_kwargs', {})
         ocean_kwargs = kwargs.pop('ocean_kwargs', {})
