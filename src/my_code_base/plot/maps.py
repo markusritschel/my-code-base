@@ -187,11 +187,11 @@ class StereographicAxisAccessor(GeoAxesAccessor):
 
 
     def rotate_lat_labels(self, **kwargs):
-        rotate_polar_plot_lat_labels(**kwargs)
+        rotate_polar_plot_lat_labels(gl=self._gl, **kwargs)
 
 
-    def rotate_lon_labels(self, **kwargs):
-        rotate_polar_plot_lon_labels(**kwargs)
+    def rotate_lon_labels(self):
+        rotate_polar_plot_lon_labels(gl=self._gl, pole=self._pole)
 
 
 def add_circular_ruler(ax, segment_length=30, offset=0, primary_color='k', secondary_color='w', width=1):
