@@ -12,7 +12,7 @@ import logging
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.path as mpath
-
+from .z_overlap import fix_overlap
 
 log = logging.getLogger(__name__)
 
