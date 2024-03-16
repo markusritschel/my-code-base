@@ -9,7 +9,7 @@ test_requirements = ['pytest>=3', ]
 
 
 setup(
-    name='my-code-base',
+    name='my_code_base',
     version='0.1.0',
     author='Markus Ritschel',
     author_email='git@markusritschel.de',
@@ -31,7 +31,9 @@ setup(
         'Programming Language :: Python :: 3.8',
     ],
     url='https://github.com/markusritschel/my-code-base',
-    packages=find_packages(include=['my-code-base', 'my-code-base.*']),
+    package_dir={"": str("src")},
+    packages=find_packages(where="./src/", include=['my_code_base', 'my_code_base.*']),
+    root="./src",
     install_requires=setup_requirements,
     setup_requires=setup_requirements,
     test_suite='tests',
