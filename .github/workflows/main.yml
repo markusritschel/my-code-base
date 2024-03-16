@@ -5,45 +5,24 @@ on: [push, pull_request]
 jobs:
   test-on-linux:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -el {0}
     strategy:
       matrix:
         python-version: ["3.7", "3.10"]
 
     steps:
       - uses: actions/checkout@v4
-      # - name: Set up Python ${{ matrix.python-version }}
-      #   uses: actions/setup-python@v2
-      #   with:
-      #     python-version: ${{ matrix.python-version }}
-      #     architecture: x64
-      # - name: Cache pip
-      #   uses: actions/cache@v2
-      #   with:
-      #     path: ~/.cache/pip     # This path is specific to Ubuntu
-      #     # Look to see if there is a cache hit for the corresponding requirements file
-      #     key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-pip-
-      #       ${{ runner.os }}-
-      - name: Cache conda
-        uses: actions/cache@v3
-        env:
-          # Increase this value to reset cache if environment.yaml has not changed
-          CACHE_NUMBER: 0
-        with:
-          path: ~/conda_pkgs_dir
-          key:
-            ${{ runner.os }}-conda-${{ env.CACHE_NUMBER }}-${{
-            hashFiles('environment.yaml') }}
       - uses: conda-incubator/setup-miniconda@v3
         with:
+          python-version: ${{ matrix.python-version }}
           miniforge-variant: Mambaforge
           miniforge-version: latest
-          activate-environment: my_code_base
           use-mamba: true
-          channel-priority: strict
+          activate-environment: mcb
           environment-file: environment.yaml
-          use-only-tar-bz2: true  # IMPORTANT: This needs to be set for caching to work properly!
+          auto-activate-base: false
       # - name: Install dependencies
       #   run: |
       #     python -m pip install --upgrade pip
@@ -53,10 +32,10 @@ jobs:
           pip install flake8
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics                        # stop the build if there are Python syntax errors or undefined names
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics       # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+
       - name: Test with pytest
         run: |
+          python -m pip install --upgrade pip
+          pip install -e .
           pip install pytest pytest-cov
-          python setup.py develop
-          pytest src/ --doctest-modules --doctest-continue-on-failure -ra -v
-          pytest tests/ -ra -v
-          # pytest -v --doctest-modules --cov=com --cov-report=xml --cov-report=html
+          pytest tests/ src/ --doctest-modules --doctest-continue-on-failure -ra -v

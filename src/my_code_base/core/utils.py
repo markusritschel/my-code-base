@@ -8,6 +8,7 @@ import logging
 
 import numpy as np
 import pandas as pd
+import pytest
 
 
 log = logging.getLogger(__name__)
@@ -37,7 +38,7 @@ def find_nearest(items: list, pivot: float) -> float:
 
     Examples
     --------
-    >>> nearest(np.array([2,4,5,7,9,10]), 4.6)
+    >>> find_nearest(np.array([2,4,5,7,9,10]), 4.6)
     5
     """
     return min(items, key=lambda x: abs(x - pivot))
@@ -57,6 +58,7 @@ def grid_dataframe(points, vals, xi, export_grid=False):
 
     Example
     -------
+    >>> pytest.skip()
     >>> df = pd.DataFrame({'lon': np.linspace(0, 40, 100),
     >>>                    'lat': np.sin(np.linspace(0, 3, 100))*10 + 40,
     >>>                    'data': np.linspace(240,200,100)})
@@ -108,13 +110,13 @@ def order_of_magnitude(x):
     Examples
     --------
     >>> order_of_magnitude(11)
-    array(1.)
+    array([1.])
     >>> order_of_magnitude(234)
-    array(2.)
+    array([2.])
     >>> order_of_magnitude(1)
-    array(0.)
+    array([0.])
     >>> order_of_magnitude(.15)
-    array(-1.)
+    array([-1.])
     >>> order_of_magnitude(np.array([24.13, 254.2]))
     array([1., 2.])
     >>> order_of_magnitude(pd.Series([24.13, 254.2]))

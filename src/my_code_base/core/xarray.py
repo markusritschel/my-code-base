@@ -6,6 +6,7 @@
 #
 import logging
 import warnings
+import numpy as np
 import xarray as xr
 
 log = logging.getLogger(__name__)

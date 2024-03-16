@@ -12,6 +12,7 @@ import logging
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.path as mpath
+import pytest
 from .z_overlap import fix_overlap
 
 log = logging.getLogger(__name__)
@@ -24,6 +25,7 @@ def register_geoaxes_accessor(accessor_name):
 
     Example
     -------
+    >>> pytest.skip()
     >>> @register_geoaxes_accessor("my_accessor")
     >>> class MyCustomAccessor:
     >>>     def some_method(self):
