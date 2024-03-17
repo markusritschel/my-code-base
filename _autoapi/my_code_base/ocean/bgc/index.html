@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>my_code_base.ocean.bgc &mdash; My Code Base</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css?v=13237357" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=eafc0fe6" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+        <script src="../../../../_static/scripts/sphinx-book-theme.js"></script>
+        <script>let toggleHintShow = 'Click to show';</script>
+        <script>let toggleHintHide = 'Click to hide';</script>
+        <script>let toggleOpenOnPrint = 'true';</script>
+        <script src="../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+        <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script src="../../../../_static/design-tabs.js?v=36754332"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+        <script async="async" src="../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="my_code_base.ocean.utils" href="../utils/index.html" />
+    <link rel="prev" title="my_code_base.ocean" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../intro.html" class="icon icon-home">
+            Python
+              <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Index</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../markdown.html">Markdown Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../content.html">Content in Jupyter Book</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks.html">Content with notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../markdown-notebooks.html">MyST Markdown Notebooks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Project Info</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base</span></code></a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../core/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.core</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../esd/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.esd</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../filehandling/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.filehandling</span></code></a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.ocean</span></code></a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.ocean.bgc</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.ocean.utils</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../plot/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.plot</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../stats/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.stats</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../cli/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.cli</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../my_code_base/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.my_code_base</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../bibliography.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../readme.html">README</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../intro.html">Python</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../intro.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base</span></code></a></li>
+          <li class="breadcrumb-item"><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.ocean</span></code></a></li>
+      <li class="breadcrumb-item active"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.ocean.bgc</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/_autoapi/my_code_base/ocean/bgc/index.rst" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-my_code_base.ocean.bgc">
+<span id="my-code-base-ocean-bgc"></span><h1><a class="reference internal" href="#module-my_code_base.ocean.bgc" title="my_code_base.ocean.bgc"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.ocean.bgc</span></code></a><a class="headerlink" href="#module-my_code_base.ocean.bgc" title="Link to this heading"></a></h1>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="my_code_base.ocean.bgc.fugacity">
+<span class="sig-prename descclassname"><span class="pre">my_code_base.ocean.bgc.</span></span><span class="sig-name descname"><span class="pre">fugacity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pCO2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_equ</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">SST</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xCO2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#my_code_base.ocean.bgc.fugacity" title="Link to this definition"></a></dt>
+<dd><p>Calculate the fugacity of CO2. Can be done either before or after a <a class="reference internal" href="#my_code_base.ocean.bgc.temperature_correction" title="my_code_base.ocean.bgc.temperature_correction"><code class="xref py py-func docutils literal notranslate"><span class="pre">temperature_correction()</span></code></a>.
+The formulas follow <span id="id1">Dickson <em>et al.</em> [<a class="reference internal" href="../../../../markdown.html#id8" title="Andrew Gilmore Dickson, Christopher L. Sabine, James Robert Christian, Charlene P. Bargeron, and North Pacific Marine Science Organization, editors. Guide to Best Practices for Ocean CO2 Measurements. Number no. 3 in PICES Special Publication. North Pacific Marine Science Organization, 2007. ISBN 978-1-897176-07-8.">DSC+07</a>]</span>, mainly SOP 5, Chapter 8. “Calculation and expression of results”</p>
+<div class="math notranslate nohighlight">
+\[(fCO_2)^\text{wet}_\text{SST} = (pCO_2)^\text{wet}_\text{SST} \cdot
+     \exp{\Big(p_\text{equ}\cdot\frac{\left[ B(CO_2,SST) + 2\,\left(1-(xCO_2)^\text{wet}_{SST}\right)^2 \, \delta(CO_2,SST)\right]}{R\cdot SST}\Big)}\]</div>
+<p>where <span class="math notranslate nohighlight">\(SST\)</span> is the sea surface temperature in K, <span class="math notranslate nohighlight">\(R\)</span> the gas constant and <span class="math notranslate nohighlight">\(B(CO_2,SST)\)</span> and
+<span class="math notranslate nohighlight">\(\delta(CO_2,SST)\)</span> are the virial coefficients for <span class="math notranslate nohighlight">\(CO_2\)</span> (both in <span class="math notranslate nohighlight">\(\text{cm}^3\,\text{mol}^{-1}\)</span>), which are given as</p>
+<div class="math notranslate nohighlight">
+\[B(CO_2,T) = -1636.75 + 12.0408\,T - 0.0327957\,T^2 + 0.0000316528\,T^3\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight">
+\[\delta(CO_2,T) = 57.7 - 0.188\,T\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pCO2</strong> (<em>float</em><em> or </em><em>pd.Series</em>) – The partial pressure of CO2 (in µatm).
+Make sure you have converted xCO2 concentration (mole fraction in ppm) into partial pressure (in µatm).</p></li>
+<li><p><strong>p_equ</strong> (<em>float</em><em> or </em><em>pd.Series</em>) – The measured pressure (in hPa, Pa or atm) at the equilibrator (hint: you might want to smoothen your time series)</p></li>
+<li><p><strong>SST</strong> (<em>float</em><em> or </em><em>pd.Series</em>) – The in-situ measurement temperature (in °C or Kelvin)</p></li>
+<li><p><strong>xCO2</strong> (<em>float</em><em> or </em><em>pd.Series</em><em> (</em><em>optional</em><em>)</em>) – CO2 concentration (mole fraction in ppm). If given, the δ_CO2 virial coefficient in the numerator in the exponential expression is multiplied by (1 - xCO2*1e-6). Else, this term is 1.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="my_code_base.ocean.bgc.temperature_correction">
+<span class="sig-prename descclassname"><span class="pre">my_code_base.ocean.bgc.</span></span><span class="sig-name descname"><span class="pre">temperature_correction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">CO2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T_in</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Takahashi2009'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#my_code_base.ocean.bgc.temperature_correction" title="Link to this definition"></a></dt>
+<dd><p>Apply a temperature correction. This might be necessary when the in-situ temperatures (at the water intake,
+often outside the ship) differ from where the CO2 measurement is done (often in a ferry-box onboard the ship).
+The correction used here follows <span id="id2">Takahashi <em>et al.</em> [<a class="reference internal" href="../../../../markdown.html#id9" title="Taro Takahashi, Stewart C. Sutherland, Rik Wanninkhof, Colm Sweeney, Richard A. Feely, David W. Chipman, Burke Hales, Gernot Friederich, Francisco Chavez, Christopher Sabine, Andrew Watson, Dorothee C.E. Bakker, Ute Schuster, Nicolas Metzl, Hisayuki Yoshikawa-Inoue, Masao Ishii, Takashi Midorikawa, Yukihiro Nojiri, Arne Körtzinger, Tobias Steinhoff, Mario Hoppema, Jon Olafsson, Thorarinn S. Arnarson, Bronte Tilbrook, Truls Johannessen, Are Olsen, Richard Bellerby, C.S. Wong, Bruno Delille, N.R. Bates, and Hein J.W. de Baar. Climatological mean and decadal change in surface ocean pCO2, and net sea–air CO2 flux over the global oceans. Deep Sea Research Part II: Topical Studies in Oceanography, 56(8-10):554–577, 2009. doi:10.1016/j.dsr2.2008.12.009.">TSW+09</a>]</span>:</p>
+<div class="math notranslate nohighlight">
+\[{(xCO_2)}_{SST} = {(xCO_2)}_{T_\text{equ}} \cdot \exp{\Big(0.0433\cdot(SST - T_\text{equ}) - 4.35\times 10^{-5}\cdot(SST^2 - T_\text{equ}^2)\Big)}\]</div>
+<p>for correcting the temperature at the equilibrator <span class="math notranslate nohighlight">\(T_\text{equ}\)</span> to the SST.</p>
+<p><cite>CO2</cite> can be one out of [xCO2 (mole fraction), pCO2 (partial pressure), fCO2 (fugacity)].</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>CO2</strong> (<em>float</em><em> | </em><em>pandas.Series</em>) – The CO2 variable, which shall be corrected for temperature differences.
+Can be one out of the following:
+- xCO2 (mole fraction in ppm)
+- pCO2 (partial pressure in hPa, Pa, atm or µatm)
+- fCO2 (<a class="reference internal" href="#my_code_base.ocean.bgc.fugacity" title="my_code_base.ocean.bgc.fugacity"><code class="xref py py-func docutils literal notranslate"><span class="pre">fugacity()</span></code></a> in hPa, Pa, atm or µatm)</p></li>
+<li><p><strong>T_out</strong> (<em>float</em><em> | </em><em>pandas.Series</em>) – The temperature towards which the data shall be corrected. Typically, the in-situ temperature (°C or K), at which the water was sampled.</p></li>
+<li><p><strong>T_in</strong> (<em>float</em><em> | </em><em>pandas.Series</em>) – The temperature from which the data shall be corrected. Typically, the temperature (°C or K) at the equilibrator, at which the water was measured.</p></li>
+<li><p><strong>method</strong> (<em>str</em>) – Either “Takahashi2009” <span id="id3">[<a class="reference internal" href="../../../../markdown.html#id9" title="Taro Takahashi, Stewart C. Sutherland, Rik Wanninkhof, Colm Sweeney, Richard A. Feely, David W. Chipman, Burke Hales, Gernot Friederich, Francisco Chavez, Christopher Sabine, Andrew Watson, Dorothee C.E. Bakker, Ute Schuster, Nicolas Metzl, Hisayuki Yoshikawa-Inoue, Masao Ishii, Takashi Midorikawa, Yukihiro Nojiri, Arne Körtzinger, Tobias Steinhoff, Mario Hoppema, Jon Olafsson, Thorarinn S. Arnarson, Bronte Tilbrook, Truls Johannessen, Are Olsen, Richard Bellerby, C.S. Wong, Bruno Delille, N.R. Bates, and Hein J.W. de Baar. Climatological mean and decadal change in surface ocean pCO2, and net sea–air CO2 flux over the global oceans. Deep Sea Research Part II: Topical Studies in Oceanography, 56(8-10):554–577, 2009. doi:10.1016/j.dsr2.2008.12.009.">TSW+09</a>]</span> or “Takahashi1993” <span id="id4">[<a class="reference internal" href="../../../../markdown.html#id13" title="Taro Takahashi, Jon Olafsson, John G. Goddard, David W. Chipman, and S. C. Sutherland. Seasonal variation of CO2 and nutrients in the high-latitude surface oceans: A comparative study. Global Biogeochemical Cycles, 7(4):843–878, December 1993. doi:10/fqbqkk.">TOG+93</a>]</span>, describing the method of the respectively published paper.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "markusritschel/my-code-base",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./_autoapi/my_code_base/ocean/bgc"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="my_code_base.ocean" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../utils/index.html" class="btn btn-neutral float-right" title="my_code_base.ocean.utils" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright markusritschel, 2024.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
