@@ -10,9 +10,10 @@ Module Contents
 .. py:function:: fix_overlap(da, ax)
 
    Fix overlapping geographic dimensions.
-
    This avoids artifacts when plotting contour lines of geographic data on a stereographic map
    projection.
+
+   Calls :func:`z_masked_overlap` to perform the data transformation.
 
    :param da: An :class:`xr.DataArray` object with dimensions to be transformed.
    :type da: xr.DataArray
@@ -22,24 +23,32 @@ Module Contents
 
 .. py:function:: z_masked_overlap(axe, X, Y, Z, source_projection=None)
 
-   Following
-   https://github.com/SciTools/cartopy/issues/1225
-   https://github.com/SciTools/cartopy/issues/1421
+   .. note::
+       Normally, it should be avoided calling this function.
+       Instead, use :func:`.fix_overlap` to fix the overlap.
 
-   for data in projection axe.projection
-   find and mask the overlaps (more 1/2 the axe.projection range)
+   This function performs the actual transformation of the data for the :func:`.fix_overlap` function.
 
-   X, Y either the coordinates in axe.projection or longitudes latitudes
-   Z the data
-   operation one of 'pcorlor', 'pcolormesh', 'countour', 'countourf'
+   It follows the solutions provided in the following issues:
+       - https://github.com/SciTools/cartopy/issues/1225
+       - https://github.com/SciTools/cartopy/issues/1421
 
-   if source_projection is a geodetic CRS data is in geodetic coordinates
-   and should first be projected in axe.projection
+   The function finds and masks the overlaps in the data that are more than half the range of the projection of the axes.
 
-   X, Y are 2D same dimension as Z for contour and contourf
-   same dimension as Z or with an extra row and column for pcolor
-   and pcolormesh
+   :param axe: The axes object with the projection.
+   :type axe: object
+   :param X: The coordinates in the projection of the axes or the longitudes and latitudes.
+   :type X: array_like
+   :param Y: The coordinates in the projection of the axes or the longitudes and latitudes.
+   :type Y: array_like
+   :param Z: The data to be transformed.
+   :type Z: array_like
+   :param source_projection: If provided and is a geodetic CRS, the data is in geodetic coordinates and should first be projected in the projection of the axes.
+   :type source_projection: ccrs.CRS, optional
+   :param X:
+   :param Y are 2D arrays with the same dimensions as Z for contour and contourf operations. They can also have an extra row and column for pcolor and pcolormesh operations.:
 
-   return ptx, pty, Z
+   :returns: **ptx, pty, Z** -- The transformed coordinates and data.
+   :rtype: array_like
 
 

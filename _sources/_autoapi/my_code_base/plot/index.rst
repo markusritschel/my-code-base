@@ -26,6 +26,17 @@ Package Contents
 
 .. py:function:: xml_to_cmap(xml)
 
-   Based on this function: http://schubert.atmos.colostate.edu/~cslocum/custom_cmap.html#code but more elegant.
+   Convert an XML file to a matplotlib colormap.
+
+   :param xml: The path to the XML file.
+   :type xml: str
+
+   :returns: The generated colormap.
+   :rtype: matplotlib.colors.LinearSegmentedColormap
+
+   :raises ValueError: If the length of position is not the same as colors.
+   :raises ValueError: If position does not start with 0 and end with 1.
+
+   Source: http://schubert.atmos.colostate.edu/~cslocum/custom_cmap.html
 
 

@@ -1,0 +1,556 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>my_code_base.ocean.bgc &#8212; My Code Base</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=252b8852" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=36754332"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/my_code_base/ocean/bgc';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../../home.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">My Code Base</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Content</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../examples.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/stereographic_maps.html">Stereographic maps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/z_overlap.html">Dealing with artifacts when plotting contour lines of curvilinear data</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project Info</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../_autoapi/index.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../_autoapi/my_code_base/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../_autoapi/my_code_base/core/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.core</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autoapi/my_code_base/core/units/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.core.units</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autoapi/my_code_base/core/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.core.utils</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autoapi/my_code_base/core/xarray/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.core.xarray</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../_autoapi/my_code_base/esd/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.esd</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autoapi/my_code_base/esd/coordinates/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.esd.coordinates</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autoapi/my_code_base/esd/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.esd.utils</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../_autoapi/my_code_base/filehandling/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.filehandling</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autoapi/my_code_base/filehandling/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.filehandling.utils</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../_autoapi/my_code_base/ocean/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.ocean</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autoapi/my_code_base/ocean/bgc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.ocean.bgc</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autoapi/my_code_base/ocean/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.ocean.utils</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../_autoapi/my_code_base/plot/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.plot</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autoapi/my_code_base/plot/colormoves/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.plot.colormoves</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autoapi/my_code_base/plot/maps/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.plot.maps</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autoapi/my_code_base/plot/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.plot.utils</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autoapi/my_code_base/plot/z_overlap/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.plot.z_overlap</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../_autoapi/my_code_base/stats/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.stats</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autoapi/my_code_base/stats/timeseries/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.stats.timeseries</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autoapi/my_code_base/cli/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.cli</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autoapi/my_code_base/my_code_base/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.my_code_base</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bibliography.html">Bibliography</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/markusritschel/my-code-base" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/markusritschel/my-code-base/issues/new?title=Issue%20on%20page%20%2F_modules/my_code_base/ocean/bgc.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for my_code_base.ocean.bgc</h1><div class="highlight"><pre>
+<span></span><span class="c1"># %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="c1"># Author: Markus Ritschel</span>
+<span class="c1"># eMail:  git@markusritschel.de</span>
+<span class="c1"># Date:   2024-03-03</span>
+<span class="c1"># %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="c1">#</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">..core.units</span> <span class="kn">import</span> <span class="n">pressure2atm</span><span class="p">,</span> <span class="n">temperature2K</span>
+
+
+<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="temperature_correction">
+<a class="viewcode-back" href="../../../_autoapi/my_code_base/ocean/bgc/index.html#my_code_base.ocean.bgc.temperature_correction">[docs]</a>
+<span class="k">def</span> <span class="nf">temperature_correction</span><span class="p">(</span><span class="n">CO2</span><span class="p">,</span> <span class="n">T_out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">T_in</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;Takahashi2009&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply a temperature correction. This might be necessary when the in-situ temperatures (at the water intake,</span>
+<span class="sd">    often outside the ship) differ from where the CO2 measurement is done (often in a ferry-box onboard the ship).</span>
+<span class="sd">    The correction used here follows :cite:t:`takahashi_climatological_2009`:</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        {(xCO_2)}_{SST} = {(xCO_2)}_{T_\\text{equ}} \\cdot \\exp{\\Big(0.0433\\cdot(SST - T_\\text{equ}) - 4.35\\times 10^{-5}\\cdot(SST^2 - T_\\text{equ}^2)\\Big)}</span>
+
+<span class="sd">    for correcting the temperature at the equilibrator :math:`T_\\text{equ}` to the SST.</span>
+
+<span class="sd">    `CO2` can be one out of [xCO2 (mole fraction), pCO2 (partial pressure), fCO2 (fugacity)].</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    CO2: float or pd.Series</span>
+<span class="sd">        The CO2 variable, which shall be corrected for temperature differences.</span>
+<span class="sd">        Can be one out of the following:</span>
+<span class="sd">        - xCO2 (mole fraction in ppm)</span>
+<span class="sd">        - pCO2 (partial pressure in hPa, Pa, atm or µatm)</span>
+<span class="sd">        - fCO2 (fugacity in hPa, Pa, atm or µatm)</span>
+<span class="sd">    T_out: float or pd.Series</span>
+<span class="sd">        The temperature towards which the data shall be corrected. Typically, the in-situ temperature (°C or K), at which the water was sampled.</span>
+<span class="sd">    T_in: float or pd.Series</span>
+<span class="sd">        The temperature from which the data shall be corrected. Typically, the temperature (°C or K) at the equilibrator, at which the water was measured.</span>
+<span class="sd">    method: str</span>
+<span class="sd">        Either &quot;Takahashi2009&quot; or &quot;Takahashi1993&quot;, describing the method of the respectively published paper by Takahashi et al.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">T_out</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">T_out</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;T_insitu&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">T_in</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">T_in</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;T_equ&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">method</span><span class="o">==</span><span class="s2">&quot;Takahashi2009&quot;</span><span class="p">:</span>
+        <span class="n">CO2_out</span> <span class="o">=</span> <span class="n">CO2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">0.0433</span><span class="o">*</span><span class="p">(</span><span class="n">T_out</span> <span class="o">-</span> <span class="n">T_in</span><span class="p">)</span> <span class="o">-</span> <span class="mf">4.35e-5</span><span class="o">*</span><span class="p">(</span><span class="n">T_out</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">T_in</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">method</span><span class="o">==</span><span class="s2">&quot;Takahashi1993&quot;</span><span class="p">:</span>
+        <span class="n">CO2_out</span> <span class="o">=</span> <span class="n">CO2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">0.0423</span><span class="o">*</span><span class="p">(</span><span class="n">T_out</span> <span class="o">-</span> <span class="n">T_in</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s2">&quot;Unknown method for temperature conversion.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">CO2_out</span></div>
+
+
+
+
+<div class="viewcode-block" id="fugacity">
+<a class="viewcode-back" href="../../../_autoapi/my_code_base/ocean/bgc/index.html#my_code_base.ocean.bgc.fugacity">[docs]</a>
+<span class="k">def</span> <span class="nf">fugacity</span><span class="p">(</span><span class="n">pCO2</span><span class="p">,</span> <span class="n">p_equ</span><span class="p">,</span> <span class="n">SST</span><span class="p">,</span> <span class="n">xCO2</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the fugacity of CO2. Can be done either before or after a :func:`.temperature correction`.</span>
+<span class="sd">    The formulas follow :cite:t:`dickson_guide_2007`, mainly SOP 5, Chapter 8. &quot;Calculation and expression of results&quot;</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">       (fCO_2)^\\text{wet}_\\text{SST} = (pCO_2)^\\text{wet}_\\text{SST} \\cdot</span>
+<span class="sd">            \\exp{\\Big(p_\\text{equ}\\cdot\\frac{\\left[ B(CO_2,SST) + 2\\,\\left(1-(xCO_2)^\\text{wet}_{SST}\\right)^2 \\, \\delta(CO_2,SST)\\right]}{R\\cdot SST}\\Big)}</span>
+
+<span class="sd">    where :math:`SST` is the sea surface temperature in K, :math:`R` the gas constant and :math:`B(CO_2,SST)` and</span>
+<span class="sd">    :math:`\delta(CO_2,SST)` are the virial coefficients for :math:`CO_2` (both in :math:`\\text{cm}^3\\,\\text{mol}^{-1}`), which are given as</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">       B(CO_2,T) = -1636.75 + 12.0408\\,T - 0.0327957\\,T^2 + 0.0000316528\\,T^3</span>
+
+<span class="sd">    and</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">       \\delta(CO_2,T) = 57.7 - 0.188\\,T</span>
+
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    pCO2: float or pd.Series</span>
+<span class="sd">        The partial pressure of CO2 (in µatm).</span>
+<span class="sd">        Make sure you have converted xCO2 concentration (mole fraction in ppm) into partial pressure (in µatm).</span>
+<span class="sd">    p_equ: float or pd.Series</span>
+<span class="sd">        The measured pressure (in hPa, Pa or atm) at the equilibrator (hint: you might want to smoothen your time series)</span>
+<span class="sd">    SST: float or pd.Series</span>
+<span class="sd">        The in-situ measurement temperature (in °C or Kelvin)</span>
+<span class="sd">    xCO2: float or pd.Series (optional)</span>
+<span class="sd">        CO2 concentration (mole fraction in ppm). If given, the δ_CO2 virial coefficient in the numerator in the exponential expression is multiplied by (1 - xCO2*1e-6). Else, this term is 1.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Pa or hPa -&gt; atm</span>
+    <span class="n">p_equ</span> <span class="o">=</span> <span class="n">pressure2atm</span><span class="p">(</span><span class="n">p_equ</span><span class="p">)</span>
+
+    <span class="c1"># °C -&gt; K</span>
+    <span class="n">SST</span> <span class="o">=</span> <span class="n">temperature2K</span><span class="p">(</span><span class="n">SST</span><span class="p">)</span>
+
+    <span class="c1"># respectively in cm³/mol</span>
+    <span class="n">B_CO2</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1636.75</span> <span class="o">+</span> <span class="mf">12.0408</span><span class="o">*</span><span class="n">SST</span> <span class="o">-</span> <span class="mf">3.27957e-2</span><span class="o">*</span><span class="n">SST</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">3.16528e-5</span><span class="o">*</span><span class="n">SST</span><span class="o">**</span><span class="mi">3</span>
+    <span class="n">δ_CO2</span> <span class="o">=</span> <span class="mf">57.7</span> <span class="o">-</span> <span class="mf">0.118</span><span class="o">*</span><span class="n">SST</span>
+
+    <span class="c1"># gas constant</span>
+    <span class="n">R</span> <span class="o">=</span> <span class="mf">8.2057366080960e-2</span> 	        <span class="c1">#   L⋅atm⋅K−1⋅mol−1</span>
+    <span class="n">R</span> <span class="o">*=</span> <span class="mi">1000</span>                       <span class="c1"># cm³⋅atm⋅K−1⋅mol−1</span>
+
+    <span class="k">if</span> <span class="n">xCO2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">x_c</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">x_c</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">xCO2</span><span class="o">*</span><span class="mf">1e-6</span><span class="p">)</span>       <span class="c1"># can be (and is often) neglected in literature</span>
+
+    <span class="n">A</span> <span class="o">=</span> <span class="n">p_equ</span><span class="o">*</span><span class="p">(</span><span class="n">B_CO2</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">δ_CO2</span> <span class="o">*</span> <span class="n">x_c</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="n">R</span><span class="o">*</span><span class="n">SST</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">pCO2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">A</span> <span class="o">/</span> <span class="n">B</span><span class="p">)</span>        <span class="c1"># same unit as pCO2 (µatm)</span>
+
+    <span class="k">return</span> <span class="n">f</span></div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By markusritschel
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

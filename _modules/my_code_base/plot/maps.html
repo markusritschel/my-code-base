@@ -1,0 +1,916 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>my_code_base.plot.maps &#8212; My Code Base</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=252b8852" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=36754332"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/my_code_base/plot/maps';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../../home.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">My Code Base</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Content</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../examples.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/stereographic_maps.html">Stereographic maps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/z_overlap.html">Dealing with artifacts when plotting contour lines of curvilinear data</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project Info</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../_autoapi/index.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../_autoapi/my_code_base/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../_autoapi/my_code_base/core/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.core</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autoapi/my_code_base/core/units/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.core.units</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autoapi/my_code_base/core/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.core.utils</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autoapi/my_code_base/core/xarray/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.core.xarray</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../_autoapi/my_code_base/esd/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.esd</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autoapi/my_code_base/esd/coordinates/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.esd.coordinates</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autoapi/my_code_base/esd/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.esd.utils</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../_autoapi/my_code_base/filehandling/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.filehandling</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autoapi/my_code_base/filehandling/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.filehandling.utils</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../_autoapi/my_code_base/ocean/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.ocean</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autoapi/my_code_base/ocean/bgc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.ocean.bgc</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autoapi/my_code_base/ocean/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.ocean.utils</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../_autoapi/my_code_base/plot/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.plot</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autoapi/my_code_base/plot/colormoves/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.plot.colormoves</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autoapi/my_code_base/plot/maps/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.plot.maps</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autoapi/my_code_base/plot/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.plot.utils</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autoapi/my_code_base/plot/z_overlap/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.plot.z_overlap</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../_autoapi/my_code_base/stats/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.stats</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autoapi/my_code_base/stats/timeseries/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.stats.timeseries</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autoapi/my_code_base/cli/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.cli</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autoapi/my_code_base/my_code_base/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.my_code_base</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bibliography.html">Bibliography</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/markusritschel/my-code-base" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/markusritschel/my-code-base/issues/new?title=Issue%20on%20page%20%2F_modules/my_code_base/plot/maps.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for my_code_base.plot.maps</h1><div class="highlight"><pre>
+<span></span><span class="c1"># %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="c1"># Author: Markus Ritschel</span>
+<span class="c1"># eMail:  git@markusritschel.de</span>
+<span class="c1"># Date:   2024-03-04</span>
+<span class="c1"># %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="c1">#</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">import</span> <span class="nn">cartopy</span>
+<span class="kn">import</span> <span class="nn">cartopy.mpl.geoaxes</span>
+<span class="kn">import</span> <span class="nn">cartopy.crs</span> <span class="k">as</span> <span class="nn">ccrs</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.path</span> <span class="k">as</span> <span class="nn">mpath</span>
+<span class="kn">import</span> <span class="nn">pytest</span>
+<span class="kn">from</span> <span class="nn">.z_overlap</span> <span class="kn">import</span> <span class="n">fix_overlap</span>
+
+<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+
+<div class="viewcode-block" id="register_geoaxes_accessor">
+<a class="viewcode-back" href="../../../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.register_geoaxes_accessor">[docs]</a>
+<span class="k">def</span> <span class="nf">register_geoaxes_accessor</span><span class="p">(</span><span class="n">accessor_name</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Register an accessor for a cartopy.GeoAxes object.</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    &gt;&gt;&gt; pytest.skip()</span>
+<span class="sd">    &gt;&gt;&gt; @register_geoaxes_accessor(&quot;my_accessor&quot;)</span>
+<span class="sd">    &gt;&gt;&gt; class MyCustomAccessor:</span>
+<span class="sd">    &gt;&gt;&gt;     def some_method(self):</span>
+<span class="sd">    &gt;&gt;&gt;         pass</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; ax = plt.subplot(projection=cartopy.crs.NorthPolarStereo())</span>
+<span class="sd">    &gt;&gt;&gt; ax.my_accessor.some_method()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">actual_decorator</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">accessor</span><span class="p">(</span><span class="n">geo_axes</span><span class="p">):</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;`accessor` func&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">geo_axes</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="n">accessor_name</span><span class="p">):</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;No instance of accessor found. Add as attribute.&quot;</span><span class="p">)</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="n">geo_axes</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="n">accessor_name</span><span class="p">,</span> <span class="bp">cls</span><span class="p">(</span><span class="n">geo_axes</span><span class="p">))</span>
+            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">geo_axes</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="n">accessor_name</span><span class="p">)</span>
+
+        <span class="nb">setattr</span><span class="p">(</span><span class="n">cartopy</span><span class="o">.</span><span class="n">mpl</span><span class="o">.</span><span class="n">geoaxes</span><span class="o">.</span><span class="n">GeoAxes</span><span class="p">,</span> <span class="n">accessor_name</span><span class="p">,</span> <span class="nb">property</span><span class="p">(</span><span class="n">accessor</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="bp">cls</span>
+
+    <span class="k">return</span> <span class="n">actual_decorator</span></div>
+
+
+
+<div class="viewcode-block" id="GeoAxesAccessor">
+<a class="viewcode-back" href="../../../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.GeoAxesAccessor">[docs]</a>
+<span class="k">class</span> <span class="nc">GeoAxesAccessor</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="p">):</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Initialize accessor&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">geo_axes</span> <span class="o">=</span> <span class="n">ax</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_projection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_cartopy_projection</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_get_cartopy_projection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">geo_axes</span><span class="o">.</span><span class="n">_projection_init</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;projection&#39;</span><span class="p">])</span>
+
+<div class="viewcode-block" id="StereographicAxisAccessor.add_ocean">
+<a class="viewcode-back" href="../../../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.StereographicAxisAccessor.add_ocean">[docs]</a>
+<div class="viewcode-block" id="GeoAxesAccessor.add_ocean">
+<a class="viewcode-back" href="../../../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.GeoAxesAccessor.add_ocean">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_ocean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add ocean feature to the GeoAxes.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        **kwargs : dict</span>
+<span class="sd">            Keyword arguments to be passed to the add_feature method of GeoAxes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Add ocean to axis&#39;</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;zorder&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">geo_axes</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">cartopy</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">OCEAN</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+</div>
+
+
+<div class="viewcode-block" id="StereographicAxisAccessor.add_land">
+<a class="viewcode-back" href="../../../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.StereographicAxisAccessor.add_land">[docs]</a>
+<div class="viewcode-block" id="GeoAxesAccessor.add_land">
+<a class="viewcode-back" href="../../../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.GeoAxesAccessor.add_land">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_land</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add land feature to the GeoAxes.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        **kwargs : dict</span>
+<span class="sd">            Keyword arguments to be passed to the add_feature method of GeoAxes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Add land to axis&#39;</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;zorder&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">geo_axes</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">cartopy</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">LAND</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+</div>
+
+
+<div class="viewcode-block" id="StereographicAxisAccessor.add_coastlines">
+<a class="viewcode-back" href="../../../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.StereographicAxisAccessor.add_coastlines">[docs]</a>
+<div class="viewcode-block" id="GeoAxesAccessor.add_coastlines">
+<a class="viewcode-back" href="../../../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.GeoAxesAccessor.add_coastlines">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_coastlines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add coastlines to the GeoAxes.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        *args : list</span>
+<span class="sd">            Arguments to be passed to the coastlines method of GeoAxes.</span>
+<span class="sd">        **kwargs : dict</span>
+<span class="sd">            Keyword arguments to be passed to the coastlines method of GeoAxes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Add coastlines to axis&#39;</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;zorder&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">geo_axes</span><span class="o">.</span><span class="n">coastlines</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+</div>
+
+
+<div class="viewcode-block" id="StereographicAxisAccessor.set_extent">
+<a class="viewcode-back" href="../../../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.StereographicAxisAccessor.set_extent">[docs]</a>
+<div class="viewcode-block" id="GeoAxesAccessor.set_extent">
+<a class="viewcode-back" href="../../../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.GeoAxesAccessor.set_extent">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_extent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">extent</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="n">cartopy</span><span class="o">.</span><span class="n">crs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">()):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the extent of the GeoAxes.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        extent : tuple</span>
+<span class="sd">            The extent of the GeoAxes. It should be a tuple of the form (xmin, xmax, ymin, ymax).</span>
+<span class="sd">        crs : cartopy.crs</span>
+<span class="sd">            The coordinate reference system in which the extent is expressed. Default is PlateCarree.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Set axis extent to </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">extent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">geo_axes</span><span class="o">.</span><span class="n">set_extent</span><span class="p">(</span><span class="n">extent</span><span class="p">,</span> <span class="n">crs</span><span class="p">)</span></div>
+</div>
+
+
+    <span class="nd">@abstractmethod</span>
+<div class="viewcode-block" id="GeoAxesAccessor.add_gridlines">
+<a class="viewcode-back" href="../../../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.GeoAxesAccessor.add_gridlines">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_gridlines</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+
+    <span class="nd">@abstractmethod</span>
+<div class="viewcode-block" id="GeoAxesAccessor.add_features">
+<a class="viewcode-back" href="../../../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.GeoAxesAccessor.add_features">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_features</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+</div>
+
+
+
+
+<span class="nd">@register_geoaxes_accessor</span><span class="p">(</span><span class="s2">&quot;polar&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="StereographicAxisAccessor">
+<a class="viewcode-back" href="../../../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.StereographicAxisAccessor">[docs]</a>
+<span class="k">class</span> <span class="nc">StereographicAxisAccessor</span><span class="p">(</span><span class="n">GeoAxesAccessor</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;An accessor to handle features and finishing of stereographic plots produced with `cartopy`.</span>
+<span class="sd">    Can handle both :class:`~cartopy.crs.NorthPolarStereo` and :class:`~cartopy.crs.SouthPolarStereo` projections.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pole</span> <span class="o">=</span> <span class="p">{</span><span class="n">cartopy</span><span class="o">.</span><span class="n">crs</span><span class="o">.</span><span class="n">SouthPolarStereo</span><span class="p">:</span> <span class="s1">&#39;south&#39;</span><span class="p">,</span>
+                      <span class="n">cartopy</span><span class="o">.</span><span class="n">crs</span><span class="o">.</span><span class="n">NorthPolarStereo</span><span class="p">:</span> <span class="s1">&#39;north&#39;</span><span class="p">}[</span><span class="bp">self</span><span class="o">.</span><span class="n">_projection</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lat_limits</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lat_breakpoint</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;south&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">80</span><span class="p">,</span>
+                                <span class="s1">&#39;north&#39;</span><span class="p">:</span> <span class="mi">80</span><span class="p">}[</span><span class="bp">self</span><span class="o">.</span><span class="n">_pole</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lon_grid_spacing</span> <span class="o">=</span> <span class="mi">30</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_draw_labels</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># or should this rather be an attribute of self.geo_axes._draw_labels ?</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">lat_limits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the latitude limits for the plot.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">geo_axes</span><span class="o">.</span><span class="n">_lat_limits</span>
+
+    <span class="nd">@lat_limits</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">lat_limits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lat_lim</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the latitude limits for the plot.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">geo_axes</span><span class="o">.</span><span class="n">_lat_limits</span> <span class="o">=</span> <span class="n">lat_lim</span>
+
+    <span class="nd">@lat_limits</span><span class="o">.</span><span class="n">getter</span>
+<div class="viewcode-block" id="StereographicAxisAccessor.lat_limits">
+<a class="viewcode-back" href="../../../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.StereographicAxisAccessor.lat_limits">[docs]</a>
+    <span class="k">def</span> <span class="nf">lat_limits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the latitude limits for the plot, with default values if not set.&quot;&quot;&quot;</span>
+        <span class="n">default_lat_lims</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;south&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="o">-</span><span class="mi">50</span><span class="p">],</span>
+                            <span class="s1">&#39;north&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">90</span><span class="p">]}[</span><span class="bp">self</span><span class="o">.</span><span class="n">_pole</span><span class="p">]</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">geo_axes</span><span class="p">,</span> <span class="s1">&#39;_lat_limits&#39;</span><span class="p">,</span> <span class="n">default_lat_lims</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="StereographicAxisAccessor.add_features">
+<a class="viewcode-back" href="../../../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.StereographicAxisAccessor.add_features">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gridlines</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ruler</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Apply various features to the plot:</span>
+<span class="sd">            - add ocean</span>
+<span class="sd">            - add land</span>
+<span class="sd">            - add coastlines</span>
+<span class="sd">            - add ruler</span>
+<span class="sd">            - make the boundary circular</span>
+<span class="sd">            - add gridlines</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            gridlines (bool, optional): Whether to add gridlines. Defaults to True.</span>
+<span class="sd">            ruler (bool, optional): Whether to add a ruler. Defaults to True.</span>
+<span class="sd">            **kwargs: Additional keyword arguments for customization.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">coastlines_kwargs</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;coastlines_kwargs&#39;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="n">ruler_kwargs</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;ruler_kwargs&#39;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="n">ocean_kwargs</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;ocean_kwargs&#39;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="n">land_kwargs</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;land_kwargs&#39;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="n">gridlines_kwargs</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;gridlines_kwargs&#39;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lon_grid_spacing</span> <span class="o">=</span> <span class="n">ruler_kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;segment_length&#39;</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_extent</span><span class="p">([</span><span class="o">-</span><span class="mi">180</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">lat_limits</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_ocean</span><span class="p">(</span><span class="o">**</span><span class="n">ocean_kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_land</span><span class="p">(</span><span class="o">**</span><span class="n">land_kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_coastlines</span><span class="p">(</span><span class="o">**</span><span class="n">coastlines_kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">make_circular</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">ruler</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_ruler</span><span class="p">(</span><span class="o">**</span><span class="n">ruler_kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">gridlines</span><span class="p">:</span>
+            <span class="n">gl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_gridlines</span><span class="p">(</span><span class="o">**</span><span class="n">gridlines_kwargs</span><span class="p">)</span>
+            <span class="n">rotate_polar_plot_lat_labels</span><span class="p">(</span><span class="n">gl</span><span class="p">,</span> <span class="n">target_lon</span><span class="o">=</span><span class="mi">118</span><span class="p">)</span>
+            <span class="n">rotate_polar_plot_lon_labels</span><span class="p">(</span><span class="n">gl</span><span class="p">,</span> <span class="n">pole</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_pole</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="StereographicAxisAccessor.add_gridlines">
+<a class="viewcode-back" href="../../../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.StereographicAxisAccessor.add_gridlines">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_gridlines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add gridlines to the plot.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            **kwargs: Additional keyword arguments for customization.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :class:`cartopy.mpl.gridliner.Gridliner`: The gridliner object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;zorder&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;linestyle&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;linewidth&#39;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">)</span>
+
+        <span class="n">lat0</span><span class="p">,</span> <span class="n">lat1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lat_limits</span>
+        <span class="n">lat_grid_spacing</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="n">ygrid_locs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">lat0</span><span class="p">,</span> <span class="n">lat1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">lat_grid_spacing</span><span class="p">)</span>
+        <span class="n">fac1</span><span class="p">,</span> <span class="n">fac2</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;north&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+                      <span class="s1">&#39;south&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]}[</span><span class="bp">self</span><span class="o">.</span><span class="n">_pole</span><span class="p">]</span>
+
+        <span class="k">def</span> <span class="nf">create_gridlines</span><span class="p">(</span><span class="n">x_spacing_factor</span><span class="p">,</span> <span class="n">ylim</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">geo_axes</span><span class="o">.</span><span class="n">gridlines</span><span class="p">(</span>
+                <span class="n">xlocs</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">180</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="n">x_spacing_factor</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lon_grid_spacing</span><span class="p">),</span>
+                <span class="n">ylim</span><span class="o">=</span><span class="n">ylim</span><span class="p">,</span>
+                <span class="n">ylocs</span><span class="o">=</span><span class="n">ygrid_locs</span><span class="p">,</span>
+                <span class="n">draw_labels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_draw_labels</span> <span class="k">if</span> <span class="n">x_spacing_factor</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="o">**</span><span class="n">kwargs</span>
+            <span class="p">)</span>
+
+        <span class="n">gl1</span> <span class="o">=</span> <span class="n">create_gridlines</span><span class="p">(</span><span class="n">fac1</span><span class="p">,</span> <span class="p">[</span><span class="n">lat0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lat_breakpoint</span><span class="p">])</span>
+        <span class="n">gl2</span> <span class="o">=</span> <span class="n">create_gridlines</span><span class="p">(</span><span class="n">fac2</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_lat_breakpoint</span><span class="p">,</span> <span class="n">lat1</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_gl</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;north&#39;</span><span class="p">:</span> <span class="n">gl1</span><span class="p">,</span> <span class="s1">&#39;south&#39;</span><span class="p">:</span> <span class="n">gl2</span><span class="p">}[</span><span class="bp">self</span><span class="o">.</span><span class="n">_pole</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gl</span></div>
+
+
+<div class="viewcode-block" id="StereographicAxisAccessor.add_ruler">
+<a class="viewcode-back" href="../../../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.StereographicAxisAccessor.add_ruler">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_ruler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a circular ruler to the plot.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            **kwargs: Additional keyword arguments for customization.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;segment_length&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lon_grid_spacing</span><span class="p">)</span>
+        <span class="n">add_circular_ruler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">geo_axes</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="StereographicAxisAccessor.make_circular">
+<a class="viewcode-back" href="../../../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.StereographicAxisAccessor.make_circular">[docs]</a>
+    <span class="k">def</span> <span class="nf">make_circular</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Make the plot boundary circular.&quot;&quot;&quot;</span>
+        <span class="n">set_circular_boundary</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">geo_axes</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="StereographicAxisAccessor.rotate_lat_labels">
+<a class="viewcode-back" href="../../../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.StereographicAxisAccessor.rotate_lat_labels">[docs]</a>
+    <span class="k">def</span> <span class="nf">rotate_lat_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Rotate the latitude labels on the plot.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            **kwargs: Additional keyword arguments for customization.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rotate_polar_plot_lat_labels</span><span class="p">(</span><span class="n">gl</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_gl</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="StereographicAxisAccessor.rotate_lon_labels">
+<a class="viewcode-back" href="../../../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.StereographicAxisAccessor.rotate_lon_labels">[docs]</a>
+    <span class="k">def</span> <span class="nf">rotate_lon_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Rotate the longitude labels on the plot.&quot;&quot;&quot;</span>
+        <span class="n">rotate_polar_plot_lon_labels</span><span class="p">(</span><span class="n">gl</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_gl</span><span class="p">,</span> <span class="n">pole</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_pole</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="add_circular_ruler">
+<a class="viewcode-back" href="../../../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.add_circular_ruler">[docs]</a>
+<span class="k">def</span> <span class="nf">add_circular_ruler</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">segment_length</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">primary_color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">secondary_color</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add a ruler around a polar stereographic plot.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ax : GeoAxes</span>
+<span class="sd">        The GeoAxes object to which the ruler should be added</span>
+<span class="sd">    segment_length : int</span>
+<span class="sd">        The length of each segment in degrees</span>
+<span class="sd">    offset : int</span>
+<span class="sd">        An optional offset</span>
+<span class="sd">    primary_color : str</span>
+<span class="sd">        The color of the background ruler segments</span>
+<span class="sd">    secondary_color : str</span>
+<span class="sd">        The color of the top ruler segments</span>
+<span class="sd">    width : float</span>
+<span class="sd">        The scaled thickness of the ruler. Defaults to 1/80 of the axes&#39; width.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">plot_circle</span><span class="p">(</span><span class="n">degrees</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Plot a circle of given radius (based on Axis dimensions) for a list of degree segments.&quot;&quot;&quot;</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;ax&quot;</span><span class="p">,</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">())</span>
+        <span class="n">arc_angles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">degrees</span><span class="p">)</span>
+        <span class="n">arc_xs</span> <span class="o">=</span> <span class="n">radius</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">arc_angles</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span>
+        <span class="n">arc_ys</span> <span class="o">=</span> <span class="n">radius</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">arc_angles</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">arc_xs</span><span class="p">,</span> <span class="n">arc_ys</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span> <span class="n">solid_capstyle</span><span class="o">=</span><span class="s2">&quot;butt&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="n">width</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">bbox</span><span class="o">.</span><span class="n">width</span> <span class="o">/</span> <span class="mi">80</span> <span class="o">*</span> <span class="n">width</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="mi">360</span> <span class="o">/</span> <span class="n">segment_length</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Warning</span><span class="p">(</span>
+            <span class="s2">&quot;`segment_length` must fit 2n times into 360 so that the segments of the &quot;</span>
+            <span class="s2">&quot;ruler can be equally distributed on a circle.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="c1"># plot background circle (default: black, slightly broader)</span>
+    <span class="n">segments_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">360</span><span class="p">,</span> <span class="mi">361</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plot_circle</span><span class="p">(</span><span class="n">segments_array</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">primary_color</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="n">width</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">999</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+
+    <span class="c1"># plot white circle segments on top</span>
+    <span class="n">segment_bnds_array</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">360</span><span class="p">,</span> <span class="n">segment_length</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="o">+</span> <span class="mi">90</span>  <span class="c1"># to start at the top instead of at the right</span>
+        <span class="o">+</span> <span class="n">offset</span>
+    <span class="p">)</span>
+    <span class="n">segments_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">*</span><span class="n">bnds</span><span class="p">,</span> <span class="n">segment_length</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)])</span>
+            <span class="k">for</span> <span class="n">bnds</span> <span class="ow">in</span> <span class="n">segment_bnds_array</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">plot_circle</span><span class="p">(</span><span class="n">segments_array</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">secondary_color</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="n">width</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="rotate_polar_plot_lat_labels">
+<a class="viewcode-back" href="../../../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.rotate_polar_plot_lat_labels">[docs]</a>
+<span class="k">def</span> <span class="nf">rotate_polar_plot_lat_labels</span><span class="p">(</span><span class="n">gl</span><span class="p">,</span> <span class="n">target_lon</span><span class="o">=</span><span class="mi">118</span><span class="p">,</span> <span class="n">orig_lon</span><span class="o">=</span><span class="mi">150</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Move the latitude labels to another longitude.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    gl : gridlines</span>
+<span class="sd">        The gridlines object holding the labels.</span>
+<span class="sd">    target_lon : int</span>
+<span class="sd">        The longitude to which the labels should be moved.</span>
+<span class="sd">    orig_lon : int</span>
+<span class="sd">        The longitude at which the labels are located per default [default: 150].</span>
+
+<span class="sd">    Following the solution on https://stackoverflow.com/a/66587492/5925453 with some minor adaptions.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">tx</span> <span class="ow">in</span> <span class="n">gl</span><span class="o">.</span><span class="n">label_artists</span><span class="p">:</span>
+        <span class="n">xy</span> <span class="o">=</span> <span class="n">tx</span><span class="o">.</span><span class="n">get_position</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">xy</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="n">orig_lon</span><span class="p">:</span>
+            <span class="n">tx</span><span class="o">.</span><span class="n">set_position</span><span class="p">([</span><span class="n">target_lon</span><span class="p">,</span> <span class="n">xy</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+            <span class="n">tx</span><span class="o">.</span><span class="n">set_size</span><span class="p">(</span><span class="s1">&#39;small&#39;</span><span class="p">)</span>
+    <span class="k">return</span></div>
+
+
+
+<div class="viewcode-block" id="rotate_polar_plot_lon_labels">
+<a class="viewcode-back" href="../../../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.rotate_polar_plot_lon_labels">[docs]</a>
+<span class="k">def</span> <span class="nf">rotate_polar_plot_lon_labels</span><span class="p">(</span><span class="n">gl</span><span class="p">,</span> <span class="n">pole</span><span class="o">=</span><span class="s1">&#39;north&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Rotate the longitude labels of a stereographic plot for better readability and nicer look.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    gl : gridlines</span>
+<span class="sd">        The gridlines object holding the labels.</span>
+<span class="sd">    pole : str (optional)</span>
+<span class="sd">        The pole to rotate the labels towards. Can be either &#39;north&#39; or &#39;south&#39; [default: &#39;north&#39;].</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">gl</span><span class="o">.</span><span class="n">rotate_labels</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+
+    <span class="c1"># all_label_artists = gl.geo_label_artists + gl.bottom_label_artists + gl.top_label_artists</span>
+    <span class="n">all_label_artists</span> <span class="o">=</span> <span class="p">[</span><span class="n">label</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">gl</span><span class="o">.</span><span class="n">label_artists</span> <span class="k">if</span> <span class="n">label</span><span class="o">.</span><span class="n">get_text</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;E&#39;</span><span class="p">,</span><span class="s1">&#39;W&#39;</span><span class="p">,</span><span class="s1">&#39;°&#39;</span><span class="p">]]</span>
+    <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">all_label_artists</span><span class="p">:</span>
+        <span class="n">alphanumeric_label</span> <span class="o">=</span> <span class="n">label</span><span class="o">.</span><span class="n">get_text</span><span class="p">()</span>
+        <span class="n">longitude</span> <span class="o">=</span> <span class="n">_str2float</span><span class="p">(</span><span class="n">alphanumeric_label</span><span class="p">)</span>
+        <span class="n">rot_degree</span> <span class="o">=</span> <span class="n">_lon2rot</span><span class="p">(</span><span class="n">longitude</span><span class="p">,</span> <span class="n">pole</span><span class="p">)</span>
+        <span class="n">_rotate_and_align_label</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">longitude</span><span class="p">,</span> <span class="n">rot_degree</span><span class="p">,</span> <span class="n">pole</span><span class="o">=</span><span class="n">pole</span><span class="p">)</span>
+    <span class="k">return</span></div>
+
+
+
+<span class="k">def</span> <span class="nf">_str2float</span><span class="p">(</span><span class="n">label</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Turn geographic longitude grid labels into numeric values of degrees east.&quot;&quot;&quot;</span>
+    <span class="c1"># Extract the numbers from the label</span>
+    <span class="n">number</span> <span class="o">=</span> <span class="n">label</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;°&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">number</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+    <span class="c1"># Turn longitudes west of the meridian into negative numbers</span>
+    <span class="k">if</span> <span class="s1">&#39;W&#39;</span> <span class="ow">in</span> <span class="n">label</span><span class="p">:</span>
+        <span class="n">number</span> <span class="o">=</span> <span class="o">-</span><span class="n">number</span>
+    <span class="k">return</span> <span class="n">number</span>
+
+
+<span class="k">def</span> <span class="nf">_lon2rot</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">pole</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Turn longitude value into rotation for polar stereographic plots.&quot;&quot;&quot;</span>
+    <span class="n">rot_rad</span> <span class="o">=</span> <span class="n">lon</span>
+    <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">lon</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">90</span><span class="p">:</span>
+        <span class="n">rot_rad</span> <span class="o">=</span> <span class="n">lon</span> <span class="o">-</span> <span class="mi">180</span>
+
+    <span class="k">if</span> <span class="n">pole</span> <span class="o">==</span> <span class="s1">&#39;south&#39;</span><span class="p">:</span>
+        <span class="n">rot_rad</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">-</span> <span class="n">rot_rad</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">lon</span><span class="p">)</span><span class="o">==</span><span class="mi">90</span><span class="p">:</span>
+            <span class="n">rot_rad</span> <span class="o">-=</span> <span class="mi">180</span>
+
+    <span class="k">return</span> <span class="n">rot_rad</span>
+
+
+<span class="k">def</span> <span class="nf">_rotate_and_align_label</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">longitude</span><span class="p">,</span> <span class="n">rot_degree</span><span class="p">,</span> <span class="n">pole</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Rotate and align longitude labels.&quot;&quot;&quot;</span>
+    <span class="n">label</span><span class="o">.</span><span class="n">set_rotation_mode</span><span class="p">(</span><span class="s1">&#39;anchor&#39;</span><span class="p">)</span>  <span class="c1"># rotation_mode=&#39;anchor&#39; aligns the unrotated text first and then rotates the text around the point of alignment.</span>
+    <span class="n">label</span><span class="o">.</span><span class="n">set_rotation</span><span class="p">(</span><span class="n">rot_degree</span><span class="p">)</span>
+    <span class="n">label</span><span class="o">.</span><span class="n">set_size</span><span class="p">(</span><span class="s1">&#39;small&#39;</span><span class="p">)</span>
+    <span class="n">label</span><span class="o">.</span><span class="n">set_horizontalalignment</span><span class="p">(</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">pole</span><span class="o">==</span><span class="s1">&#39;north&#39;</span><span class="p">:</span>
+        <span class="n">alignment</span> <span class="o">=</span> <span class="s1">&#39;top&#39;</span> <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">longitude</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">90</span> <span class="k">else</span> <span class="s1">&#39;bottom&#39;</span>
+    <span class="k">elif</span> <span class="n">pole</span> <span class="o">==</span> <span class="s1">&#39;south&#39;</span><span class="p">:</span>
+        <span class="n">alignment</span> <span class="o">=</span> <span class="s1">&#39;top&#39;</span> <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">longitude</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">90</span> <span class="k">else</span> <span class="s1">&#39;bottom&#39;</span>
+    <span class="n">label</span><span class="o">.</span><span class="n">set_verticalalignment</span><span class="p">(</span><span class="n">alignment</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">label</span>
+
+
+<div class="viewcode-block" id="set_circular_boundary">
+<a class="viewcode-back" href="../../../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.set_circular_boundary">[docs]</a>
+<span class="k">def</span> <span class="nf">set_circular_boundary</span><span class="p">(</span><span class="n">ax</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute a circle in axes coordinates, which we can use as a boundary for the map.</span>
+<span class="sd">    We can pan/zoom as much as we like – the boundary will be permanently circular.&quot;&quot;&quot;</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">center</span><span class="p">,</span> <span class="n">radius</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="mf">0.5</span>
+    <span class="n">vertices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)])</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">circle</span> <span class="o">=</span> <span class="n">mpath</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">vertices</span><span class="o">*</span><span class="n">radius</span> <span class="o">+</span> <span class="n">center</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_boundary</span><span class="p">(</span><span class="n">circle</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">)</span>
+    <span class="k">return</span></div>
+
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By markusritschel
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

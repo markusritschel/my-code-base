@@ -10,7 +10,6 @@
    - temperature and salinity normalization
    - temperature decomposition
    - fgCO2 <-> pCO2 and other conversions
-   # TODO: check content of `oceanpack` package and move/copy to `ocean_bgc` if necessary
 
 
 
@@ -97,7 +96,7 @@ Package Contents
 .. py:function:: temperature2C(T)
 
    Convert temperatures given in Kelvin into °C.
-   If `T` is a :meth:`pandas.Series` object, only values less than 200 are converted. All others are expected to be
+   If `T` is a :class:`pandas.Series` object, only values less than 200 are converted. All others are expected to be
    already in °C.
 
    .. rubric:: Examples
@@ -109,7 +108,7 @@ Package Contents
 .. py:function:: temperature2K(T)
 
    Convert temperatures given in °C into Kelvin.
-   If `T` is a :meth:`pandas.Series` object, only values larger than 200 are converted. All others are expected to be
+   If `T` is a :class:`pandas.Series` object, only values larger than 200 are converted. All others are expected to be
    already in Kelvin.
 
    .. rubric:: Examples

@@ -17,6 +17,13 @@ Module Contents
 
    .. py:method:: add_coastlines(*args, **kwargs)
 
+      Add coastlines to the GeoAxes.
+
+      :param \*args: Arguments to be passed to the coastlines method of GeoAxes.
+      :type \*args: list
+      :param \*\*kwargs: Keyword arguments to be passed to the coastlines method of GeoAxes.
+      :type \*\*kwargs: dict
+
 
    .. py:method:: add_features()
       :abstractmethod:
@@ -28,11 +35,28 @@ Module Contents
 
    .. py:method:: add_land(**kwargs)
 
+      Add land feature to the GeoAxes.
+
+      :param \*\*kwargs: Keyword arguments to be passed to the add_feature method of GeoAxes.
+      :type \*\*kwargs: dict
+
 
    .. py:method:: add_ocean(**kwargs)
 
+      Add ocean feature to the GeoAxes.
+
+      :param \*\*kwargs: Keyword arguments to be passed to the add_feature method of GeoAxes.
+      :type \*\*kwargs: dict
+
 
    .. py:method:: set_extent(extent, crs=cartopy.crs.PlateCarree())
+
+      Set the extent of the GeoAxes.
+
+      :param extent: The extent of the GeoAxes. It should be a tuple of the form (xmin, xmax, ymin, ymax).
+      :type extent: tuple
+      :param crs: The coordinate reference system in which the extent is expressed. Default is PlateCarree.
+      :type crs: cartopy.crs
 
 
 
@@ -42,50 +66,102 @@ Module Contents
 
 
    An accessor to handle features and finishing of stereographic plots produced with `cartopy`.
-   Can handle both :class:`ccrs.NorthPolarStereo` and :class:`ccrs.SouthPolarStereo` projections.
+   Can handle both :class:`~cartopy.crs.NorthPolarStereo` and :class:`~cartopy.crs.SouthPolarStereo` projections.
 
    .. py:property:: lat_limits
 
+      Get the latitude limits for the plot.
 
    .. py:method:: add_coastlines(*args, **kwargs)
+
+      Add coastlines to the GeoAxes.
+
+      :param \*args: Arguments to be passed to the coastlines method of GeoAxes.
+      :type \*args: list
+      :param \*\*kwargs: Keyword arguments to be passed to the coastlines method of GeoAxes.
+      :type \*\*kwargs: dict
 
 
    .. py:method:: add_features(gridlines=True, ruler=True, **kwargs)
 
-      Perform the following steps:
-      - add ocean
-      - add land
-      - add coastlines
-      - add ruler
-      - make the boundary circular
-      - add gridlines
+      Apply various features to the plot:
+          - add ocean
+          - add land
+          - add coastlines
+          - add ruler
+          - make the boundary circular
+          - add gridlines
+
+      :param gridlines: Whether to add gridlines. Defaults to True.
+      :type gridlines: bool, optional
+      :param ruler: Whether to add a ruler. Defaults to True.
+      :type ruler: bool, optional
+      :param \*\*kwargs: Additional keyword arguments for customization.
 
 
    .. py:method:: add_gridlines(**kwargs)
 
+      Add gridlines to the plot.
+
+      :param \*\*kwargs: Additional keyword arguments for customization.
+
+      :returns: The gridliner object.
+      :rtype: :class:`cartopy.mpl.gridliner.Gridliner`
+
 
    .. py:method:: add_land(**kwargs)
+
+      Add land feature to the GeoAxes.
+
+      :param \*\*kwargs: Keyword arguments to be passed to the add_feature method of GeoAxes.
+      :type \*\*kwargs: dict
 
 
    .. py:method:: add_ocean(**kwargs)
 
+      Add ocean feature to the GeoAxes.
+
+      :param \*\*kwargs: Keyword arguments to be passed to the add_feature method of GeoAxes.
+      :type \*\*kwargs: dict
+
 
    .. py:method:: add_ruler(**kwargs)
+
+      Add a circular ruler to the plot.
+
+      :param \*\*kwargs: Additional keyword arguments for customization.
 
 
    .. py:method:: lat_limits()
 
+      Get the latitude limits for the plot, with default values if not set.
+
 
    .. py:method:: make_circular()
+
+      Make the plot boundary circular.
 
 
    .. py:method:: rotate_lat_labels(**kwargs)
 
+      Rotate the latitude labels on the plot.
+
+      :param \*\*kwargs: Additional keyword arguments for customization.
+
 
    .. py:method:: rotate_lon_labels()
 
+      Rotate the longitude labels on the plot.
+
 
    .. py:method:: set_extent(extent, crs=cartopy.crs.PlateCarree())
+
+      Set the extent of the GeoAxes.
+
+      :param extent: The extent of the GeoAxes. It should be a tuple of the form (xmin, xmax, ymin, ymax).
+      :type extent: tuple
+      :param crs: The coordinate reference system in which the extent is expressed. Default is PlateCarree.
+      :type crs: cartopy.crs
 
 
 

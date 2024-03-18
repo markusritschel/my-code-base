@@ -9,7 +9,7 @@ Module Contents
 
 .. py:function:: fugacity(pCO2, p_equ, SST, xCO2=None)
 
-   Calculate the fugacity of CO2. Can be done either before or after a :func:`.temperature_correction`.
+   Calculate the fugacity of CO2. Can be done either before or after a :func:`.temperature correction`.
    The formulas follow :cite:t:`dickson_guide_2007`, mainly SOP 5, Chapter 8. "Calculation and expression of results"
 
    .. math::
@@ -39,7 +39,7 @@ Module Contents
    :type xCO2: float or pd.Series (optional)
 
 
-.. py:function:: temperature_correction(CO2, T_out = None, T_in = None, method = 'Takahashi2009', **kwargs)
+.. py:function:: temperature_correction(CO2, T_out=None, T_in=None, method='Takahashi2009', **kwargs)
 
    Apply a temperature correction. This might be necessary when the in-situ temperatures (at the water intake,
    often outside the ship) differ from where the CO2 measurement is done (often in a ferry-box onboard the ship).
@@ -56,9 +56,13 @@ Module Contents
                Can be one out of the following:
                - xCO2 (mole fraction in ppm)
                - pCO2 (partial pressure in hPa, Pa, atm or µatm)
-               - fCO2 (:func:`.fugacity` in hPa, Pa, atm or µatm)
+               - fCO2 (fugacity in hPa, Pa, atm or µatm)
+   :type CO2: float or pd.Series
    :param T_out: The temperature towards which the data shall be corrected. Typically, the in-situ temperature (°C or K), at which the water was sampled.
+   :type T_out: float or pd.Series
    :param T_in: The temperature from which the data shall be corrected. Typically, the temperature (°C or K) at the equilibrator, at which the water was measured.
-   :param method: Either "Takahashi2009" :cite:p:`takahashi_climatological_2009` or "Takahashi1993" :cite:p:`takahashi_seasonal_1993`, describing the method of the respectively published paper.
+   :type T_in: float or pd.Series
+   :param method: Either "Takahashi2009" or "Takahashi1993", describing the method of the respectively published paper by Takahashi et al.
+   :type method: str
 
 
