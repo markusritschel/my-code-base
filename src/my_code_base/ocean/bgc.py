@@ -14,7 +14,13 @@ from ..core.units import pressure2atm, temperature2K
 log = logging.getLogger(__name__)
 
 
-def temperature_correction(CO2, T_out=None, T_in=None, method='Takahashi2009', **kwargs):
+def temperature_correction(
+    CO2: float | pd.Series,
+    T_out: float | pd.Series = None,
+    T_in: float | pd.Series = None,
+    method: str="Takahashi2009",
+    **kwargs
+):
     """Apply a temperature correction. This might be necessary when the in-situ temperatures (at the water intake,
     often outside the ship) differ from where the CO2 measurement is done (often in a ferry-box onboard the ship).
     The correction used here follows :cite:t:`takahashi_climatological_2009`:
@@ -28,18 +34,18 @@ def temperature_correction(CO2, T_out=None, T_in=None, method='Takahashi2009', *
 
     Parameters
     ----------
-    CO2: float or pd.Series
+    CO2:
         The CO2 variable, which shall be corrected for temperature differences.
         Can be one out of the following:
         - xCO2 (mole fraction in ppm)
         - pCO2 (partial pressure in hPa, Pa, atm or µatm)
-        - fCO2 (fugacity in hPa, Pa, atm or µatm)
-    T_out: float or pd.Series
+        - fCO2 (:func:`.fugacity` in hPa, Pa, atm or µatm)
+    T_out: 
         The temperature towards which the data shall be corrected. Typically, the in-situ temperature (°C or K), at which the water was sampled.
-    T_in: float or pd.Series
+    T_in: 
         The temperature from which the data shall be corrected. Typically, the temperature (°C or K) at the equilibrator, at which the water was measured.
-    method: str
-        Either "Takahashi2009" or "Takahashi1993", describing the method of the respectively published paper by Takahashi et al.
+    method:
+        Either "Takahashi2009" :cite:p:`takahashi_climatological_2009` or "Takahashi1993" :cite:p:`takahashi_seasonal_1993`, describing the method of the respectively published paper.
     """
     if T_out is None: T_out = kwargs.pop('T_insitu')
     if T_in is None: T_in = kwargs.pop('T_equ')
@@ -55,8 +61,8 @@ def temperature_correction(CO2, T_out=None, T_in=None, method='Takahashi2009', *
 
 
 def fugacity(pCO2, p_equ, SST, xCO2=None):
-    """Calculate the fugacity of CO2. Can be done either before or after a :func:`.temperature correction`.
-    The formulas follow :cite:t:`dickson_guide_2007`, mainly SOP 5, Chapter 8. "Calculation and expression of results"
+    """Calculate the fugacity of CO2. Can be done either before or after a :func:`.temperature_correction`.
+    The formulas follow :cite:t:`dickson_guide_2007`, mainly SOP 5, Chapter 8. "Calculation and expression of results".
 
     .. math::
        (fCO_2)^\\text{wet}_\\text{SST} = (pCO_2)^\\text{wet}_\\text{SST} \\cdot

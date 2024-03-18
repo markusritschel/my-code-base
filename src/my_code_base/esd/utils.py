@@ -52,7 +52,18 @@ _RENAME_DICT = {
 
 
 def compute_weighted_mean(ds):
-    """Compute the weighted mean"""
+    """
+    Compute the weighted mean of a given xarray dataset.
+
+    Parameters
+    ----------
+    ds (xarray.Dataset): The input dataset.
+
+    Returns
+    -------
+    xarray.DataArray: The computed weighted mean.
+
+    """
     # Compute weights based on the xarray you pass
     weights = np.cos(np.deg2rad(ds['lat']))
     weights.name = "weights"

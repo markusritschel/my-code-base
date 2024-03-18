@@ -34,7 +34,20 @@ def centered_bins(x):
 
 
 def find_nearest(items: list, pivot: float) -> float:
-    """Find the element inside `items` that is closest to the `pivot` element.
+    """
+    Find the element inside `items` that is closest to the `pivot` element.
+
+    Parameters
+    ----------
+    items : list
+        A list of elements to search from.
+    pivot : float
+        The pivot element to find the closest element to.
+
+    Returns
+    -------
+    float
+        The element from `items` that is closest to the `pivot` element.
 
     Examples
     --------
@@ -72,9 +85,9 @@ def grid_dataframe(points, vals, xi, export_grid=False):
     >>> plt.legend()
     >>> plt.show()
 
-    .. image:: ../_static/grid_dataframe_plot.png
+    .. image:: /_static/grid_dataframe_plot.png
        :width: 450px
-       :alt: eample plot
+       :alt: example plot
        :align: left
     """
     x, y = points
@@ -104,8 +117,8 @@ def grid_dataframe(points, vals, xi, export_grid=False):
     return (xx, yy, target) if export_grid else target
 
 
-def order_of_magnitude(x):
-    """Determine the order of magnitude of the numeric input (`int`, `float`, :meth:`numpy.array` or :meth:`pandas.Series`).
+def order_of_magnitude(x: int | float | np.ndarray | pd.Series) -> np.ndarray:
+    """Determine the order of magnitude of the numeric input.
 
     Examples
     --------

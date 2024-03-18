@@ -13,10 +13,12 @@ log = logging.getLogger(__name__)
 
 
 def fix_overlap(da: xr.DataArray, ax):
-    """Fix overlapping geographic dimensions.
-    
+    """
+    Fix overlapping geographic dimensions.
     This avoids artifacts when plotting contour lines of geographic data on a stereographic map
     projection.
+
+    Calls :func:`z_masked_overlap` to perform the data transformation.
     
     Parameters
     ----------
@@ -35,25 +37,35 @@ def fix_overlap(da: xr.DataArray, ax):
 
 def z_masked_overlap(axe, X, Y, Z, source_projection=None):
     """
-    Following
-    https://github.com/SciTools/cartopy/issues/1225
-    https://github.com/SciTools/cartopy/issues/1421
+    .. warning::
+        Normally, one should avoid calling this function.
+        Instead, use :func:`.fix_overlap` to fix the overlap.
+    
+    This function performs the actual transformation of the data for the :func:`.fix_overlap` function.
+    
+    It follows the solutions provided in the following issues:
+        - https://github.com/SciTools/cartopy/issues/1225
+        - https://github.com/SciTools/cartopy/issues/1421
 
-    for data in projection axe.projection
-    find and mask the overlaps (more 1/2 the axe.projection range)
+    The function finds and masks the overlaps in the data that are more than half the range of the projection of the axes.
 
-    X, Y either the coordinates in axe.projection or longitudes latitudes
-    Z the data
-    operation one of 'pcorlor', 'pcolormesh', 'countour', 'countourf'
+    Parameters
+    ----------
+    axe : object
+        The axes object with the projection.
+    X, Y : array_like
+        The coordinates in the projection of the axes or the longitudes and latitudes.
+    Z : array_like
+        The data to be transformed.
+    source_projection : ccrs.CRS, optional
+        If provided and is a geodetic CRS, the data is in geodetic coordinates and should first be projected in the projection of the axes.
 
-    if source_projection is a geodetic CRS data is in geodetic coordinates
-    and should first be projected in axe.projection
+    X, Y are 2D arrays with the same dimensions as Z for contour and contourf operations. They can also have an extra row and column for pcolor and pcolormesh operations.
 
-    X, Y are 2D same dimension as Z for contour and contourf
-    same dimension as Z or with an extra row and column for pcolor
-    and pcolormesh
-
-    return ptx, pty, Z
+    Returns
+    -------
+    ptx, pty, Z : array_like
+        The transformed coordinates and data.
     """
     if not hasattr(axe, 'projection'):
         return X, Y, Z

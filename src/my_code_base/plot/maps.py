@@ -8,6 +8,7 @@ from abc import ABC, abstractmethod
 import functools
 import cartopy
 import cartopy.mpl.geoaxes
+import cartopy.crs as ccrs
 import logging
 import numpy as np
 import matplotlib.pyplot as plt
@@ -21,7 +22,7 @@ log = logging.getLogger(__name__)
 
 def register_geoaxes_accessor(accessor_name):
     """
-    Register an accessor for a cartopy.GeoAxes object.
+    Register an accessor for a :class:`cartopy.mpl.geoaxes.GeoAxes` object.
 
     Example
     -------
@@ -60,21 +61,57 @@ class GeoAxesAccessor(ABC):
         return type(self.geo_axes._projection_init[1]['projection'])
 
     def add_ocean(self, **kwargs):
+        """
+        Add ocean feature to the :class:`~cartopy.mpl.geoaxes.GeoAxes`.
+
+        Parameters
+        ----------
+        **kwargs : dict
+            Keyword arguments to be passed to the :meth:`~cartopy.mpl.geoaxes.GeoAxes.add_feature` method of :class:`~cartopy.mpl.geoaxes.GeoAxes`.
+        """
         log.debug('Add ocean to axis')
         kwargs.setdefault('zorder', 0)
         self.geo_axes.add_feature(cartopy.feature.OCEAN, **kwargs)
 
     def add_land(self, **kwargs):
+        """
+        Add land feature to the :class:`~cartopy.mpl.geoaxes.GeoAxes`.
+
+        Parameters
+        ----------
+        **kwargs : dict
+            Keyword arguments to be passed to the :meth:`~cartopy.mpl.geoaxes.GeoAxes.add_feature` method of :class:`~cartopy.mpl.geoaxes.GeoAxes`.
+        """
         log.debug('Add land to axis')
         kwargs.setdefault('zorder', 2)
         self.geo_axes.add_feature(cartopy.feature.LAND, **kwargs)
 
     def add_coastlines(self, *args, **kwargs):
+        """
+        Add coastlines to the :class:`~cartopy.mpl.geoaxes.GeoAxes`.
+
+        Parameters
+        ----------
+        *args : list
+            Arguments to be passed to the :meth:`~cartopy.mpl.geoaxes.GeoAxes.coastlines` method of :class:`~cartopy.mpl.geoaxes.GeoAxes`.
+        **kwargs : dict
+            Keyword arguments to be passed to the :meth:`~cartopy.mpl.geoaxes.GeoAxes.coastlines` method of :class:`~cartopy.mpl.geoaxes.GeoAxes`.
+        """
         log.debug('Add coastlines to axis')
         kwargs.setdefault('zorder', 3)
         self.geo_axes.coastlines(*args, **kwargs)
 
     def set_extent(self, extent, crs=cartopy.crs.PlateCarree()):
+        """
+        Set the extent of the :class:`~cartopy.mpl.geoaxes.GeoAxes`.
+
+        Parameters
+        ----------
+        extent : tuple
+            The extent of the :class:`~cartopy.mpl.geoaxes.GeoAxes`. It should be a tuple of the form (xmin, xmax, ymin, ymax).
+        crs : cartopy.crs
+            The coordinate reference system in which the extent is expressed. Default is :class:`~cartopy.crs.PlateCarree`.
+        """
         log.debug('Set axis extent to %s', extent)
         self.geo_axes.set_extent(extent, crs)
 
@@ -91,7 +128,8 @@ class GeoAxesAccessor(ABC):
 @register_geoaxes_accessor("polar")
 class StereographicAxisAccessor(GeoAxesAccessor):
     """An accessor to handle features and finishing of stereographic plots produced with `cartopy`.
-    Can handle both :class:`ccrs.NorthPolarStereo` and :class:`ccrs.SouthPolarStereo` projections."""
+    Can handle both :class:`~cartopy.crs.NorthPolarStereo` and :class:`~cartopy.crs.SouthPolarStereo` projections."""
+
     def __init__(self, ax):
         super().__init__(ax)
         self._pole = {cartopy.crs.SouthPolarStereo: 'south',
@@ -101,9 +139,10 @@ class StereographicAxisAccessor(GeoAxesAccessor):
                                 'north': 80}[self._pole]
         self._lon_grid_spacing = 30
         self._draw_labels = True  # or should this rather be an attribute of self.geo_axes._draw_labels ?
-        
+
     @property
     def lat_limits(self):
+        """Get and set the latitude limits for the plot."""
         return self.geo_axes._lat_limits
 
     @lat_limits.setter
@@ -116,15 +155,21 @@ class StereographicAxisAccessor(GeoAxesAccessor):
                             'north': [50, 90]}[self._pole]
         return getattr(self.geo_axes, '_lat_limits', default_lat_lims)
 
-
     def add_features(self, gridlines=True, ruler=True, **kwargs):
-        """Perform the following steps:
-        - add ocean
-        - add land
-        - add coastlines
-        - add ruler
-        - make the boundary circular
-        - add gridlines
+        """Apply various features to the plot:
+            - add ocean
+            - add land
+            - add coastlines
+            - add ruler
+            - make the boundary circular
+            - add gridlines
+
+        Args:
+            gridlines (bool, optional): Whether to add gridlines. Defaults to True.
+            ruler (bool, optional): Whether to add a ruler. Defaults to True.
+            **kwargs: Additional keyword arguments for customization.
+
+        :glue:`/examples/stereographic_maps.ipynb::polar_plot_features`
         """
         coastlines_kwargs = kwargs.pop('coastlines_kwargs', {})
         ruler_kwargs = kwargs.pop('ruler_kwargs', {})
@@ -145,8 +190,15 @@ class StereographicAxisAccessor(GeoAxesAccessor):
             rotate_polar_plot_lat_labels(gl, target_lon=118)
             rotate_polar_plot_lon_labels(gl, pole=self._pole)
 
-
     def add_gridlines(self, **kwargs):
+        """Add gridlines to the plot.
+
+        Args:
+            **kwargs: Additional keyword arguments for customization.
+
+        Returns:
+            :class:`cartopy.mpl.gridliner.Gridliner`: The gridliner object.
+        """
         kwargs.setdefault('zorder', 1)
         kwargs.setdefault('linestyle', '-')
         kwargs.setdefault('linewidth', 0.5)
@@ -156,7 +208,7 @@ class StereographicAxisAccessor(GeoAxesAccessor):
         lat0, lat1 = self.lat_limits
         lat_grid_spacing = 10
         ygrid_locs = np.arange(lat0, lat1 + 1, lat_grid_spacing)
-        fac1, fac2 = {'north': [1, 2], 
+        fac1, fac2 = {'north': [1, 2],
                       'south': [2, 1]}[self._pole]
 
         def create_gridlines(x_spacing_factor, ylim):
@@ -175,24 +227,32 @@ class StereographicAxisAccessor(GeoAxesAccessor):
 
         return self._gl
 
-
-
     def add_ruler(self, **kwargs):
-        log.debug("Add circular ruler")
+        """Add a circular ruler to the plot.
+        
+        See :func:`add_circular_ruler` for customization arguments.
+        The `ax` argument is not needed to be handed over when using the accessor's method.
+
+        Args:
+            **kwargs: Additional keyword arguments for customization.
+        """
         kwargs.setdefault('segment_length', self._lon_grid_spacing)
         add_circular_ruler(self.geo_axes, **kwargs)
 
-
     def make_circular(self):
-        log.debug("Make circular boundary")
+        """Make the plot boundary circular."""
         set_circular_boundary(self.geo_axes)
 
-
     def rotate_lat_labels(self, **kwargs):
+        """Rotate the latitude labels on the plot.
+
+        Args:
+            **kwargs: Additional keyword arguments for customization.
+        """
         rotate_polar_plot_lat_labels(gl=self._gl, **kwargs)
 
-
     def rotate_lon_labels(self):
+        """Rotate the longitude labels on the plot."""
         rotate_polar_plot_lon_labels(gl=self._gl, pole=self._pole)
 
 

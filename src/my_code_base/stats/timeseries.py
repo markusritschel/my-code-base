@@ -17,7 +17,7 @@ def weighted_annual_mean(ds: xr.Dataset | xr.DataArray):
     """Compute the annual mean of an :class:`xr.Dataset`, thereby considering the different lengths of the months.
     That is, the function weights each month of the year by the number of days it comprises.
 
-    Following https://ncar.github.io/esds/posts/2021/yearly-averages-xarray/
+    Source: https://ncar.github.io/esds/posts/2021/yearly-averages-xarray/
     """
     # Determine the month length
     month_length = ds.time.dt.days_in_month

@@ -9,8 +9,8 @@
 - temperature and salinity normalization
 - temperature decomposition
 - fgCO2 <-> pCO2 and other conversions
-# TODO: check content of `oceanpack` package and move/copy to `ocean_bgc` if necessary
 """
+# TODO: check content of `oceanpack` package and move/copy to `ocean_bgc` if necessary
 import logging
 
 

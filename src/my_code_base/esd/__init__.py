@@ -4,6 +4,7 @@
 # Date:   2024-03-03
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
+"""A module for helping process Earth System Data"""
 import logging
 
 
