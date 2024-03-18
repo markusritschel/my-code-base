@@ -7,6 +7,7 @@
 import logging
 
 import numpy as np
+import pandas as pd
 
 from ..core.units import pressure2atm, temperature2K
 

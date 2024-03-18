@@ -1,0 +1,26 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: home
+parts:
+ - caption: Content
+   chapters:
+    - file: installation
+    - file: usage
+    - file: examples
+      sections:
+        - file: examples/stereographic_maps.ipynb
+        - file: examples/z_overlap
+    - file: faq
+ - caption: Project Info
+   chapters:
+     - file: _autoapi/index
+     - file: bibliography
+     - file: readme
+       title: README
+       sections:
+         - file: license
+           title: License
+         - file: authors
+         - file: changelog

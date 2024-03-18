@@ -1,7 +1,7 @@
 # My Code Base
 
 ![build](https://github.com/markusritschel/my-code-base/workflows/build/badge.svg)
-[![License MIT license](https://img.shields.io/github/license/markusritschel/my-code-base)](./LICENSE)
+[![License MIT license](https://img.shields.io/github/license/markusritschel/my-code-base)](LICENSE)
 
 
 This is a collection of routines that I've developed over time and that I use in my daily work.
@@ -20,7 +20,7 @@ or via
 ```
 python setup.py develop
 ```
-if you plan on making changes on the code.
+if you plan on making changes to the code.
 
 
 ## Testing

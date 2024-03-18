@@ -2,6 +2,6 @@
 
 ## Development Lead
 
-* Markus Ritschel <git@markusritschel.de>
+- Markus Ritschel (git@markusritschel.de)
 
 ## Contributors
