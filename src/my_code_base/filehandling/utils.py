@@ -7,6 +7,7 @@
 import filecmp
 from functools import wraps
 import logging
+import pytest
 
 
 log = logging.getLogger(__name__)
@@ -33,6 +34,7 @@ def check_input_for_duplicates(func):
 
     Example
     -------
+    >>> pytest.skip()
     >>> @check_input_for_duplicates
     >>> def process_files(file_list):
     >>>     # Process the files
