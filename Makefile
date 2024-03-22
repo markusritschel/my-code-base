@@ -7,7 +7,7 @@
 # Document any rules by adding a single line starting with ## right before the rule (see examples below)
 # ======================================================================================================
 
-.PHONY: docs
+.PHONY: docs tests
 
 ## Clean-up python artifacts, logs and jupyter-book built
 cleanup: clean-pyc clean-logs clean-docs
