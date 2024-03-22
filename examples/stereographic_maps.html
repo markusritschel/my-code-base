@@ -37,7 +37,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinxcontrib-images/LightBox2/lightbox2/dist/css/lightbox.css?v=5c84f910" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=252b8852" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=d1816bf1" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
@@ -497,7 +497,7 @@ document.write(`
 <!-- 
 <div class='alert alert-success'>
 This notebook showcases an accessor class for stereographic map plots produced with `cartopy` and `matplotlib`.
-</div> --><p>An accessor can be registered with the <a class="reference internal" href="../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.register_geoaxes_accessor" title="my_code_base.plot.maps.register_geoaxes_accessor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">register_geoaxes_accessor</span></code></a> decorator in <a class="reference internal" href="../_autoapi/my_code_base/plot/maps/index.html#module-my_code_base.plot.maps" title="my_code_base.plot.maps"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.plot.maps</span></code></a>. The accessor can be given an arbitrary name and should inherit from the <a class="reference internal" href="../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.GeoAxesAccessor" title="my_code_base.plot.maps.GeoAxesAccessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">my_code_base.plot.maps.GeoAxesAccessor</span></code></a> ABC meta class, which provides some basic geographic-map related methods.</p>
+</div> --><p>An accessor can be registered with the <a class="reference internal" href="../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.register_geoaxes_accessor" title="my_code_base.plot.maps.register_geoaxes_accessor"><code class="xref py py-deco docutils literal notranslate"><span class="pre">&#64;register_geoaxes_accessor</span></code></a> decorator in <a class="reference internal" href="../_autoapi/my_code_base/plot/maps/index.html#module-my_code_base.plot.maps" title="my_code_base.plot.maps"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.plot.maps</span></code></a>. The accessor can be given an arbitrary name and should inherit from the <a class="reference internal" href="../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.GeoAxesAccessor" title="my_code_base.plot.maps.GeoAxesAccessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">my_code_base.plot.maps.GeoAxesAccessor</span></code></a> ABC meta class, which provides some basic geographic-map related methods.</p>
 <p>For example, the “polar” accessor is registered as follows:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@register_geoaxes_accessor</span><span class="p">(</span><span class="s2">&quot;polar&quot;</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">StereographicAxisAccessor</span><span class="p">(</span><span class="n">GeoAxesAccessor</span><span class="p">):</span>
@@ -507,13 +507,12 @@ This notebook showcases an accessor class for stereographic map plots produced w
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
 
         <span class="o">...</span>
-
 </pre></div>
 </div>
 <p>This notebook shall demonstrate the usage of such an accessor.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>This accessor works both for <code class="docutils literal notranslate"><span class="pre">projection=cartopy.crs.NorthPolarStereo</span></code> and <code class="docutils literal notranslate"><span class="pre">projection=cartopy.crs.SouthPolarStereo</span></code>.</p>
+<p>This accessor works both for <a class="reference external" href="../cartopy/reference/projections.html#cartopy.crs.NorthPolarStereo" title="(in cartopy v0.22.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">NorthPolarStereo</span></code></a> and <a class="reference external" href="../cartopy/reference/projections.html#cartopy.crs.SouthPolarStereo" title="(in cartopy v0.22.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">SouthPolarStereo</span></code></a> projections.</p>
 </div>
 <p>First, let’s load some packages. The <a class="reference internal" href="../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.StereographicAxisAccessor" title="my_code_base.plot.maps.StereographicAxisAccessor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">polar</span></code></a> accessor is part of <a class="reference internal" href="../_autoapi/my_code_base/plot/maps/index.html#module-my_code_base.plot.maps" title="my_code_base.plot.maps"><code class="xref py py-mod docutils literal notranslate"><span class="pre">my_code_base.plot.maps</span></code></a>.</p>
 <div class="cell docutils container">

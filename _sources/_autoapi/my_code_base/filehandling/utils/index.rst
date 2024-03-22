@@ -25,6 +25,7 @@ Module Contents
 
    .. rubric:: Example
 
+   >>> pytest.skip()
    >>> @check_input_for_duplicates
    >>> def process_files(file_list):
    >>>     # Process the files
