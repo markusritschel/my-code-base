@@ -9,7 +9,13 @@ Module Contents
 
 .. py:function:: compute_weighted_mean(ds)
 
-   Compute the weighted mean
+   Compute the weighted mean of a given xarray dataset.
+
+   :param ds (xarray.Dataset):
+   :type ds (xarray.Dataset): The input dataset.
+
+   :returns: **xarray.DataArray**
+   :rtype: The computed weighted mean.
 
 
 .. py:function:: rename_obs(ds, rename_dict=None)

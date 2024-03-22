@@ -23,8 +23,8 @@ Module Contents
 
 .. py:function:: z_masked_overlap(axe, X, Y, Z, source_projection=None)
 
-   .. note::
-       Normally, it should be avoided calling this function.
+   .. warning::
+       Normally, one should avoid calling this function.
        Instead, use :func:`.fix_overlap` to fix the overlap.
 
    This function performs the actual transformation of the data for the :func:`.fix_overlap` function.

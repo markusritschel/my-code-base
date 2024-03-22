@@ -3,6 +3,11 @@
 
 .. py:module:: my_code_base.esd
 
+.. autoapi-nested-parse::
+
+   A module for helping process Earth System Data
+
+
 
 Submodules
 ----------

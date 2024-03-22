@@ -396,17 +396,40 @@ document.write(`
 <a class="viewcode-back" href="../../../_autoapi/my_code_base/core/xarray/index.html#my_code_base.core.xarray.HistoryAccessor">[docs]</a>
 <span class="k">class</span> <span class="nc">HistoryAccessor</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xr_obj</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A class for accessing and manipulating the &#39;history&#39; attribute of an xarray object.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        xr_obj: xarray.Dataset or xarray.DataArray</span>
+<span class="sd">            The xarray object to be accessed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span> <span class="o">=</span> <span class="n">xr_obj</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_history</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_ensure_history</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Ensure that the &#39;history&#39; attribute exists in the xarray object.</span>
+<span class="sd">        If it doesn&#39;t exist, create an empty &#39;history&#39; attribute.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="s1">&#39;history&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;history&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
 <div class="viewcode-block" id="HistoryAccessor.add">
 <a class="viewcode-back" href="../../../_autoapi/my_code_base/core/xarray/index.html#my_code_base.core.xarray.HistoryAccessor.add">[docs]</a>
     <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add an entry to the history.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add an entry to the history.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        msg: str</span>
+<span class="sd">            The message to be added to the history.</span>
+
+<span class="sd">        Example</span>
+<span class="sd">        -------</span>
+<span class="sd">        &gt;&gt;&gt; da.history.add(&quot;New entry to history&quot;)        # doctest: +SKIP</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;history&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">msg</span>
         <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Wrote &#39;</span><span class="si">%s</span><span class="s2">&#39; to history&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
         <span class="k">return</span></div>
@@ -417,7 +440,7 @@ document.write(`
 <div class="viewcode-block" id="compress_xarray">
 <a class="viewcode-back" href="../../../_autoapi/my_code_base/core/xarray/index.html#my_code_base.core.xarray.compress_xarray">[docs]</a>
 <span class="k">def</span> <span class="nf">compress_xarray</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span> <span class="o">|</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">,</span> <span class="n">complevel</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span> <span class="o">|</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compress :class:`xr.Dataset` or :class:`xr.DataArray`.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compress :class:`xarray.Dataset` or :class:`xarray.DataArray`.</span>
 <span class="sd">    </span>
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>

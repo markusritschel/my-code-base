@@ -24,6 +24,14 @@ Module Contents
 
    Find the element inside `items` that is closest to the `pivot` element.
 
+   :param items: A list of elements to search from.
+   :type items: list
+   :param pivot: The pivot element to find the closest element to.
+   :type pivot: float
+
+   :returns: The element from `items` that is closest to the `pivot` element.
+   :rtype: float
+
    .. rubric:: Examples
 
    >>> find_nearest(np.array([2,4,5,7,9,10]), 4.6)
@@ -57,16 +65,15 @@ Module Contents
    >>> plt.legend()
    >>> plt.show()
 
-   .. image:: ../_static/grid_dataframe_plot.png
+   .. image:: /_static/grid_dataframe_plot.png
       :width: 450px
-      :alt: eample plot
+      :alt: example plot
       :align: left
 
 
 .. py:function:: order_of_magnitude(x)
 
    Determine the order of magnitude of the numeric input.
-
 
    .. rubric:: Examples
 

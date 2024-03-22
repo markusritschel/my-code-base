@@ -9,7 +9,7 @@ Module Contents
 
 .. py:function:: adjust_lons(ds, lon_name='lon')
 
-   Adjust longitude values to make sure they are in the range between -180 and 180
+   Adjust longitude values to make sure they are in the range between -180° and 180°.
 
 
 

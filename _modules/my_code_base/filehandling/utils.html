@@ -394,15 +394,34 @@ document.write(`
 <div class="viewcode-block" id="check_input_for_duplicates">
 <a class="viewcode-back" href="../../../_autoapi/my_code_base/filehandling/utils/index.html#my_code_base.filehandling.utils.check_input_for_duplicates">[docs]</a>
 <span class="k">def</span> <span class="nf">check_input_for_duplicates</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;A decorator that checks a list of file paths (the first and only argument of the wrapped function) for duplicates.</span>
-<span class="sd">    For example, when you call a function with a list of many files as input, the decorator checks the input for</span>
-<span class="sd">    duplicates before the read-in routine actually processes the files.</span>
-<span class="sd">    The decorator makes use of the :func:`os.stat` signatures (file type, size, and modification time) to compare files</span>
-<span class="sd">    pair-wise.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A decorator that checks a list of file paths for duplicates before processing them.</span>
 
-<span class="sd">    Detected duplicates are dropped from the list such that the function can deal with the cleaned-up list.</span>
+<span class="sd">    This decorator takes a function as input and returns a wrapped function that performs the following steps:</span>
+<span class="sd">        1. Checks if the input is a list and contains more than one element.</span>
+<span class="sd">        2. Compares each pair of file paths in the list using the `os.stat` signatures (file type, size, and modification time).</span>
+<span class="sd">        3. Removes any duplicates from the list.</span>
+<span class="sd">        4. Calls the original function with the cleaned-up list of file paths.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    func (function): The function to be decorated.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    function: The wrapped function.</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    &gt;&gt;&gt; @check_input_for_duplicates</span>
+<span class="sd">    &gt;&gt;&gt; def process_files(file_list):</span>
+<span class="sd">    &gt;&gt;&gt;     # Process the files</span>
+<span class="sd">    &gt;&gt;&gt;     pass</span>
+
+<span class="sd">    .. note::</span>
+<span class="sd">        The wrapped function can still be parsed by Sphinx due to the :obj:`functools.wraps` decorator.</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># The functools.wraps decorator ensures that `func` can still be parsed by Sphinx. Usually, decorated functions can not be parsed by Sphinx.</span>
     <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">file_list</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">file_list</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">file_list</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>

@@ -449,10 +449,25 @@ document.write(`
 <dl class="py class">
 <dt class="sig sig-object py" id="my_code_base.core.xarray.HistoryAccessor">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">my_code_base.core.xarray.</span></span><span class="sig-name descname"><span class="pre">HistoryAccessor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xr_obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/my_code_base/core/xarray.html#HistoryAccessor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#my_code_base.core.xarray.HistoryAccessor" title="Link to this definition">#</a></dt>
-<dd><dl class="py method">
+<dd><p>A class for accessing and manipulating the ‘history’ attribute of an xarray object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>xr_obj</strong> (<a class="reference external" href="../../../../xarray/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2024.2.1.dev0)"><em>xarray.Dataset</em></a><em> or </em><a class="reference external" href="../../../../xarray/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2024.2.1.dev0)"><em>xarray.DataArray</em></a>) – The xarray object to be accessed.</p>
+</dd>
+</dl>
+<dl class="py method">
 <dt class="sig sig-object py" id="my_code_base.core.xarray.HistoryAccessor.add">
 <span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/my_code_base/core/xarray.html#HistoryAccessor.add"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#my_code_base.core.xarray.HistoryAccessor.add" title="Link to this definition">#</a></dt>
 <dd><p>Add an entry to the history.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>msg</strong> (<a class="reference external" href="../../../../python/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The message to be added to the history.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">da</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;New entry to history&quot;</span><span class="p">)</span>        
+</pre></div>
+</div>
 </dd></dl>
 
 </dd></dl>
@@ -460,7 +475,7 @@ document.write(`
 <dl class="py function">
 <dt class="sig sig-object py" id="my_code_base.core.xarray.compress_xarray">
 <span class="sig-prename descclassname"><span class="pre">my_code_base.core.xarray.</span></span><span class="sig-name descname"><span class="pre">compress_xarray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">complevel</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/my_code_base/core/xarray.html#compress_xarray"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#my_code_base.core.xarray.compress_xarray" title="Link to this definition">#</a></dt>
-<dd><p>Compress <code class="xref py py-class docutils literal notranslate"><span class="pre">xr.Dataset</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">xr.DataArray</span></code>.</p>
+<dd><p>Compress <a class="reference external" href="../../../../xarray/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2024.2.1.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a> or <a class="reference external" href="../../../../xarray/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2024.2.1.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.DataArray</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">

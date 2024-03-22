@@ -17,11 +17,11 @@ Module Contents
 
    .. py:method:: add_coastlines(*args, **kwargs)
 
-      Add coastlines to the GeoAxes.
+      Add coastlines to the :class:`~cartopy.mpl.geoaxes.GeoAxes`.
 
-      :param \*args: Arguments to be passed to the coastlines method of GeoAxes.
+      :param \*args: Arguments to be passed to the :meth:`~cartopy.mpl.geoaxes.GeoAxes.coastlines` method of :class:`~cartopy.mpl.geoaxes.GeoAxes`.
       :type \*args: list
-      :param \*\*kwargs: Keyword arguments to be passed to the coastlines method of GeoAxes.
+      :param \*\*kwargs: Keyword arguments to be passed to the :meth:`~cartopy.mpl.geoaxes.GeoAxes.coastlines` method of :class:`~cartopy.mpl.geoaxes.GeoAxes`.
       :type \*\*kwargs: dict
 
 
@@ -35,27 +35,27 @@ Module Contents
 
    .. py:method:: add_land(**kwargs)
 
-      Add land feature to the GeoAxes.
+      Add land feature to the :class:`~cartopy.mpl.geoaxes.GeoAxes`.
 
-      :param \*\*kwargs: Keyword arguments to be passed to the add_feature method of GeoAxes.
+      :param \*\*kwargs: Keyword arguments to be passed to the :meth:`~cartopy.mpl.geoaxes.GeoAxes.add_feature` method of :class:`~cartopy.mpl.geoaxes.GeoAxes`.
       :type \*\*kwargs: dict
 
 
    .. py:method:: add_ocean(**kwargs)
 
-      Add ocean feature to the GeoAxes.
+      Add ocean feature to the :class:`~cartopy.mpl.geoaxes.GeoAxes`.
 
-      :param \*\*kwargs: Keyword arguments to be passed to the add_feature method of GeoAxes.
+      :param \*\*kwargs: Keyword arguments to be passed to the :meth:`~cartopy.mpl.geoaxes.GeoAxes.add_feature` method of :class:`~cartopy.mpl.geoaxes.GeoAxes`.
       :type \*\*kwargs: dict
 
 
    .. py:method:: set_extent(extent, crs=cartopy.crs.PlateCarree())
 
-      Set the extent of the GeoAxes.
+      Set the extent of the :class:`~cartopy.mpl.geoaxes.GeoAxes`.
 
-      :param extent: The extent of the GeoAxes. It should be a tuple of the form (xmin, xmax, ymin, ymax).
+      :param extent: The extent of the :class:`~cartopy.mpl.geoaxes.GeoAxes`. It should be a tuple of the form (xmin, xmax, ymin, ymax).
       :type extent: tuple
-      :param crs: The coordinate reference system in which the extent is expressed. Default is PlateCarree.
+      :param crs: The coordinate reference system in which the extent is expressed. Default is :class:`~cartopy.crs.PlateCarree`.
       :type crs: cartopy.crs
 
 
@@ -70,15 +70,15 @@ Module Contents
 
    .. py:property:: lat_limits
 
-      Get the latitude limits for the plot.
+      Get and set the latitude limits for the plot.
 
    .. py:method:: add_coastlines(*args, **kwargs)
 
-      Add coastlines to the GeoAxes.
+      Add coastlines to the :class:`~cartopy.mpl.geoaxes.GeoAxes`.
 
-      :param \*args: Arguments to be passed to the coastlines method of GeoAxes.
+      :param \*args: Arguments to be passed to the :meth:`~cartopy.mpl.geoaxes.GeoAxes.coastlines` method of :class:`~cartopy.mpl.geoaxes.GeoAxes`.
       :type \*args: list
-      :param \*\*kwargs: Keyword arguments to be passed to the coastlines method of GeoAxes.
+      :param \*\*kwargs: Keyword arguments to be passed to the :meth:`~cartopy.mpl.geoaxes.GeoAxes.coastlines` method of :class:`~cartopy.mpl.geoaxes.GeoAxes`.
       :type \*\*kwargs: dict
 
 
@@ -98,6 +98,8 @@ Module Contents
       :type ruler: bool, optional
       :param \*\*kwargs: Additional keyword arguments for customization.
 
+      :glue:`/examples/stereographic_maps.ipynb::polar_plot_features`
+
 
    .. py:method:: add_gridlines(**kwargs)
 
@@ -111,17 +113,17 @@ Module Contents
 
    .. py:method:: add_land(**kwargs)
 
-      Add land feature to the GeoAxes.
+      Add land feature to the :class:`~cartopy.mpl.geoaxes.GeoAxes`.
 
-      :param \*\*kwargs: Keyword arguments to be passed to the add_feature method of GeoAxes.
+      :param \*\*kwargs: Keyword arguments to be passed to the :meth:`~cartopy.mpl.geoaxes.GeoAxes.add_feature` method of :class:`~cartopy.mpl.geoaxes.GeoAxes`.
       :type \*\*kwargs: dict
 
 
    .. py:method:: add_ocean(**kwargs)
 
-      Add ocean feature to the GeoAxes.
+      Add ocean feature to the :class:`~cartopy.mpl.geoaxes.GeoAxes`.
 
-      :param \*\*kwargs: Keyword arguments to be passed to the add_feature method of GeoAxes.
+      :param \*\*kwargs: Keyword arguments to be passed to the :meth:`~cartopy.mpl.geoaxes.GeoAxes.add_feature` method of :class:`~cartopy.mpl.geoaxes.GeoAxes`.
       :type \*\*kwargs: dict
 
 
@@ -129,12 +131,13 @@ Module Contents
 
       Add a circular ruler to the plot.
 
+      See :func:`add_circular_ruler` for customization arguments.
+      The `ax` argument is not needed to be handed over when using the accessor's method.
+
       :param \*\*kwargs: Additional keyword arguments for customization.
 
 
    .. py:method:: lat_limits()
-
-      Get the latitude limits for the plot, with default values if not set.
 
 
    .. py:method:: make_circular()
@@ -156,11 +159,11 @@ Module Contents
 
    .. py:method:: set_extent(extent, crs=cartopy.crs.PlateCarree())
 
-      Set the extent of the GeoAxes.
+      Set the extent of the :class:`~cartopy.mpl.geoaxes.GeoAxes`.
 
-      :param extent: The extent of the GeoAxes. It should be a tuple of the form (xmin, xmax, ymin, ymax).
+      :param extent: The extent of the :class:`~cartopy.mpl.geoaxes.GeoAxes`. It should be a tuple of the form (xmin, xmax, ymin, ymax).
       :type extent: tuple
-      :param crs: The coordinate reference system in which the extent is expressed. Default is PlateCarree.
+      :param crs: The coordinate reference system in which the extent is expressed. Default is :class:`~cartopy.crs.PlateCarree`.
       :type crs: cartopy.crs
 
 
@@ -185,7 +188,7 @@ Module Contents
 
 .. py:function:: register_geoaxes_accessor(accessor_name)
 
-   Register an accessor for a cartopy.GeoAxes object.
+   Register an accessor for a :class:`cartopy.mpl.geoaxes.GeoAxes` object.
 
    .. rubric:: Example
 

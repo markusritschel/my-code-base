@@ -394,7 +394,13 @@ document.write(`
 
 <div class="viewcode-block" id="temperature_correction">
 <a class="viewcode-back" href="../../../_autoapi/my_code_base/ocean/bgc/index.html#my_code_base.ocean.bgc.temperature_correction">[docs]</a>
-<span class="k">def</span> <span class="nf">temperature_correction</span><span class="p">(</span><span class="n">CO2</span><span class="p">,</span> <span class="n">T_out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">T_in</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;Takahashi2009&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">temperature_correction</span><span class="p">(</span>
+    <span class="n">CO2</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span>
+    <span class="n">T_out</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">T_in</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">method</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s2">&quot;Takahashi2009&quot;</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply a temperature correction. This might be necessary when the in-situ temperatures (at the water intake,</span>
 <span class="sd">    often outside the ship) differ from where the CO2 measurement is done (often in a ferry-box onboard the ship).</span>
 <span class="sd">    The correction used here follows :cite:t:`takahashi_climatological_2009`:</span>
@@ -408,18 +414,18 @@ document.write(`
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    CO2: float or pd.Series</span>
+<span class="sd">    CO2:</span>
 <span class="sd">        The CO2 variable, which shall be corrected for temperature differences.</span>
 <span class="sd">        Can be one out of the following:</span>
 <span class="sd">        - xCO2 (mole fraction in ppm)</span>
 <span class="sd">        - pCO2 (partial pressure in hPa, Pa, atm or µatm)</span>
-<span class="sd">        - fCO2 (fugacity in hPa, Pa, atm or µatm)</span>
-<span class="sd">    T_out: float or pd.Series</span>
+<span class="sd">        - fCO2 (:func:`.fugacity` in hPa, Pa, atm or µatm)</span>
+<span class="sd">    T_out: </span>
 <span class="sd">        The temperature towards which the data shall be corrected. Typically, the in-situ temperature (°C or K), at which the water was sampled.</span>
-<span class="sd">    T_in: float or pd.Series</span>
+<span class="sd">    T_in: </span>
 <span class="sd">        The temperature from which the data shall be corrected. Typically, the temperature (°C or K) at the equilibrator, at which the water was measured.</span>
-<span class="sd">    method: str</span>
-<span class="sd">        Either &quot;Takahashi2009&quot; or &quot;Takahashi1993&quot;, describing the method of the respectively published paper by Takahashi et al.</span>
+<span class="sd">    method:</span>
+<span class="sd">        Either &quot;Takahashi2009&quot; :cite:p:`takahashi_climatological_2009` or &quot;Takahashi1993&quot; :cite:p:`takahashi_seasonal_1993`, describing the method of the respectively published paper.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">T_out</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">T_out</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;T_insitu&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">T_in</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">T_in</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;T_equ&#39;</span><span class="p">)</span>
@@ -438,8 +444,8 @@ document.write(`
 <div class="viewcode-block" id="fugacity">
 <a class="viewcode-back" href="../../../_autoapi/my_code_base/ocean/bgc/index.html#my_code_base.ocean.bgc.fugacity">[docs]</a>
 <span class="k">def</span> <span class="nf">fugacity</span><span class="p">(</span><span class="n">pCO2</span><span class="p">,</span> <span class="n">p_equ</span><span class="p">,</span> <span class="n">SST</span><span class="p">,</span> <span class="n">xCO2</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the fugacity of CO2. Can be done either before or after a :func:`.temperature correction`.</span>
-<span class="sd">    The formulas follow :cite:t:`dickson_guide_2007`, mainly SOP 5, Chapter 8. &quot;Calculation and expression of results&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the fugacity of CO2. Can be done either before or after a :func:`.temperature_correction`.</span>
+<span class="sd">    The formulas follow :cite:t:`dickson_guide_2007`, mainly SOP 5, Chapter 8. &quot;Calculation and expression of results&quot;.</span>
 
 <span class="sd">    .. math::</span>
 <span class="sd">       (fCO_2)^\\text{wet}_\\text{SST} = (pCO_2)^\\text{wet}_\\text{SST} \\cdot</span>

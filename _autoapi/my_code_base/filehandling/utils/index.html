@@ -444,12 +444,38 @@ document.write(`
 <dl class="py function">
 <dt class="sig sig-object py" id="my_code_base.filehandling.utils.check_input_for_duplicates">
 <span class="sig-prename descclassname"><span class="pre">my_code_base.filehandling.utils.</span></span><span class="sig-name descname"><span class="pre">check_input_for_duplicates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/my_code_base/filehandling/utils.html#check_input_for_duplicates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#my_code_base.filehandling.utils.check_input_for_duplicates" title="Link to this definition">#</a></dt>
-<dd><p>A decorator that checks a list of file paths (the first and only argument of the wrapped function) for duplicates.
-For example, when you call a function with a list of many files as input, the decorator checks the input for
-duplicates before the read-in routine actually processes the files.
-The decorator makes use of the <a class="reference external" href="../../../../python/library/os.html#os.stat" title="(in Python v3.12)"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.stat()</span></code></a> signatures (file type, size, and modification time) to compare files
-pair-wise.</p>
-<p>Detected duplicates are dropped from the list such that the function can deal with the cleaned-up list.</p>
+<dd><p>A decorator that checks a list of file paths for duplicates before processing them.</p>
+<dl class="simple">
+<dt>This decorator takes a function as input and returns a wrapped function that performs the following steps:</dt><dd><ol class="arabic simple">
+<li><p>Checks if the input is a list and contains more than one element.</p></li>
+<li><p>Compares each pair of file paths in the list using the <cite>os.stat</cite> signatures (file type, size, and modification time).</p></li>
+<li><p>Removes any duplicates from the list.</p></li>
+<li><p>Calls the original function with the cleaned-up list of file paths.</p></li>
+</ol>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>(</strong><strong>function</strong><strong>)</strong> (<em>func</em>) – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>function</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The wrapped function.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@check_input_for_duplicates</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">process_files</span><span class="p">(</span><span class="n">file_list</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="c1"># Process the files</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">pass</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The wrapped function can still be parsed by Sphinx due to the <a class="reference external" href="../../../../python/library/functools.html#functools.wraps" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">functools.wraps</span></code></a> decorator.</p>
+</div>
 </dd></dl>
 
 </section>

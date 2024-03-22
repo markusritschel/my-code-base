@@ -402,7 +402,7 @@ document.write(`
 <a class="viewcode-back" href="../../../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.register_geoaxes_accessor">[docs]</a>
 <span class="k">def</span> <span class="nf">register_geoaxes_accessor</span><span class="p">(</span><span class="n">accessor_name</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Register an accessor for a cartopy.GeoAxes object.</span>
+<span class="sd">    Register an accessor for a :class:`cartopy.mpl.geoaxes.GeoAxes` object.</span>
 
 <span class="sd">    Example</span>
 <span class="sd">    -------</span>
@@ -449,12 +449,12 @@ document.write(`
 <a class="viewcode-back" href="../../../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.GeoAxesAccessor.add_ocean">[docs]</a>
     <span class="k">def</span> <span class="nf">add_ocean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Add ocean feature to the GeoAxes.</span>
+<span class="sd">        Add ocean feature to the :class:`~cartopy.mpl.geoaxes.GeoAxes`.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        **kwargs : dict</span>
-<span class="sd">            Keyword arguments to be passed to the add_feature method of GeoAxes.</span>
+<span class="sd">            Keyword arguments to be passed to the :meth:`~cartopy.mpl.geoaxes.GeoAxes.add_feature` method of :class:`~cartopy.mpl.geoaxes.GeoAxes`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Add ocean to axis&#39;</span><span class="p">)</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;zorder&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
@@ -468,12 +468,12 @@ document.write(`
 <a class="viewcode-back" href="../../../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.GeoAxesAccessor.add_land">[docs]</a>
     <span class="k">def</span> <span class="nf">add_land</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Add land feature to the GeoAxes.</span>
+<span class="sd">        Add land feature to the :class:`~cartopy.mpl.geoaxes.GeoAxes`.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        **kwargs : dict</span>
-<span class="sd">            Keyword arguments to be passed to the add_feature method of GeoAxes.</span>
+<span class="sd">            Keyword arguments to be passed to the :meth:`~cartopy.mpl.geoaxes.GeoAxes.add_feature` method of :class:`~cartopy.mpl.geoaxes.GeoAxes`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Add land to axis&#39;</span><span class="p">)</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;zorder&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
@@ -487,14 +487,14 @@ document.write(`
 <a class="viewcode-back" href="../../../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.GeoAxesAccessor.add_coastlines">[docs]</a>
     <span class="k">def</span> <span class="nf">add_coastlines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Add coastlines to the GeoAxes.</span>
+<span class="sd">        Add coastlines to the :class:`~cartopy.mpl.geoaxes.GeoAxes`.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        *args : list</span>
-<span class="sd">            Arguments to be passed to the coastlines method of GeoAxes.</span>
+<span class="sd">            Arguments to be passed to the :meth:`~cartopy.mpl.geoaxes.GeoAxes.coastlines` method of :class:`~cartopy.mpl.geoaxes.GeoAxes`.</span>
 <span class="sd">        **kwargs : dict</span>
-<span class="sd">            Keyword arguments to be passed to the coastlines method of GeoAxes.</span>
+<span class="sd">            Keyword arguments to be passed to the :meth:`~cartopy.mpl.geoaxes.GeoAxes.coastlines` method of :class:`~cartopy.mpl.geoaxes.GeoAxes`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Add coastlines to axis&#39;</span><span class="p">)</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;zorder&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
@@ -508,14 +508,14 @@ document.write(`
 <a class="viewcode-back" href="../../../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.GeoAxesAccessor.set_extent">[docs]</a>
     <span class="k">def</span> <span class="nf">set_extent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">extent</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="n">cartopy</span><span class="o">.</span><span class="n">crs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">()):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Set the extent of the GeoAxes.</span>
+<span class="sd">        Set the extent of the :class:`~cartopy.mpl.geoaxes.GeoAxes`.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        extent : tuple</span>
-<span class="sd">            The extent of the GeoAxes. It should be a tuple of the form (xmin, xmax, ymin, ymax).</span>
+<span class="sd">            The extent of the :class:`~cartopy.mpl.geoaxes.GeoAxes`. It should be a tuple of the form (xmin, xmax, ymin, ymax).</span>
 <span class="sd">        crs : cartopy.crs</span>
-<span class="sd">            The coordinate reference system in which the extent is expressed. Default is PlateCarree.</span>
+<span class="sd">            The coordinate reference system in which the extent is expressed. Default is :class:`~cartopy.crs.PlateCarree`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Set axis extent to </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">extent</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">geo_axes</span><span class="o">.</span><span class="n">set_extent</span><span class="p">(</span><span class="n">extent</span><span class="p">,</span> <span class="n">crs</span><span class="p">)</span></div>
@@ -558,19 +558,17 @@ document.write(`
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">lat_limits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the latitude limits for the plot.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get and set the latitude limits for the plot.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">geo_axes</span><span class="o">.</span><span class="n">_lat_limits</span>
 
     <span class="nd">@lat_limits</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">lat_limits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lat_lim</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the latitude limits for the plot.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">geo_axes</span><span class="o">.</span><span class="n">_lat_limits</span> <span class="o">=</span> <span class="n">lat_lim</span>
 
     <span class="nd">@lat_limits</span><span class="o">.</span><span class="n">getter</span>
 <div class="viewcode-block" id="StereographicAxisAccessor.lat_limits">
 <a class="viewcode-back" href="../../../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.StereographicAxisAccessor.lat_limits">[docs]</a>
     <span class="k">def</span> <span class="nf">lat_limits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the latitude limits for the plot, with default values if not set.&quot;&quot;&quot;</span>
         <span class="n">default_lat_lims</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;south&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="o">-</span><span class="mi">50</span><span class="p">],</span>
                             <span class="s1">&#39;north&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">90</span><span class="p">]}[</span><span class="bp">self</span><span class="o">.</span><span class="n">_pole</span><span class="p">]</span>
         <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">geo_axes</span><span class="p">,</span> <span class="s1">&#39;_lat_limits&#39;</span><span class="p">,</span> <span class="n">default_lat_lims</span><span class="p">)</span></div>
@@ -591,6 +589,8 @@ document.write(`
 <span class="sd">            gridlines (bool, optional): Whether to add gridlines. Defaults to True.</span>
 <span class="sd">            ruler (bool, optional): Whether to add a ruler. Defaults to True.</span>
 <span class="sd">            **kwargs: Additional keyword arguments for customization.</span>
+
+<span class="sd">        :glue:`/examples/stereographic_maps.ipynb::polar_plot_features`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">coastlines_kwargs</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;coastlines_kwargs&#39;</span><span class="p">,</span> <span class="p">{})</span>
         <span class="n">ruler_kwargs</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;ruler_kwargs&#39;</span><span class="p">,</span> <span class="p">{})</span>
@@ -656,6 +656,9 @@ document.write(`
 <a class="viewcode-back" href="../../../_autoapi/my_code_base/plot/maps/index.html#my_code_base.plot.maps.StereographicAxisAccessor.add_ruler">[docs]</a>
     <span class="k">def</span> <span class="nf">add_ruler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a circular ruler to the plot.</span>
+<span class="sd">        </span>
+<span class="sd">        See :func:`add_circular_ruler` for customization arguments.</span>
+<span class="sd">        The `ax` argument is not needed to be handed over when using the accessor&#39;s method.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            **kwargs: Additional keyword arguments for customization.</span>

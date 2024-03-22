@@ -392,7 +392,7 @@ document.write(`
 <div class="viewcode-block" id="adjust_lons">
 <a class="viewcode-back" href="../../../_autoapi/my_code_base/esd/coordinates/index.html#my_code_base.esd.coordinates.adjust_lons">[docs]</a>
 <span class="k">def</span> <span class="nf">adjust_lons</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">lon_name</span><span class="o">=</span><span class="s2">&quot;lon&quot;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Adjust longitude values to make sure they are in the range between -180 and 180</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Adjust longitude values to make sure they are in the range between -180° and 180°.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;_longitude_adjusted&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
         <span class="n">ds</span><span class="p">[</span><span class="n">lon_name</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">180</span><span class="p">,</span> <span class="n">ds</span><span class="p">[</span><span class="n">lon_name</span><span class="p">]</span> <span class="o">-</span> <span class="mi">360</span><span class="p">,</span> <span class="n">ds</span><span class="p">[</span><span class="n">lon_name</span><span class="p">]</span>

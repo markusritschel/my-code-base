@@ -417,7 +417,20 @@ document.write(`
 <div class="viewcode-block" id="find_nearest">
 <a class="viewcode-back" href="../../../_autoapi/my_code_base/core/utils/index.html#my_code_base.core.utils.find_nearest">[docs]</a>
 <span class="k">def</span> <span class="nf">find_nearest</span><span class="p">(</span><span class="n">items</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">pivot</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Find the element inside `items` that is closest to the `pivot` element.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Find the element inside `items` that is closest to the `pivot` element.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    items : list</span>
+<span class="sd">        A list of elements to search from.</span>
+<span class="sd">    pivot : float</span>
+<span class="sd">        The pivot element to find the closest element to.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    float</span>
+<span class="sd">        The element from `items` that is closest to the `pivot` element.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
@@ -458,9 +471,9 @@ document.write(`
 <span class="sd">    &gt;&gt;&gt; plt.legend()</span>
 <span class="sd">    &gt;&gt;&gt; plt.show()</span>
 
-<span class="sd">    .. image:: ../_static/grid_dataframe_plot.png</span>
+<span class="sd">    .. image:: /_static/grid_dataframe_plot.png</span>
 <span class="sd">       :width: 450px</span>
-<span class="sd">       :alt: eample plot</span>
+<span class="sd">       :alt: example plot</span>
 <span class="sd">       :align: left</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">points</span>
@@ -495,7 +508,6 @@ document.write(`
 <a class="viewcode-back" href="../../../_autoapi/my_code_base/core/utils/index.html#my_code_base.core.utils.order_of_magnitude">[docs]</a>
 <span class="k">def</span> <span class="nf">order_of_magnitude</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">|</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">|</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Determine the order of magnitude of the numeric input.</span>
-
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
