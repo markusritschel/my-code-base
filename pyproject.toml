@@ -1,2 +1,14 @@
 [tool.jupytext]
 formats = "ipynb,md:myst"
+
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+testpaths = [
+    "tests",
+    "src",
+]
+addopts = [
+    "--import-mode=importlib",
+    "-ra -q"
+]
