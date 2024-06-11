@@ -4,15 +4,21 @@
 # Date:   2024-03-03
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
+import functools
 import logging
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import xarray as xr
+from .xarray_utils import HistoryAccessor
 
 logging.basicConfig(level="INFO")
 
 log = logging.getLogger(__name__)
 
 
+import matplotlib.pyplot as plt
+@functools.singledispatch
 def save(obj, *args, **kwargs):
     """
     Save the given object.
@@ -41,6 +47,19 @@ def save(obj, *args, **kwargs):
                               Please use the native method.")
 
 
+@save.register(plt.Figure)
+def _(fig, path, *args, **kwargs):
+    plt.savefig(path, *args, **kwargs)
+
+@save.register(pd.DataFrame)
+def _(df, path, *args, **kwargs):
+    df.to_csv(path, *args, **kwargs)
+
+
+@save.register(xr.Dataset)
+def _(ds, path, *args, **kwargs):
+    ds = ds.history.add("Test")
+    ds.to_netcdf(path, *args, **kwargs)
 
 
 def centered_bins(x):
