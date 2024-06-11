@@ -1,23 +1,23 @@
 [build-system]
 requires = ["setuptools @ git+https://github.com/pypa/setuptools.git@main", "wheel"]
 build-backend = "setuptools.build_meta"
-# TODO: consider hatchling for built
 
 [project]
-name = "my_code_base"
+name = "my-code-base"
 description = "This is a collection of routines that I've developed over time and that I use in my daily work."
 authors = [
-  {name = "Markus Ritschel", email = "git@markusritschel.de"},
-]
+    {name = "Markus Ritschel", email = "git@markusritschel.de"}
+    ]
 readme = "README.md"
 license = {file = "LICENSE"}
 dynamic = ["version"]
-requires-python = ">= 3.10"
+requires-python = ">=3.10"
 dependencies = []
 
 
 [project.scripts]
-my_code_base = "my_code_base:cli"
+mcb-cli = "my_code_base:cli"
+
 
 [tool.setuptools.dynamic]
 version = {attr = "my_code_base.__version__"}
@@ -35,14 +35,10 @@ formats = "ipynb,py:percent,md:myst"
 minversion = "6.0"
 testpaths = [
     "tests",
-    "src",
-]
+    "src"
+    ]
 addopts = [
     "--import-mode=importlib",
-    "-ra -q"
-]
-
-
-[tool.flake8]
-max-line-length = 80
-max-complexity = 10
+    "--doctest-modules",
+    "-ra -q",
+    ]
