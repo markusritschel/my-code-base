@@ -13,6 +13,36 @@ logging.basicConfig(level="INFO")
 log = logging.getLogger(__name__)
 
 
+def save(obj, *args, **kwargs):
+    """
+    Save the given object.
+
+    Parameters
+    ----------
+    obj : object
+        The object to be saved.
+
+    Raises
+    ------
+    NotImplementedError
+        If the according function is not dispatched.
+
+    Notes
+    -----
+    This function raises a NotImplementedError because it is meant to be overridden by subclasses.
+    To save objects of a specific type, please use the native method provided by that type.
+
+    Examples
+    --------
+    >>> save(my_object)        # doctest: +SKIP
+    NotImplementedError: Cannot save object of type <class 'type'> using `save` method. Please use the native method.
+    """
+    raise NotImplementedError(f"No implementation of `save` found for object of type {type(obj)}. 
+                              Please use the native method.")
+
+
+
+
 def centered_bins(x):
     """Create centered bin boundaries from a given array with the values of the array as centers.
 
