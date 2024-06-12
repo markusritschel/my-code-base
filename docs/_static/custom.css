@@ -32,48 +32,48 @@
 
 
 /* Add an accordion-like details section */
-details > * {
+bd-content details > * {
     padding: 8pt;
     margin: 0;
 //    border: thin solid #ccc;
 }
-details[open] > * {
+bd-content details[open] > * {
 	//background-color: #eee;
 }
 
 
-details summary {
+bd-content details summary {
 	font-weight: bold;
 }
 
-details > p {
+bd-content details > p {
 	padding: 0 0 12pt 25pt;
 }
 
-details:first-of-type summary {
+bd-content details:first-of-type summary {
     border-radius: 10pt 10pt 0 0;
 }
 
-details:last-of-type:not([open]) summary {
+bd-content details:last-of-type:not([open]) summary {
     border-radius: 0 0 10pt 10pt;
 }
 
-details:last-of-type p {
+bd-content details:last-of-type p {
     border-radius: 0 0 10pt 10pt;    
 }
 
 
-details[open] summary::before{
+bd-content details[open] summary::before{
   content: "\00D7";
   margin-right: 1ex;
 }
 
-details:not([open]) summary::before{
+bd-content details:not([open]) summary::before{
   content: "\002B ";
   margin-right: 1ex;
 }
 
 
-summary::marker{
+bd-content summary::marker{
   content: "";
 }
