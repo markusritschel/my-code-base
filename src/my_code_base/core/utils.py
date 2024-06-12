@@ -16,8 +16,16 @@ logging.basicConfig(level="INFO")
 
 log = logging.getLogger(__name__)
 
+def get_obj_type_str(obj):
+    """Transform the output of `type` to a simplified descriptor:
+    
+    Turns
+        "<class 'xarray.core.dataset.Dataset'>"
+    into "Dataset"
+    """
+    return str(type(obj)).split("'")[1].split('.')[-1]
 
-import matplotlib.pyplot as plt
+
 @functools.singledispatch
 def save(obj, *args, **kwargs):
     """
