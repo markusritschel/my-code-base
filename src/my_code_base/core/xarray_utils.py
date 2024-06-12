@@ -5,6 +5,8 @@
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
 import logging
+import warnings
+from typing_extensions import deprecated
 import numpy as np
 import xarray as xr
 
@@ -75,8 +77,12 @@ def compress_xarray(data: xr.Dataset | xr.DataArray, complevel: int) -> xr.Datas
     return data
 
 
+@deprecated("Will be removed in a future version. Use :func:`xarray.DataArray.get_axis_num()` instead.")
 def get_dim_index(da: xr.DataArray, dim: str) -> int:
     """Get the index of a dimension in a DataArray.
+
+    .. deprecated:: 0.1.0
+        Will be removed in a future version. Use :meth:`xarray.DataArray.get_axis_num()` instead.
 
     Parameters
     ----------
@@ -95,5 +101,11 @@ def get_dim_index(da: xr.DataArray, dim: str) -> int:
     >>> get_dim_index(da, 'lat')
     1
     """
+    warnings.warn(
+        "Will be removed in a future version."
+        "Use xr.DataArray.get_axis_num(dim) instead.",
+        DeprecationWarning,
+        stacklevel=2
+    )
     assert isinstance(da, xr.DataArray), "First argument must be of type xr.DataArray."
     return da.dims.index(dim)
