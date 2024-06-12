@@ -6,6 +6,7 @@
 #
 from abc import ABC, abstractmethod
 import logging
+import pandas as pd
 
 
 log = logging.getLogger(__name__)
@@ -76,4 +77,15 @@ def _build_member_mapping_table(member_values, member_id_elements):
     member_table.index.name = "member"
     member_table.columns = member_id_elements
     return member_table
+
+
+@pd.api.extensions.register_dataframe_accessor("ens")
+class PandasEnsembleAccessor(EnsembleAccessor):
+    def _init_member_keys(self, **kwargs):
+        super()._init_member_keys(self._obj.columns)
+
+    def groupby(self, key):
+        self._init_member_keys()
+        return self._obj.groupby(self.member_keys[key], axis=1)
+
 
