@@ -35,3 +35,22 @@ class EnsembleAccessor(ABC):
                              "Please choose a different identifier.")
         self._key_template = template_string
 
+
+
+def _build_member_mapping_table(member_values, member_id_elements):
+    """Create a mapping table for member keys. Each member name follows the same format, 
+    e.g. `source_id.member_id.grid_label`. The mapping represents a table with each key of
+    `(source_id, member_id, grid_label)` as a column.
+
+    The `member_values` could be an array of member values as follows:
+    array(['ACCESS-CM2.r1i1p1f1.gn', 'ACCESS-CM2.r2i1p1f1.gn',
+       'ACCESS-CM2.r3i1p1f1.gn', ...])
+
+    And `member_id_elements` would be a list like ['source_id','member_id','grid_label'].
+    """
+    member_table = pd.Series(member_values).str.split('.', expand=True)
+    member_table.index = member_values
+    member_table.index.name = "member"
+    member_table.columns = member_id_elements
+    return member_table
+
