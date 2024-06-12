@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Welcome to the documentation of My Code Base!
+Welcome to the documentation of *My Code Base*!
 
 This is a collection of routines that I've developed over time and that I use in my daily work.
 
@@ -17,9 +17,17 @@ This is a collection of routines that I've developed over time and that I use in
 
 ### Installation
 
-For getting started in the fastest way possible, there are *Make* targets provided.
-To set up the project, simply run the following commands from the main directory:
+#### Install via pip
 
+The easiest way to install the package is via pip directly from this repository:
+
+```bash
+$ pip install git+https://github.com/markusritschel/my_code_base.git
+```
+
+#### Clone repo and install locally
+
+Alternatively, clone the repo and use the *Make* targets provided.
 First, run
 
 ```bash
@@ -46,23 +54,12 @@ make tests
 
 to run the tests via `pytest`.
 
-### Make data available
+### Usage
 
-You may need to make data available under `data`.
-These can be either copied directly into the directory or, if the files are too big and/or already reside somewhere your machine can access it directly, create links in `data`, pointing to the actual location of the data.
+The package can be imported and used as follows:
 
-You should now be set to proceed with executing the scripts and notebooks. 🚀
-
-## Data
-
-```{tip}
-Describe the data you use in the project.
-```
-
-## Workflow
-
-```{tip}
-Describe the workflow that should be followed to reproduce the results of your project.
+```python
+import my_code_base as mcb
 ```
 
 

@@ -37,7 +37,7 @@ bibtex_bibfiles:
 
 # Information about where the book exists on the web
 repository:
-  url: https://github.com/Markus Ritschel/my-code-base  # Online location of your book
+  url: https://github.com/markusritschel/my-code-base  # Online location of your book
   path_to_book: docs  # Optional path to your book, relative to the repository root
   branch: main  # Which branch of the repository should be used when creating links (optional)
 
@@ -125,8 +125,8 @@ sphinx:
   - 'sphinx_autodoc_defaultargs'
   - 'sphinx.ext.doctest'
   - 'sphinxcontrib.images'
-  # - 'sphinx_toolbox.collapse'
-  # - 'sphinx_toolbox.decorators'
+  - 'sphinx_toolbox.collapse'
+  - 'sphinx_toolbox.decorators'
   config:
     napoleon_use_param: True
     napoleon_preprocess_types: False

@@ -6,7 +6,11 @@ root: index
 parts:
   - caption: Content
     chapters:
-      - file: demo-stuff
+      - file: examples
+        sections:
+          - file: examples/stereographic_maps.ipynb
+          - file: examples/z_overlap
+      - file: faq
   - caption: Project Info
     chapters:
       - file: _autoapi/index   # will be generated automatically
@@ -15,6 +19,5 @@ parts:
         title: README
         sections:
           - file: license
-            title: LICENSE
-          - title: CHANGELOG
-            file: changelog
+            title: License
+          - file: changelog
