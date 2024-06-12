@@ -20,4 +20,4 @@ def fixture(request):
 def test_history_accessor(fixture):
     ds = fixture
     ds.history.add("new entry")
-    assert ds.attrs['history'] == "new entry", "Couldn't find the expected entry in the history"
+    assert ds.attrs['history'].endswith("new entry; "), "Couldn't find the expected entry in the history"
