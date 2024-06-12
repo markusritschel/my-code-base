@@ -54,6 +54,10 @@ class EnsembleAccessor(ABC):
             log.warning("Member IDs are not all different!")
 
 
+    def groupby(self, key):
+        """Group the object by a member key. Member keys are initialized beforehand."""
+        self._init_member_keys()
+        return self._obj.groupby(self.member_keys[key])
 
 
 def _build_member_mapping_table(member_values, member_id_elements):
