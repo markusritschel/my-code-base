@@ -4,10 +4,29 @@
 # Date:   2024-04-04
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
+from functools import singledispatch
 import logging
+import numpy as np
+import pandas as pd
 
 
 log = logging.getLogger(__name__)
+
+
+
+
+@singledispatch
+def inv(x):
+    """Invert a quadratic-shape :class:`numpy.ndarray` object."""
+    return np.linalg.inv(x)
+
+
+@inv.register(pd.DataFrame)
+def _(df: pd.DataFrame):
+    """Invert a quadratic-shape :class:`pandas.DataFrame` object."""
+    assert np.equal(*df.shape), "Cannot invert non-quadratic object."
+    inverted = np.linalg.inv(df)
+    return pd.DataFrame(inverted, columns=df.columns, index=df.index)
 
 
 def empirical_covariance(x, bias=False):
