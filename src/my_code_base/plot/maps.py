@@ -137,3 +137,15 @@ class StereographicAxisAccessor(GeoAxesAccessor):
         default_lat_lims = {'south': [-90, -50],
                             'north': [50, 90]}[self._pole]
         return getattr(self, '_lat_limits', default_lat_lims)
+
+
+def set_circular_boundary(ax):
+    """Compute a circle in axes coordinates, which we can use as a boundary for the map.
+    We can pan/zoom as much as we like – the boundary will be permanently circular."""
+    theta = np.linspace(0, 2*np.pi, 100)
+    center, radius = [0.5, 0.5], 0.5
+    vertices = np.vstack([np.sin(theta), np.cos(theta)]).T
+    circle = mpath.Path(vertices*radius + center)
+    ax.set_boundary(circle, transform=ax.transAxes)
+    return
+
