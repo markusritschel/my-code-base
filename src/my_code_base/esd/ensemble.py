@@ -7,6 +7,7 @@
 from abc import ABC, abstractmethod
 import logging
 import pandas as pd
+import xarray as xr
 
 
 log = logging.getLogger(__name__)
@@ -89,3 +90,15 @@ class PandasEnsembleAccessor(EnsembleAccessor):
         return self._obj.groupby(self.member_keys[key], axis=1)
 
 
+@xr.register_dataset_accessor("ens")
+class XarrayEnsembleAccessor(EnsembleAccessor):
+    """An :class:`xarray.Dataset` accessor supporting the grouping of ensemble members by 
+    model id and similar. The `member` coordinate in the :class:`xr.Dataset` must have a 
+    `key_template` attribute of the form 'source_id.member_id.grid_label', following the 
+    structure of the entries of the 'member' coordinate.
+    """
+    def _init_member_keys(self, **kwargs):
+        if not 'member' in self._obj.coords:
+            raise AttributeError("No coordinate 'member' found in xarray object.")
+        super()._init_member_keys(self._obj.member.values)
+        self.member_keys = self.member_keys.to_xarray()
