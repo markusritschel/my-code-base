@@ -16,6 +16,7 @@ class EnsembleAccessor(ABC):
         super().__init__()
         self._obj = data_obj
         self._key_template = None
+        self.member_keys = None
 
     @property
     def key_template(self):
@@ -34,6 +35,12 @@ class EnsembleAccessor(ABC):
             raise ValueError("key_template must not contain 'member'! "
                              "Please choose a different identifier.")
         self._key_template = template_string
+
+    @abstractmethod
+    def _init_member_keys(self, member_values):
+        self._verify_member_keys(member_values)
+        member_table = _build_member_mapping_table(member_values, self.key_template.split('.'))
+        self.member_keys = member_table
 
     def _verify_member_keys(self, member_values):
         def _consistent_key_pattern():
