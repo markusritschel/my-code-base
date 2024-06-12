@@ -1,0 +1,27 @@
+{
+  "template": "/home/markusritschel/PycharmProjects/cookiecutter-pypackage",
+  "commit": "814a1ea63d0abc435aec3d405c95c819c8c53993",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "project_author": "Markus Ritschel",
+      "email": "git@markusritschel.de",
+      "github_username": "markusritschel",
+      "project_name": "My Code Base",
+      "project_slug": "my-code-base",
+      "package_name": "my_code_base",
+      "project_short_description": "This is a collection of routines that I've developed over time and that I use in my daily work.",
+      "project_version": "0.1.0",
+      "use_pytest": "y",
+      "command_line_interface": "Click",
+      "create_author_file": "y",
+      "sphinx_theme": "pydata_sphinx_theme",
+      "project_license": "MIT license",
+      "_copy_without_render": [
+        ".github/workflows/*"
+      ],
+      "_template": "/home/markusritschel/PycharmProjects/cookiecutter-pypackage"
+    }
+  },
+  "directory": null
+}
