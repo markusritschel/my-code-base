@@ -1,6 +1,6 @@
 {
   "template": "/home/markusritschel/PycharmProjects/cookiecutter-pypackage",
-  "commit": "814a1ea63d0abc435aec3d405c95c819c8c53993",
+  "commit": "1cc9c8404be0181ef9e5eb67555bcede82b7f21a",
   "checkout": null,
   "context": {
     "cookiecutter": {
