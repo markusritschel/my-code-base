@@ -138,6 +138,10 @@ class StereographicAxisAccessor(GeoAxesAccessor):
                             'north': [50, 90]}[self._pole]
         return getattr(self, '_lat_limits', default_lat_lims)
 
+    def make_circular(self):
+        """Make the plot boundary circular."""
+        set_circular_boundary(self.geo_axes)
+
 
 def set_circular_boundary(ax):
     """Compute a circle in axes coordinates, which we can use as a boundary for the map.
