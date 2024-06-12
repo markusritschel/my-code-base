@@ -48,10 +48,12 @@ class HistoryAccessor:
         -------
         >>> da.history.add("New entry to history")        # doctest: +SKIP
         """
-        self._obj.attrs['history'] += msg
+        from datetime import datetime
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        self._obj.attrs['history'] += f"{timestamp}: {msg}; "
         log.debug("Wrote '%s' to history", msg)
-        return
-
+        return self._obj
+    
 
 def compress_xarray(data: xr.Dataset | xr.DataArray, complevel: int) -> xr.Dataset | xr.DataArray:
     """Compress :class:`xarray.Dataset` or :class:`xarray.DataArray`.
