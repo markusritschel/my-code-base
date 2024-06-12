@@ -9,6 +9,9 @@ import functools
 import cartopy
 import cartopy.mpl.geoaxes
 import logging
+import matplotlib.pyplot as plt
+import matplotlib.path as mpath
+import numpy as np
 import pytest
 
 log = logging.getLogger(__name__)
