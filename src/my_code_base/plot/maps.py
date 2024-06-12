@@ -111,3 +111,29 @@ class GeoAxesAccessor(ABC):
     @abstractmethod
     def add_features(self):
         pass
+
+
+@register_geoaxes_accessor("polar")
+class StereographicAxisAccessor(GeoAxesAccessor):
+    """An accessor to handle features and finishing of stereographic plots produced with `cartopy`.
+    Can handle both :class:`~cartopy.crs.NorthPolarStereo` and :class:`~cartopy.crs.SouthPolarStereo` projections."""
+
+    def __init__(self, ax):
+        super().__init__(ax)
+        self._pole = {cartopy.crs.SouthPolarStereo: 'south',
+                      cartopy.crs.NorthPolarStereo: 'north'}[self._projection]
+
+    @property
+    def lat_limits(self):
+        """Get and set the latitude limits for the plot."""
+        pass
+
+    @lat_limits.setter
+    def lat_limits(self, lat_lim):
+        self._lat_limits = lat_lim
+
+    @lat_limits.getter
+    def lat_limits(self):
+        default_lat_lims = {'south': [-90, -50],
+                            'north': [50, 90]}[self._pole]
+        return getattr(self, '_lat_limits', default_lat_lims)
