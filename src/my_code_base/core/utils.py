@@ -43,8 +43,8 @@ def save(obj, *args, **kwargs):
     >>> save(my_object)        # doctest: +SKIP
     NotImplementedError: Cannot save object of type <class 'type'> using `save` method. Please use the native method.
     """
-    raise NotImplementedError(f"No implementation of `save` found for object of type {type(obj)}. 
-                              Please use the native method.")
+    raise NotImplementedError(f"No implementation of `save` found for object of type {type(obj)}. "
+                               "Please use the native method.")
 
 
 @save.register(plt.Figure)
