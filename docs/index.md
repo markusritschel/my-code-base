@@ -1,6 +1,6 @@
 ![](_static/logo.png)
 
-## Introduction
+# Introduction
 
 Welcome to the documentation of *My Code Base*!
 

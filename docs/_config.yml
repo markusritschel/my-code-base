@@ -56,13 +56,12 @@ launch_buttons:
 html:
   use_issues_button: true
   use_repository_button: true
-  home_page_in_navbar: false
+  # home_page_in_navbar: false
   # use_repository_button: true
   # use_issues_button: true
   # use_edit_page_button: true
   html_show_sourcelink: false
-  #extra_navbar: '<hr> Powered by <a href="https://jupyterbook.org">Jupyter Book</a> '
-  #extra_footer: ''
+  # extra_footer: '<hr> Powered by <a href="https://jupyterbook.org">Jupyter Book</a> '
   comments:
     hypothesis: false
   # utterances: false
@@ -178,7 +177,7 @@ sphinx:
          - fmt: myst
     images_config: 
       backend: 'LightBox2'
-    html_theme: furo   # furo, sphinx_rtd_theme, pydata_sphinx_theme, sphinx_book_theme, furo, sphinx_material, sphinx_immaterial
+    # html_theme: furo   # furo, sphinx_rtd_theme, pydata_sphinx_theme, sphinx_book_theme, furo, sphinx_material, sphinx_immaterial
     pygments_style: sphinx
     bibtex_reference_style: author_year
 
