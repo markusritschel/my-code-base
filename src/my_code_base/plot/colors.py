@@ -5,6 +5,8 @@
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
 import logging
+import matplotlib.colors as mcolors
+import numpy as np
 
 
 log = logging.getLogger(__name__)
@@ -55,4 +57,36 @@ def rgb_to_dec(value: list[float]) -> tuple[float]:
     """
     return tuple([v/255 for v in value])
 
+
+def build_continuous_cmap(hex_list: list[str], float_list=None, N=256, name='my_cmap') -> mcolors.LinearSegmentedColormap:
+    """Create and return a color map that can be used in heat map figures.
+    If `float_list` is not provided, colour map graduates linearly between each color in hex_list.
+    If `float_list` is provided, each color in `hex_list` is mapped to the respective location in `float_list`.
+
+    Source: https://towardsdatascience.com/beautiful-custom-colormaps-with-matplotlib-5bab3d1f0e72
+
+    Parameters
+    ----------
+    hex_list: list of hex code strings
+    float_list: list of floats between 0 and 1, same length as hex_list. Must start with 0 and end with 1.
+
+    Returns
+    -------
+    colour map
+    """
+    rgb_list = [rgb_to_dec(hex_to_rgb(i)) for i in hex_list]
+    if float_list:
+        pass
+    else:
+        float_list = list(np.linspace(0, 1, len(rgb_list)))
+
+    cdict = dict()
+    for num, col in enumerate(['red', 'green', 'blue']):
+        col_list = [[float_list[i], 
+                     rgb_list[i][num], 
+                     rgb_list[i][num]] 
+                    for i in range(len(float_list))]
+        cdict[col] = col_list
+    cmap = mcolors.LinearSegmentedColormap(name, segmentdata=cdict, N=N)
+    return cmap
 
