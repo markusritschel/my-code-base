@@ -146,7 +146,7 @@ def save(obj, path, *args, **kwargs):
     Examples
     --------
     >>> ds = xr.tutorial.load_dataset('air_temperature')
-    >>> save(ds, '/tmp/mynetcdf.nc', add_hash=True))
+    >>> save(ds, '/tmp/mynetcdf.nc', add_hash=True)
     >>> !ncdump -h /tmp/mynetcdf_500e15f.nc | grep history     # doctest: +SKIP
     :history = "2024-06-12 16:18:16: File saved by myscript.py#3 @git-commit:500e15f;"
     >>> save(my_object, '/tmp/myobj')                  # doctest: +SKIP
