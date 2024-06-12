@@ -10,7 +10,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import xarray as xr
-from .xarray_utils import HistoryAccessor
 
 logging.basicConfig(level="INFO")
 
@@ -118,14 +117,21 @@ def get_obj_type_str(obj):
 
 @add_metadata
 @functools.singledispatch
-def save(obj, *args, **kwargs):
-    """
-    Save the given object.
+def save(obj, path, *args, **kwargs):
+    """Save the given object including metadata.
+
+    This is a dispatchable function. That is, there are several 
+    implementations for different types of objects (e.g. 
+    :class:`matplotlib.figure.Figure`, :class:`pandas.DataFrame`, 
+    :class:`xarray.Dataset`). In case there is no implementation, 
+    the function will throw a :class:`NotImplementedError`.
 
     Parameters
     ----------
     obj : object
         The object to be saved.
+    path : str
+        The path to which the object will be saved.
 
     Raises
     ------
@@ -139,7 +145,11 @@ def save(obj, *args, **kwargs):
 
     Examples
     --------
-    >>> save(my_object)        # doctest: +SKIP
+    >>> ds = xr.tutorial.load_dataset('air_temperature')
+    >>> save(ds, '/tmp/mynetcdf.nc', add_hash=True))
+    >>> !ncdump -h /tmp/mynetcdf_500e15f.nc | grep history     # doctest: +SKIP
+    :history = "2024-06-12 16:18:16: File saved by myscript.py#3 @git-commit:500e15f;"
+    >>> save(my_object, '/tmp/myobj')                  # doctest: +SKIP
     NotImplementedError: Cannot save object of type <class 'type'> using `save` method. Please use the native method.
     """
     raise NotImplementedError(f"No implementation of `save` found for object of type {type(obj)}. "
@@ -152,12 +162,16 @@ def _(fig, path, *args, **kwargs):
 
 @save.register(pd.DataFrame)
 def _(df, path, *args, **kwargs):
+    del kwargs['metadata']  # df.to_csv cannot interpret `metadata`
     df.to_csv(path, *args, **kwargs)
 
 
 @save.register(xr.Dataset)
 def _(ds, path, *args, **kwargs):
-    ds = ds.history.add("Test")
+    from .xarray_utils import HistoryAccessor
+    metadata = kwargs.pop('metadata')
+    msg = f"File saved by {metadata['relative_code_path']}#{metadata['line_number']} @git-commit:{metadata['git_commit']}"
+    ds = ds.history.add(msg)
     ds.to_netcdf(path, *args, **kwargs)
 
 
