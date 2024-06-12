@@ -35,6 +35,18 @@ class EnsembleAccessor(ABC):
                              "Please choose a different identifier.")
         self._key_template = template_string
 
+    def _verify_member_keys(self, member_values):
+        def _consistent_key_pattern():
+            number_of_keys = [len(x.split('.')) for x in member_values]
+            return len(set(number_of_keys)) == 1
+        if not _consistent_key_pattern():
+            raise ValueError("Column keys must show the same pattern. "
+                             "Not all column names have the same number of keys.")
+        
+        if len(set(member_values)) != len(member_values):
+            log.warning("Member IDs are not all different!")
+
+
 
 
 def _build_member_mapping_table(member_values, member_id_elements):
