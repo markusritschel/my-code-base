@@ -15,6 +15,65 @@ from .xarray_utils import HistoryAccessor
 logging.basicConfig(level="INFO")
 
 log = logging.getLogger(__name__)
+
+def add_metadata(func):
+    """
+    A decorator that adds metadata to the function's output.
+
+    The metadata includes the relative path of the file, line number, and git commit hash.
+
+    Parameters
+    ----------
+    func : callable 
+        The function to be decorated.
+
+    Returns
+    -------
+    callable
+        The decorated function.
+    """
+    import os
+    import subprocess
+    import sys
+    from pathlib import Path
+
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        kwargs.setdefault('add_hash', False)
+
+        meta = collect_metadata()
+        kwargs['metadata'] = meta
+
+        args = list(args)
+        obj = args[0]
+        path = Path(args[1])
+        suffix = ''
+        if kwargs.pop('add_hash'):
+            suffix += f"_{meta.git_commit}"
+        output_path = f'{path.parent}/{path.stem}{suffix}{path.suffix}'
+        args[1] = output_path
+        
+        obj_type = get_obj_type_str(obj)
+        log.info(f"Saved {obj_type} to {output_path}, produced by {meta.relative_code_path}#{meta.line_number} @git-commit:{meta.git_commit}")
+
+        return func(*args, **kwargs)
+
+    def collect_metadata():
+        frame = sys._getframe(1).f_back
+        code_filename = frame.f_code.co_filename
+        line_number = frame.f_lineno #- 1   # TODO: <-- check!
+        relative_code_path = os.path.relpath(code_filename)
+        git_commit = subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD']).decode('ascii').strip()
+
+        metadata = {}
+        metadata['relative_code_path'] = relative_code_path
+        metadata['line_number'] = str(line_number)
+        metadata['git_commit'] = git_commit
+        return BunchDict(metadata)
+        
+    return wrapper
+
+
 class BunchDict(dict):
     """BunchDict is a subclass of the built-in dict class that allows 
     accessing dictionary keys as attributes.
@@ -57,6 +116,7 @@ def get_obj_type_str(obj):
     return str(type(obj)).split("'")[1].split('.')[-1]
 
 
+@add_metadata
 @functools.singledispatch
 def save(obj, *args, **kwargs):
     """
