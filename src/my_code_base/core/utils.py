@@ -145,11 +145,11 @@ def save(obj, path, *args, **kwargs):
 
     Examples
     --------
-    >>> ds = xr.tutorial.load_dataset('air_temperature')
-    >>> save(ds, '/tmp/mynetcdf.nc', add_hash=True)
+    >>> ds = xr.tutorial.load_dataset('air_temperature')       # doctest: +SKIP
+    >>> save(ds, '/tmp/mynetcdf.nc', add_hash=True)            # doctest: +SKIP
     >>> !ncdump -h /tmp/mynetcdf_500e15f.nc | grep history     # doctest: +SKIP
     :history = "2024-06-12 16:18:16: File saved by myscript.py#3 @git-commit:500e15f;"
-    >>> save(my_object, '/tmp/myobj')                  # doctest: +SKIP
+    >>> save(my_object, '/tmp/myobj')                          # doctest: +SKIP
     NotImplementedError: Cannot save object of type <class 'type'> using `save` method. Please use the native method.
     """
     raise NotImplementedError(f"No implementation of `save` found for object of type {type(obj)}. "
