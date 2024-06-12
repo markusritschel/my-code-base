@@ -5,10 +5,44 @@
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
 from abc import ABC, abstractmethod
+import functools
 import cartopy
+import cartopy.mpl.geoaxes
 import logging
+import pytest
 
 log = logging.getLogger(__name__)
+
+
+def register_geoaxes_accessor(accessor_name):
+    """
+    A decorator to register an accessor for a :class:`cartopy.mpl.geoaxes.GeoAxes` object.
+
+    Example
+    -------
+    >>> pytest.skip()
+    >>> @register_geoaxes_accessor("my_accessor")
+    >>> class MyCustomAccessor:
+    >>>     def some_method(self):
+    >>>         pass
+    >>>
+    >>> ax = plt.subplot(projection=cartopy.crs.NorthPolarStereo())
+    >>> ax.my_accessor.some_method()
+    """
+    def actual_decorator(cls):
+        @functools.wraps(cls)
+        def accessor(geo_axes):
+            log.debug("`accessor` func")
+            if not hasattr(geo_axes, '_'+accessor_name):
+                log.debug("No instance of accessor found. Add as attribute.")
+                setattr(geo_axes, '_'+accessor_name, cls(geo_axes))
+            return getattr(geo_axes, '_'+accessor_name)
+
+        setattr(cartopy.mpl.geoaxes.GeoAxes, accessor_name, property(accessor))
+
+        return cls
+
+    return actual_decorator
 
 
 class GeoAxesAccessor(ABC):
