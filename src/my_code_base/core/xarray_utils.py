@@ -74,3 +74,26 @@ def compress_xarray(data: xr.Dataset | xr.DataArray, complevel: int) -> xr.Datas
         data.encoding.update(compression_dict)
     return data
 
+
+def get_dim_index(da: xr.DataArray, dim: str) -> int:
+    """Get the index of a dimension in a DataArray.
+
+    Parameters
+    ----------
+    da : 
+        DataArray to get the dimension index from.
+    dim : str
+        Dimension name.
+
+    Returns
+    -------
+    Index of the dimension in the DataArray. Can be used for specifying the axis in a numpy operation.
+
+    Examples
+    --------
+    >>> da = xr.DataArray(np.random.rand(2, 3, 4), dims=['time', 'lat', 'lon'])
+    >>> get_dim_index(da, 'lat')
+    1
+    """
+    assert isinstance(da, xr.DataArray), "First argument must be of type xr.DataArray."
+    return da.dims.index(dim)
