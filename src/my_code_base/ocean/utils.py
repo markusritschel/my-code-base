@@ -74,3 +74,21 @@ def cond2sal(C, T, p):
 
     return salinity
 
+
+def water_vapor_pressure(T, S):
+    """Compute the water vapor pressure by means of the temperature [K] and the salinity [PSU]
+    following :cite:t:`weiss_nitrous_1980`.
+
+    Parameters
+    ----------
+    S: float or pandas.Series
+        Salinity in PSU
+    T: float or pandas.Series
+        Temperature (°C gets converted into Kelvin)
+    """
+    T = temperature2K(T)
+
+    pH2O = np.exp(24.4543 - 67.4509*(100/T) - 4.8489*np.log(T/100) - 0.000544*S)
+    return pH2O
+
+
