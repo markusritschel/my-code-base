@@ -7,9 +7,8 @@ Welcome to the documentation of *My Code Base*!
 This is a collection of routines that I've developed over time and that I use in my daily work.
 
 ```{tip}
-- Give a short introduction on what the project is about.
+- Give a short introduction on what the package is about.
 - Limit yourself to just a few sentences.
-- Mention any preknowledge the user must have for the project.
 - You may also give some instructions on how to navigate through the documentation.
 ```
 
@@ -22,7 +21,7 @@ This is a collection of routines that I've developed over time and that I use in
 The easiest way to install the package is via pip directly from this repository:
 
 ```bash
-$ pip install git+https://github.com/markusritschel/my_code_base.git
+$ pip install git+https://github.com/markusritschel/my-code-base.git
 ```
 
 #### Clone repo and install locally
@@ -44,6 +43,14 @@ make src-available
 
 to make the project's routines (located in `src`) available for import.
 
+### Usage
+
+The package can be imported and used as follows:
+
+```python
+import my_code_base
+```
+
 ### Test code
 
 You can run
@@ -61,7 +68,6 @@ The package can be imported and used as follows:
 ```python
 import my_code_base as mcb
 ```
-
 
 ## Contact
 
