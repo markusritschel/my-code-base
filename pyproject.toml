@@ -42,3 +42,6 @@ addopts = [
     "--doctest-modules",
     "-ra -q",
     ]
+
+[tool.cruft]
+skip = [".git/"]
