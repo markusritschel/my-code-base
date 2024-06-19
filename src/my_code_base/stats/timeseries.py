@@ -71,3 +71,42 @@ def xr_deseasonalize(da, freq=12, dim='time'):
         )
     return deseasonalized_detrended + trend
     
+    
+def xr_seasonal_decompose(da, dim='time'):
+    """
+    Perform seasonal decomposition of a time series using the given dataset.
+
+    Parameters
+    ----------
+    da: xarray.DataArray
+        The input data array containing the time series.
+    dim: str
+        The dimension along which the decomposition is performed. Default is 'time'.
+
+    Returns
+    -------
+    xarray.Dataset: 
+        A new dataset containing the decomposed components: trend, detrended, seasonality, residuals, and deseasonalized.
+    """
+    assert isinstance(da, xr.DataArray), "Input should be xarray.DataArray"
+    
+    res = xarrayutils.linear_trend(da, dim=dim)
+    time_index = xr.DataArray(np.arange(da[dim].size), dims={dim:da[dim]}, coords={dim:da[dim]})
+
+    trend = res.intercept + time_index*res.slope
+    detrended = da - trend
+    seasonality = detrended.groupby(f'{dim}.month').mean()
+    residuals = detrended.groupby(f'{dim}.month') - seasonality
+    deseasonalized = residuals + trend
+
+    # Create a new dataset to store the results
+    result = xr.Dataset()
+    result['trend'] = trend
+    result['detrended'] = detrended
+    result['seasonality'] = seasonality
+    result['residuals'] = residuals
+    result['deseasonalized'] = deseasonalized
+    
+    return result
+
+
