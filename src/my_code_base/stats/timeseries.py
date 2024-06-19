@@ -6,9 +6,12 @@
 # Date:   2024-03-03
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
+import logging
 import numpy as np
 import xarray as xr
 import xarrayutils
+
+log = logging.getLogger(__name__)
 
 
 def weighted_annual_mean(ds: xr.Dataset | xr.DataArray):
@@ -18,6 +21,17 @@ def weighted_annual_mean(ds: xr.Dataset | xr.DataArray):
 
     Source: https://ncar.github.io/esds/posts/2021/yearly-averages-xarray/
     """
+    def check_for_frequency(ds):
+        try:
+            estimated_frequency = xr.infer_freq(ds.time)
+            if not estimated_frequency.startswith('M'):
+                log.warning("Frequency seems to be not monthly. Consider another averaging method.")
+        except:
+            log.warning("Cannot infer frequency")
+            return
+    
+    check_for_frequency(ds)
+
     # Determine the month length
     month_length = ds.time.dt.days_in_month
 
