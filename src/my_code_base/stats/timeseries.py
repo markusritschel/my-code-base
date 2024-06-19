@@ -48,7 +48,7 @@ def weighted_annual_mean(ds: xr.Dataset | xr.DataArray):
     return output
 
 
-def xr_deseasonalize(ds, freq=12, dim='time'):
+def xr_deseasonalize(da, freq=12, dim='time'):
     """Remove the seasonal cycle of an :class:`xr.Dataset` object.
     Data get first detrended, then the long-term average of every season is subtracted for
     each season. Finally, the trend is added again.
@@ -60,12 +60,14 @@ def xr_deseasonalize(ds, freq=12, dim='time'):
     dim : str
         The name of the time dimension.
     """
-    # trend = ds.rolling({dim: freq + 1, 'center': True}).mean(dim=dim)
-    trend = xarrayutils.linear_trend(ds, dim=dim)
-    detrended = ds - trend
-    detrended_deseasonalized = (
-        detrended.groupby(f"{dim}.month") - detrended.groupby(f"{dim}.month").mean()
-    )
-    deseasonalized = detrended_deseasonalized + trend
-    return deseasonalized
+    res = xarrayutils.linear_trend(da, dim=dim)
+    time_index = xr.DataArray(np.arange(da[dim].size), dims={dim:da[dim]}, coords={dim:da[dim]})
+    trend = res.intercept + time_index*res.slope
 
+    detrended = da - trend
+
+    deseasonalized_detrended = (
+        detrended.groupby(f'{dim}.month') - detrended.groupby(f'{dim}.month').mean()
+        )
+    return deseasonalized_detrended + trend
+    
