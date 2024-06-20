@@ -50,6 +50,7 @@ def register_geoaxes_accessor(accessor_name):
 
 class GeoAxesAccessor(ABC):
     def __init__(self, ax):
+        log.debug('Initialize accessor')
         self.geo_axes = ax
         self._projection = self._get_cartopy_projection()
 
@@ -65,6 +66,7 @@ class GeoAxesAccessor(ABC):
         kwargs : dict
             Keyword arguments to be passed to the :meth:`~cartopy.mpl.geoaxes.GeoAxes.add_feature` method of :class:`~cartopy.mpl.geoaxes.GeoAxes`.
         """
+        log.debug('Add ocean to axis')
         kwargs.setdefault('zorder', 0)
         self.geo_axes.add_feature(cartopy.feature.OCEAN, **kwargs)
 
@@ -77,6 +79,7 @@ class GeoAxesAccessor(ABC):
         kwargs : dict
             Keyword arguments to be passed to the :meth:`~cartopy.mpl.geoaxes.GeoAxes.add_feature` method of :class:`~cartopy.mpl.geoaxes.GeoAxes`.
         """
+        log.debug('Add land to axis')
         kwargs.setdefault('zorder', 2)
         self.geo_axes.add_feature(cartopy.feature.LAND, **kwargs)
 
@@ -91,6 +94,7 @@ class GeoAxesAccessor(ABC):
         kwargs : dict
             Keyword arguments to be passed to the :meth:`~cartopy.mpl.geoaxes.GeoAxes.coastlines` method of :class:`~cartopy.mpl.geoaxes.GeoAxes`.
         """
+        log.debug('Add coastlines to axis')
         kwargs.setdefault('zorder', 3)
         self.geo_axes.coastlines(*args, **kwargs)
 
@@ -105,6 +109,7 @@ class GeoAxesAccessor(ABC):
         crs : cartopy.crs
             The coordinate reference system in which the extent is expressed. Default is :class:`~cartopy.crs.PlateCarree`.
         """
+        log.debug('Set axis extent to %s', extent)
         self.geo_axes.set_extent(extent, crs)
 
     @abstractmethod
