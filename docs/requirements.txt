@@ -1,4 +1,5 @@
 furo
+geopy
 jupyter-book
 jupytext
 myst-parser
