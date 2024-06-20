@@ -8,6 +8,7 @@
 #
 import logging
 import numpy as np
+import pandas as pd
 import xarray as xr
 import xarrayutils
 
@@ -122,6 +123,42 @@ def xr_seasonal_decompose(da, dim='time'):
     result['deseasonalized'] = deseasonalized
     
     return result
+
+
+def pd_seasonal_decompose(x, freq=12):
+    """Decompose a time series into its trend, the seasonality, and the residuals.
+
+    Parameters
+    ----------
+    x: pd.Series
+        A :class:`pandas.Series` containing a time series of data
+    freq : int
+        The frequency of the data, e.g. 12 for monthly data
+
+    Returns
+    -------
+    A :class:`pandas.DataFrame` containing time series of the raw data, trend,
+    seasonality, the detrended time series, and the residuals.
+    """
+    assert isinstance(x, pd.Series), "The input should be a pandas.Series"
+
+    df = x.to_frame("raw")
+
+    # calculate the trend component
+    # TODO: decide if this should be calculated based on a running mean or the linear trend
+    df["trend"] = df["raw"].rolling(window=freq+1, center=True).mean()
+
+    # detrend the series
+    df["detrended"] = df["raw"] - df["trend"]
+
+    # calculate the seasonal component
+    df.index = pd.to_datetime(df.index)
+    df["seasonality"] = df.groupby(df.index.month)["detrended"].transform("mean")
+
+    # get the residuals
+    df["residuals"] = df["detrended"] - df["seasonality"]
+
+    return df[['raw', 'trend', 'seasonality', 'detrended', 'residuals']]
 
 
 def extend_annual_series(ds):
