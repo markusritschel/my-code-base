@@ -162,6 +162,13 @@ class StereographicAxisAccessor(GeoAxesAccessor):
         kwargs.setdefault('segment_length', self._lon_grid_spacing)
         add_circular_ruler(self.geo_axes, **kwargs)
 
+    def add_gridlines(self):
+        pass
+
+    def add_features(self):
+        pass
+
+
 def add_circular_ruler(ax, segment_length=30, offset=0, primary_color='k', secondary_color='w', width=1):
     """Add a ruler around a polar stereographic plot.
 
