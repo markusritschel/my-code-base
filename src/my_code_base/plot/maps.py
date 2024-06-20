@@ -130,6 +130,9 @@ class StereographicAxisAccessor(GeoAxesAccessor):
         super().__init__(ax)
         self._pole = {cartopy.crs.SouthPolarStereo: 'south',
                       cartopy.crs.NorthPolarStereo: 'north'}[self._projection]
+        self._lat_limits = None
+        self._lon_grid_spacing = 30
+        self._draw_labels = True  # or should this rather be an attribute of self.geo_axes._draw_labels ?
 
     @property
     def lat_limits(self):
@@ -162,8 +165,67 @@ class StereographicAxisAccessor(GeoAxesAccessor):
         kwargs.setdefault('segment_length', self._lon_grid_spacing)
         add_circular_ruler(self.geo_axes, **kwargs)
 
-    def add_gridlines(self):
-        pass
+    def add_gridlines(self, **kwargs):
+        """
+        Add gridlines to the plot.
+
+        Parameters
+        ----------
+        **kwargs : dict
+            Additional keyword arguments for customization.
+
+        Returns
+        -------
+        cartopy.mpl.gridliner.Gridliner
+            The gridliner object.
+
+        Notes
+        -----
+        This method adds gridlines to the plot using the specified keyword arguments for customization.
+        The default values for the keyword arguments are:
+        - 'zorder': 1
+        - 'linestyle': '-'
+        - 'linewidth': 0.5
+        - 'color': 'gray'
+        - 'alpha': 0.7
+
+        The gridlines are added based on the latitude limits of the plot.
+        The latitude grid spacing is set to 10 degrees.
+        The longitude grid spacing is determined by the latitude grid spacing and the x_spacing_factor.
+        The gridlines are created using the `gridlines` method of the `geo_axes` object.
+        The `draw_labels` argument is set to True for the first set of gridlines and False for the second set.
+        """
+        kwargs.setdefault('zorder', 1)
+        kwargs.setdefault('linestyle', '-')
+        kwargs.setdefault('linewidth', 0.5)
+        kwargs.setdefault('color', 'gray')
+        kwargs.setdefault('alpha', 0.7)
+
+        lat0, lat1 = self.lat_limits
+        lat_grid_spacing = 10
+        ygrid_locs = np.arange(lat0, lat1 + 1, lat_grid_spacing)
+        fac1, fac2 = {'north': [1, 2],
+                      'south': [2, 1]}[self._pole]
+
+        def draw_gridlines(x_spacing_factor, ylim):
+            return self.geo_axes.gridlines(
+                xlocs=np.arange(-180, 180, x_spacing_factor * self._lon_grid_spacing),
+                ylim=ylim,
+                ylocs=ygrid_locs,
+                draw_labels=self._draw_labels if x_spacing_factor == 1 else False,
+                **kwargs
+            )
+
+        lat_breakpoint = {'south': -80,
+                          'north': +80}[self._pole]
+
+        gl1 = draw_gridlines(fac1, [lat0, lat_breakpoint])
+        gl2 = draw_gridlines(fac2, [lat_breakpoint, lat1])
+
+        self._gl = {'north': gl1, 'south': gl2}[self._pole]
+
+        return self._gl
+
 
     def add_features(self):
         pass
