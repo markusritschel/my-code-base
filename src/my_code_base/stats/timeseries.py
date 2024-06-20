@@ -60,7 +60,7 @@ def weighted_annual_mean(ds: xr.Dataset | xr.DataArray):
     output = ds_sum / ones_out
 
     output = output.assign_coords(year=('time', output.time.dt.year.values), keep_attrs=True)
-    return output
+    return output.swap_dims({'time': 'year'}).drop_vars('time')
 
 
 def xr_deseasonalize(da, freq=12, dim='time'):
