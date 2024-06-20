@@ -7,7 +7,7 @@
 import logging
 import xarray as xr
 from multipledispatch import dispatch
-from .timeseries import weighted_annual_mean
+from .timeseries import extend_annual_series, weighted_annual_mean
 
 
 log = logging.getLogger(__name__)
@@ -52,3 +52,32 @@ class StatsAccessor:
         log.debug(f"Identified single dimension {dim}. Building weighted annual mean.")
         return weighted_annual_mean(self._obj)
 
+    def _is_annual(self):
+        """
+        Check if the xarray object has a 'year' dimension.
+
+        Returns
+        -------
+        bool
+            True if the xarray object has a 'year' dimension, False otherwise.
+        """
+        return 'year' in self._obj.dims
+
+    def fill_months_with_annual_value(self):
+        """
+        Fill the xarray object with annual values for each month.
+
+        Returns
+        -------
+        xarray.Dataset or xarray.DataArray
+            The xarray object with extended annual series.
+
+        Raises
+        ------
+        ValueError
+            If the time series is not of yearly frequency.
+        """
+        ds = self._obj
+        if not self._is_annual():
+            raise ValueError("Time series is not of yearly frequency.")
+        return extend_annual_series(ds)
