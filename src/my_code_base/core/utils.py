@@ -212,7 +212,8 @@ def find_nearest(items: list | np.ndarray, pivot: float) -> float:
 
     Examples
     --------
-    >>> find_nearest(np.array([2,4,5,7,9,10]), 4.6)
+    >>> result = find_nearest(np.array([2,4,5,7,9,10]), 4.6)
+    >>> int(result)      # Cast to int for consistent comparison
     5
     """
     return min(items, key=lambda x: abs(x - pivot))
