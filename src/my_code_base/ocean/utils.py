@@ -72,7 +72,7 @@ def cond2sal(C, T, p):
 
     salinity = a0 + a1*ξ + a2*ξ**2 + a3*ξ**3 + a4*ξ**4 + a5*ξ**5 + dSal
 
-    return salinity
+    return float(salinity)
 
 
 def water_vapor_pressure(T, S):
