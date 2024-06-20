@@ -47,6 +47,8 @@ class HistoryAccessor:
         Example
         -------
         >>> da.history.add("New entry to history")        # doctest: +SKIP
+        >>> da.attrs['history']                           # doctest: +SKIP
+        '...: New entry to history; '
         """
         from datetime import datetime
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
