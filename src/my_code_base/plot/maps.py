@@ -226,10 +226,55 @@ class StereographicAxisAccessor(GeoAxesAccessor):
 
         return self._gl
 
+    def add_features(self, gridlines=True, ruler=True, **kwargs):
+        """Apply various features to the plot.
 
-    def add_features(self):
-        pass
+        Parameters
+        ----------
+        gridlines : bool, optional
+            Whether to add gridlines. Defaults to True.
+        ruler : bool, optional
+            Whether to add a ruler. Defaults to True.
+        **kwargs
+            Additional keyword arguments for customization.
 
+        Returns
+        -------
+        None
+
+        Notes
+        -----
+        This method applies the following features to the plot:
+        - add ocean
+        - add land
+        - add coastlines
+        - add ruler
+        - make the boundary circular
+        - add gridlines
+
+
+        :glue:`/examples/stereographic_maps.ipynb::polar_plot_features`
+        """
+        coastlines_kwargs = kwargs.pop('coastlines_kwargs', {})
+        gridlines_kwargs = kwargs.pop('gridlines_kwargs', {})
+        land_kwargs = kwargs.pop('land_kwargs', {})
+        ocean_kwargs = kwargs.pop('ocean_kwargs', {})
+        ruler_kwargs = kwargs.pop('ruler_kwargs', {})
+        self._lon_grid_spacing = ruler_kwargs.get('segment_length', 30)
+
+        self.set_extent([-180, 180, *self.lat_limits])
+        self.add_ocean(**ocean_kwargs)
+        self.add_land(**land_kwargs)
+        self.add_coastlines(**coastlines_kwargs)
+        self.make_circular()
+        if ruler:
+            self.add_ruler(**ruler_kwargs)
+        if gridlines:
+            gl = self.add_gridlines(**gridlines_kwargs)
+            rotate_polar_plot_lat_labels(gl, target_lon=118)
+            rotate_polar_plot_lon_labels(gl, pole=self._pole)
+        
+        return
 
 def add_circular_ruler(ax, segment_length=30, offset=0, primary_color='k', secondary_color='w', width=1):
     """Add a ruler around a polar stereographic plot.
