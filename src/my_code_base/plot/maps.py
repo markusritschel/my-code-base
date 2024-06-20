@@ -271,18 +271,46 @@ class StereographicAxisAccessor(GeoAxesAccessor):
             self.add_ruler(**ruler_kwargs)
         if gridlines:
             gl = self.add_gridlines(**gridlines_kwargs)
-            rotate_polar_plot_lat_labels(gl, target_lon=118)
-            rotate_polar_plot_lon_labels(gl, pole=self._pole)
+            self.rotate_lat_labels(gl, target_lon=118)
+            self.rotate_lon_labels(gl, pole=self._pole)
         
         return
 
-    def rotate_lat_labels(self, **kwargs):
-        """Rotate the latitude labels on the plot."""
-        rotate_polar_plot_lat_labels(gl=self._gl, **kwargs)
+    def rotate_lat_labels(self, target_lon=118, orig_lon=150):
+        """Move the latitude labels to another longitude.
+
+        Parameters
+        ----------
+        target_lon : int
+            The longitude to which the labels should be moved.
+        orig_lon : int
+            The longitude at which the labels are located per default [default: 150].
+
+        Source: https://stackoverflow.com/a/66587492/5925453 with minor adaptions.
+        """
+        plt.draw()
+        for tx in self._gl.label_artists:
+            xy = tx.get_position()
+            if xy[0]==orig_lon:
+                tx.set_position([target_lon, xy[1]])
+                tx.set_size('small')
+        return
 
     def rotate_lon_labels(self):
-        """Rotate the longitude labels on the plot."""
-        rotate_polar_plot_lon_labels(gl=self._gl, pole=self._pole)
+        """
+        Rotate the longitude labels of a stereographic plot for better readability and nicer look.
+        """
+        self._gl.rotate_labels = False
+        plt.gcf().canvas.draw()
+
+        all_label_artists = [label for label in self._gl.label_artists if label.get_text()[-1] 
+                            in ['E', 'W', '°']]
+        for label in all_label_artists:
+            alphanumeric_label = label.get_text()
+            longitude = _str2float(alphanumeric_label)
+            rot_degree = _lon2rot(longitude, self._pole)
+            _rotate_and_align_label(label, longitude, rot_degree, pole=self._pole)
+        return
 
 
 def add_circular_ruler(ax, segment_length=30, offset=0, primary_color='k', secondary_color='w', width=1):
@@ -337,55 +365,6 @@ def add_circular_ruler(ax, segment_length=30, offset=0, primary_color='k', secon
         ]
     )
     plot_circle(segments_array, color=secondary_color, lw=width * 2, zorder=1000, ax=ax)
-
-
-def rotate_polar_plot_lat_labels(gl, target_lon=118, orig_lon=150):
-    """Move the latitude labels to another longitude.
-
-    Parameters
-    ----------
-    gl : gridlines
-        The gridlines object holding the labels.
-    target_lon : int
-        The longitude to which the labels should be moved.
-    orig_lon : int
-        The longitude at which the labels are located per default [default: 150].
-
-    Following the solution on https://stackoverflow.com/a/66587492/5925453 with minor adaptions.
-    """
-    plt.draw()
-    for tx in gl.label_artists:
-        xy = tx.get_position()
-        if xy[0]==orig_lon:
-            tx.set_position([target_lon, xy[1]])
-            tx.set_size('small')
-    return
-
-
-def rotate_polar_plot_lon_labels(gl, pole='north'):
-    """
-    Rotate the longitude labels of a stereographic plot for better readability and nicer look.
-    
-    Parameters
-    ----------
-    gl : gridlines
-        The gridlines object holding the labels.
-    pole : str (optional)
-        The pole to rotate the labels towards. 
-        Can be either 'north' or 'south' [default: 'north'].
-    """
-    gl.rotate_labels = False
-    plt.gcf().canvas.draw()
-
-    # all_label_artists = gl.geo_label_artists + gl.bottom_label_artists + gl.top_label_artists
-    all_label_artists = [label for label in gl.label_artists if label.get_text()[-1] 
-                         in ['E', 'W', '°']]
-    for label in all_label_artists:
-        alphanumeric_label = label.get_text()
-        longitude = _str2float(alphanumeric_label)
-        rot_degree = _lon2rot(longitude, pole)
-        _rotate_and_align_label(label, longitude, rot_degree, pole=pole)
-    return
 
 
 def _str2float(label):
