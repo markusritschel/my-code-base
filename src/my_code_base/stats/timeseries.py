@@ -16,11 +16,35 @@ log = logging.getLogger(__name__)
 
 
 def weighted_annual_mean(ds: xr.Dataset | xr.DataArray):
-    """Compute the annual mean of an :class:`xr.Dataset`, thereby considering the
-    different lengths of the months. That is, the function weights each month of the
-    year by the number of days it comprises.
+    """
+    Compute the weighted annual mean of an :class:`xarray.Dataset` or :class:`xarray.DataArray`.
 
-    Source: https://ncar.github.io/esds/posts/2021/yearly-averages-xarray/
+    Parameters
+    ---------
+    ds :
+        The input dataset or data array.
+
+    Returns
+    -------
+    xarray.DataArray
+        The weighted annual mean of the input dataset or data array.
+
+    Raises
+    ------
+    AssertionError
+        If the sum of the weights in each year is not equal to 1.0.
+
+    Notes
+    -----
+    The function computes the annual mean of the input dataset or data array, taking into account the different lengths
+    of the months. Each month is weighted by the number of days it comprises. If the frequency of the time dimension is
+    '1M', the function applies the weights. If the frequency is '1D' or higher, no weights are applied.
+
+    The function follows the approach described in the following source:
+    https://ncar.github.io/esds/posts/2021/yearly-averages-xarray/
+
+    The function assumes that the input dataset or data array has a 'time' dimension.
+
     """
     def check_for_frequency(ds):
         try:
@@ -130,7 +154,7 @@ def pd_seasonal_decompose(x, freq=12):
 
     Parameters
     ----------
-    x: pd.Series
+    x: pandas.Series
         A :class:`pandas.Series` containing a time series of data
     freq : int
         The frequency of the data, e.g. 12 for monthly data
@@ -163,8 +187,9 @@ def pd_seasonal_decompose(x, freq=12):
 
 def extend_annual_series(ds):
     """
-    Fill a time series with only annual values such that all months are represented
-    again but the value for all 12 months within a year is equal to the annual value.
+    Fill a time series with only annual values (one such timeseries could be generated
+    via :func:`weighted_annual_mean`, for example) such that all months are represented again but the value 
+    for all 12 months within a year is equal to the annual value.
 
     Parameters
     ----------
