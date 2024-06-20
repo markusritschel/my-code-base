@@ -13,6 +13,7 @@ import matplotlib.pyplot as plt
 import matplotlib.path as mpath
 import numpy as np
 import pytest
+from .z_overlap import fix_overlap
 
 log = logging.getLogger(__name__)
 
