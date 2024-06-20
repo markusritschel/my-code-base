@@ -8,6 +8,7 @@ import pytest
 import cartopy.crs as ccrs
 from matplotlib import pyplot as plt
 from my_code_base.plot.maps import *
+from my_code_base.plot.maps import _lon2rot
 
 
 @pytest.fixture(scope="module")
@@ -39,3 +40,17 @@ def test_geoaxes_latlimits(ax_northpolar, ax_southpolar):
     assert ax_northpolar.polar.lat_limits == [30, 70], "Expected different latitude limits"
     
 
+def test_helper():
+    assert _lon2rot(0, pole='north') == 0, "Incorrect rotation of longitude value"
+    assert _lon2rot(30, pole='north') == 30, "Incorrect rotation of longitude value"
+    assert _lon2rot(60, pole='north') == 60, "Incorrect rotation of longitude value"
+    assert _lon2rot(120, pole='north') == -60, "Incorrect rotation of longitude value"
+    assert _lon2rot(160, pole='north') == -20, "Incorrect rotation of longitude value"
+    assert _lon2rot(180, pole='north') == 0, "Incorrect rotation of longitude value"
+
+    assert _lon2rot(0, pole='south') == 0, "Incorrect rotation of longitude value"
+    assert _lon2rot(30, pole='south') == -30, "Incorrect rotation of longitude value"
+    assert _lon2rot(60, pole='south') == -60, "Incorrect rotation of longitude value"
+    assert _lon2rot(120, pole='south') == 60, "Incorrect rotation of longitude value"
+    assert _lon2rot(160, pole='south') == 20, "Incorrect rotation of longitude value"
+    assert _lon2rot(180, pole='south') == 0, "Incorrect rotation of longitude value"
