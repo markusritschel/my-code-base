@@ -124,3 +124,46 @@ def xr_seasonal_decompose(da, dim='time'):
     return result
 
 
+def extend_annual_series(ds):
+    """
+    Fill a time series with only annual values such that all months are represented
+    again but the value for all 12 months within a year is equal to the annual value.
+
+    Parameters
+    ----------
+    ds : xarray.Dataset
+        The input dataset containing the time series data.
+
+    Returns
+    -------
+    xarray.Dataset
+        The extended time series dataset with monthly values.
+
+    Raises
+    ------
+    AssertionError
+        If the dataset does not have 'year' as a dimension.
+
+    Example
+    -------
+    >>> ds = xr.Dataset({'time': pd.date_range('2000-01-01', '2001-12-31', freq='M'),
+    ...                  'value': np.random.rand(24)})
+    >>> extended_ds = extend_annual_series(ds)
+    """
+    if 'year' not in ds.dims:
+        ds = (ds.assign_coords(year=('time', ds.time.dt.year.values))
+              .swap_dims({'time': 'year'})).drop('time')
+
+    assert 'year' in ds.dims, 'Dataset needs to have `year` as dimension'
+
+    ds_monthly = ds.expand_dims(month=np.arange(1, 13))
+    ds_stacked = ds_monthly.stack(year_month=('year', 'month'))
+
+    _datetime = pd.to_datetime([f"{y}-{m}" for y in ds_monthly.year.values
+                                           for m in np.arange(1, 13)])
+    ds_stacked = ds_stacked.assign_coords(time=('year_month', _datetime))
+    ds_stacked = ds_stacked.swap_dims({'year_month': 'time'})
+
+    ds_stacked = ds_stacked.drop_vars(['year', 'month', 'year_month'])
+    return ds_stacked
+
