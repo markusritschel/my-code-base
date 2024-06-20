@@ -1,16 +1,11 @@
-![](_static/logo.png)
-
 # Introduction
 
 Welcome to the documentation of *My Code Base*!
 
 This is a collection of routines that I've developed over time and that I use in my daily work.
+The online documentation serves in first instance myself, providing me a kind of well-documented archive of the functions.
+However, if you stumbled upon this accidentally, I hope you find some of the content useful 🙂.
 
-```{tip}
-- Give a short introduction on what the package is about.
-- Limit yourself to just a few sentences.
-- You may also give some instructions on how to navigate through the documentation.
-```
 
 ## Getting Started
 
