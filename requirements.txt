@@ -2,6 +2,7 @@ cartopy
 lxml
 matplotlib
 mpl-axes-aligner
+multipledispatch
 numpy
 pandas
 pytest

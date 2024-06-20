@@ -18,6 +18,7 @@ dependencies:
   - jupytext
   - markdown
   - matplotlib
+  - multipledispatch
   - mystmd
   - nodejs
   - numpy
