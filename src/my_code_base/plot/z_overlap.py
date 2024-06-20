@@ -7,7 +7,6 @@
 import logging
 import cartopy.crs as ccrs
 import numpy as np
-import xarray as xr
 
 log = logging.getLogger(__name__)
 
@@ -75,46 +74,28 @@ def z_masked_overlap(axe, X, Y, Z, source_projection=None):
     ptx, pty, Z : list(numpy.ndarray)
         The transformed coordinates and data.
     """
-    if not hasattr(axe, 'projection'):
-        return X, Y, Z
-    if not isinstance(axe.projection, ccrs.Projection):
+    if not hasattr(axe, 'projection') or not isinstance(axe.projection, ccrs.Projection):
         return X, Y, Z
 
     if len(X.shape) != 2 or len(Y.shape) != 2:
         return X, Y, Z
 
-    if (source_projection is not None and
-            isinstance(source_projection, ccrs.Geodetic)):
-        transformed_pts = axe.projection.transform_points(
-            source_projection, X, Y)
+    if source_projection is not None and isinstance(source_projection, ccrs.Geodetic):
+        transformed_pts = axe.projection.transform_points(source_projection, X, Y)
         ptx, pty = transformed_pts[..., 0], transformed_pts[..., 1]
     else:
         ptx, pty = X, Y
 
     with np.errstate(invalid='ignore'):
-        # diagonals have one less row and one less columns
-        diagonal0_lengths = np.hypot(
-            ptx[1:, 1:] - ptx[:-1, :-1],
-            pty[1:, 1:] - pty[:-1, :-1]
-        )
-        diagonal1_lengths = np.hypot(
-            ptx[1:, :-1] - ptx[:-1, 1:],
-            pty[1:, :-1] - pty[:-1, 1:]
-        )
-        to_mask = (
-            (diagonal0_lengths > (
-                abs(axe.projection.x_limits[1]
-                    - axe.projection.x_limits[0])) / 2) |
-            np.isnan(diagonal0_lengths) |
-            (diagonal1_lengths > (
-                abs(axe.projection.x_limits[1]
-                    - axe.projection.x_limits[0])) / 2) |
-            np.isnan(diagonal1_lengths)
-        )
+        diagonal0_lengths = np.hypot(ptx[1:, 1:] - ptx[:-1, :-1], pty[1:, 1:] - pty[:-1, :-1])
+        diagonal1_lengths = np.hypot(ptx[1:, :-1] - ptx[:-1, 1:], pty[1:, :-1] - pty[:-1, 1:])
+        x_range = abs(axe.projection.x_limits[1] - axe.projection.x_limits[0])
+        to_mask = (diagonal0_lengths > x_range / 2) | np.isnan(diagonal0_lengths) | (diagonal1_lengths > x_range / 2) | np.isnan(diagonal1_lengths)
+
+        # TODO check if we need to do something about surrounding vertices
 
         # add one extra colum and row for contour and contourf
-        if (to_mask.shape[0] == Z.shape[0] - 1 and
-                to_mask.shape[1] == Z.shape[1] - 1):
+        if to_mask.shape[0] == Z.shape[0] - 1 and to_mask.shape[1] == Z.shape[1] - 1:
             to_mask_extended = np.zeros(Z.shape, dtype=bool)
             to_mask_extended[:-1, :-1] = to_mask
             to_mask_extended[-1, :] = to_mask_extended[-2, :]
