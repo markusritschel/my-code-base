@@ -189,7 +189,7 @@ def extend_annual_series(ds):
     """
     if 'year' not in ds.dims:
         ds = (ds.assign_coords(year=('time', ds.time.dt.year.values))
-              .swap_dims({'time': 'year'})).drop('time')
+              .swap_dims({'time': 'year'})).drop_vars(['time'])
 
     assert 'year' in ds.dims, 'Dataset needs to have `year` as dimension'
 
