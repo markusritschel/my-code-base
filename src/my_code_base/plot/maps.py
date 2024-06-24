@@ -138,17 +138,20 @@ class StereographicAxisAccessor(GeoAxesAccessor):
     @property
     def lat_limits(self):
         """Get and set the latitude limits for the plot."""
-        pass
+        if self._lat_limits is None:
+            self._lat_limits = {'south': [-90, -50],
+                            'north': [50, 90]}[self._pole]
+        return self._lat_limits
 
     @lat_limits.setter
     def lat_limits(self, lat_lim):
         self._lat_limits = lat_lim
 
-    @lat_limits.getter
-    def lat_limits(self):
-        default_lat_lims = {'south': [-90, -50],
-                            'north': [50, 90]}[self._pole]
-        return getattr(self, '_lat_limits', default_lat_lims)
+    # @lat_limits.getter
+    # def lat_limits(self):
+    #     default_lat_lims = {'south': [-90, -50],
+    #                         'north': [50, 90]}[self._pole]
+    #     return getattr(self, '_lat_limits', default_lat_lims)
 
     def make_circular(self):
         """Make the plot boundary circular."""
