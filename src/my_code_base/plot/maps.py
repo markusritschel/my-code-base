@@ -275,8 +275,8 @@ class StereographicAxisAccessor(GeoAxesAccessor):
             self.add_ruler(**ruler_kwargs)
         if gridlines:
             gl = self.add_gridlines(**gridlines_kwargs)
-            self.rotate_lat_labels(gl, target_lon=118)
-            self.rotate_lon_labels(gl, pole=self._pole)
+            self.rotate_lat_labels(target_lon=118)
+            self.rotate_lon_labels()
         
         return
 
