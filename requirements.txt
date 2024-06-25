@@ -7,6 +7,7 @@ mpl-axes-aligner
 multipledispatch
 numpy
 pandas
+pooch
 pytest
 pytest-cov
 tqdm
