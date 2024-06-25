@@ -187,6 +187,7 @@ class StereographicAxisAccessor(GeoAxesAccessor):
         -----
         This method adds gridlines to the plot using the specified keyword arguments for customization.
         The default values for the keyword arguments are:
+
         - 'zorder': 1
         - 'linestyle': '-'
         - 'linewidth': 0.5
@@ -249,6 +250,7 @@ class StereographicAxisAccessor(GeoAxesAccessor):
         Notes
         -----
         This method applies the following features to the plot:
+        
         - add ocean
         - add land
         - add coastlines
