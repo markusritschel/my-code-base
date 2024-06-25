@@ -12,7 +12,13 @@ readme = "README.md"
 license = {file = "LICENSE"}
 dynamic = ["version"]
 requires-python = ">=3.10"
-dependencies = []
+dependencies = [
+    "cartopy",
+    "lxml",
+    "matplotlib",
+    "numpy",
+    "pytest",
+]
 
 
 [project.scripts]
