@@ -1,6 +1,6 @@
 {
   "template": "https://github.com/markusritschel/cookiecutter-pypackage",
-  "commit": "5f5d8c9402c136298487adaddb85b666d30fa308",
+  "commit": "513db265ec105714fdef2227e4800857b8d04f6f",
   "checkout": null,
   "context": {
     "cookiecutter": {
@@ -12,9 +12,7 @@
       "package_name": "my_code_base",
       "project_short_description": "This is a collection of routines that I've developed over time and that I use in my daily work.",
       "project_version": "0.1.0",
-      "use_pytest": "y",
       "command_line_interface": "Click",
-      "create_author_file": "y",
       "sphinx_theme": "pydata_sphinx_theme",
       "project_license": "MIT license",
       "_copy_without_render": [

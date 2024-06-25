@@ -1,6 +1,7 @@
 # My Code Base
 
-![build](https://github.com/markusritschel/my-code-base/actions/workflows/main.yml/badge.svg)
+[![build](https://github.com/markusritschel/my-code-base/actions/workflows/main.yml/badge.svg)]([![build](https://github.com/markusritschel/my-code-base/actions/workflows/main.yml/badge.svg)
+)
 [![License MIT license](https://img.shields.io/github/license/markusritschel/my-code-base)](./LICENSE)
 
 

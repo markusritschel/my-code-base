@@ -1,4 +1,6 @@
 cartopy
+click
+flake8
 lxml
 matplotlib
 mpl-axes-aligner
@@ -6,6 +8,7 @@ multipledispatch
 numpy
 pandas
 pytest
+pytest-cov
 tqdm
 typing-extensions
 xarray
