@@ -11,6 +11,7 @@ parts:
           - file: examples/stereographic_maps.ipynb
           - file: examples/z_overlap
           - file: examples/calculating-distances
+          - file: examples/detect-sea-ice-edge
       - file: faq
   - caption: Project Info
     chapters:

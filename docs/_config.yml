@@ -169,6 +169,7 @@ sphinx:
       python: ['https://docs.python.org/3.12/', 'https://docs.python.org/3.12/objects.inv']
       pyproj: ['https://pyproj4.github.io/pyproj/stable/', 'https://pyproj4.github.io/pyproj/stable/objects.inv']
       scipy: ['https://docs.scipy.org/doc/scipy/', 'https://docs.scipy.org/doc/scipy/objects.inv']
+      skimage: ['https://scikit-image.org/docs/stable/', 'https://scikit-image.org/docs/stable/objects.inv']
       shapely: ['https://shapely.readthedocs.io/en/stable/', 'https://shapely.readthedocs.io/en/stable/objects.inv']
       sklearn: ['https://scikit-learn.org/stable/', 'https://scikit-learn.org/stable/objects.inv']
       sphinx: ['https://www.sphinx-doc.org/en/master/', 'https://www.sphinx-doc.org/en/master/objects.inv']
