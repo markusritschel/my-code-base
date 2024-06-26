@@ -1,5 +1,13 @@
 # Examples
 
+<!-- 
+Glue issues:
+
+https://jupyterbook.org/en/stable/explain/migration.html#changes-to-glue
+https://myst-nb.readthedocs.io/en/v0.9.0/use/glue.html
+https://myst-nb.readthedocs.io/en/latest/render/glue.html
+-->
+
 This is an overview
 
 ```{glue} polar_plot_features
@@ -35,6 +43,23 @@ Adding features to polar plots.
 
 Dealing with artifacts in polar contour plots.
 :::
+
+:::{grid-item-card} Detecting sea-ice edge
+:link: examples/detect-sea-ice-edge
+:link-type: doc
+:class-header: bg-light
+
+How to detect and compute the length of the sea-ice edge.
+:::
+
+:::{grid-item-card} Calculating distances
+:link: examples/calculating-distances
+:link-type: doc
+:class-header: bg-light
+
+A comparison of different methods to calculate distances.
+:::
+
 ::::
 
 ```{tableofcontents}
