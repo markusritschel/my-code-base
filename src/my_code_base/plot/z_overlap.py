@@ -11,7 +11,7 @@ import numpy as np
 log = logging.getLogger(__name__)
 
 
-def fix_overlap(da, ax):
+def fix_overlap(da, ax, lon_name='lon', lat_name='lat', source_projection=ccrs.Geodetic()):
     """
     Fix overlapping geographic dimensions.
     This avoids artifacts when plotting contour lines of geographic data on a stereographic map
@@ -27,13 +27,13 @@ def fix_overlap(da, ax):
         A :class:`cartopy.mpl.geoaxes.GeoAxes` object with stereographic projection.
     """
     X, Y, masked_data = z_masked_overlap(ax,
-                                         da['lon'].values,
-                                         da['lat'].values,
+                                         da[lon_name].values,
+                                         da[lat_name].values,
                                          da.squeeze().values,
-                                         source_projection=ccrs.Geodetic())
+                                         source_projection=source_projection)
     da.data = masked_data
-    da = da.assign_coords({'lon': (('y', 'x'), X),
-                           'lat': (('y', 'x'), Y)})
+    da = da.assign_coords({lon_name: (('y', 'x'), X),
+                           lat_name: (('y', 'x'), Y)})
     return da
 
 
