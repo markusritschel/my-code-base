@@ -4,6 +4,7 @@
 # Date:   2024-06-08
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
+import colorsys
 import logging
 import matplotlib.colors as mcolors
 import numpy as np
@@ -88,3 +89,15 @@ def build_continuous_cmap(hex_list: list[str], float_list=None, N=256, name='my_
     cmap = mcolors.LinearSegmentedColormap(name, segmentdata=cdict, N=N)
     return cmap
 
+
+def scale_lightness(color: tuple, amount: float):
+    # convert rgb to hls
+    try:
+        c = mcolors.cnames[color]
+    except:
+        c = color
+    rgb = mcolors.to_rgb(c)
+    h, l, s = colorsys.rgb_to_hls(*rgb[:3])
+    # manipulate h, l, s values and return as rgb
+    lightness = min(1, amount*l)
+    return colorsys.hls_to_rgb(h=h, l=lightness, s=s)
