@@ -28,7 +28,7 @@ def register_geoaxes_accessor(accessor_name):
     >>> @register_geoaxes_accessor("my_accessor")
     >>> class MyCustomAccessor:
     >>>     def some_method(self):
-    >>>         pass
+    >>>         ...
     >>>
     >>> ax = plt.subplot(projection=cartopy.crs.NorthPolarStereo())
     >>> ax.my_accessor.some_method()
@@ -115,11 +115,11 @@ class GeoAxesAccessor(ABC):
 
     @abstractmethod
     def add_gridlines(self):
-        pass
+        ...
 
     @abstractmethod
     def add_features(self):
-        pass
+        ...
 
 
 @register_geoaxes_accessor("polar")
