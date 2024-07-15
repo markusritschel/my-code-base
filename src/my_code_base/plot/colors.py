@@ -75,9 +75,7 @@ def build_continuous_cmap(hex_list: list[str], float_list=None, N=256, name='my_
     colour map
     """
     rgb_list = [rgb_to_dec(hex_to_rgb(i)) for i in hex_list]
-    if float_list:
-        pass
-    else:
+    if float_list is None:
         float_list = list(np.linspace(0, 1, len(rgb_list)))
 
     cdict = dict()
