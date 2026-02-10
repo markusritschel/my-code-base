@@ -208,7 +208,7 @@ def extend_annual_series(ds):
 
     Example
     -------
-    >>> ds = xr.Dataset({'time': pd.date_range('2000-01-01', '2001-12-31', freq='M'),
+    >>> ds = xr.Dataset({'time': pd.date_range('2000-01-01', '2001-12-31', freq='ME'),
     ...                  'value': np.random.rand(24)})
     >>> extended_ds = extend_annual_series(ds)
     """
