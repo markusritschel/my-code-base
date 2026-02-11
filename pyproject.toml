@@ -1,7 +1,3 @@
-[build-system]
-requires = ["setuptools>=61.0", "wheel"]
-build-backend = "setuptools.build_meta"
-
 [project]
 name = "my-code-base"
 description = "This is a collection of routines that I've developed over time and that I use in my daily work."
@@ -10,76 +6,87 @@ authors = [
     ]
 readme = "README.md"
 license = {file = "LICENSE"}
-dynamic = ["version"]
+version = "0.1.0"
 requires-python = ">=3.10"
 dependencies = [
-    "cartopy",
-    "click",
-    "flake8",
-    "lxml",
-    "matplotlib",
-    "mpl-axes-aligner",
-    "multipledispatch",
-    "numpy",
-    "pandas",
-    "pooch",
-    "pytest",
-    "pytest-cov",
-    "tqdm",
-    "typing-extensions",
-    "xarray",
-    "xarrayutils",
+  "click",
+  "colorama",
+  "dask",
+  "Deprecated",
+  "docopt",
+  "ipykernel",
+  "ipython",
+  "ipywidgets",
+  "jupyter-book",
+  "jupyterbook-latex",
+  "jupyterlab",
+  "jupyternotify",
+  "jupytext",
+  "markdown",
+  "matplotlib",
+  "mystmd",
+  "nodejs",
+  "numpy",
+  "pandas",
+  "python-dotenv",
+  "rich",
+  "tqdm",
+  "typer",
+  "xarray"
 ]
-
-[project.optional-dependencies]
-docs = [
-    "furo",
-    "geopy",
-    "jupyter-book",
-    "jupytext",
-    "myst-parser",
-    "mystmd",
-    "lxml_html_clean",
-    "nbsphinx",
-    "pydata-sphinx-theme",
-    "rinohtype",
-    "sphinx",
-    "sphinx-autoapi",
-    "sphinx-autodoc-defaultargs",
-    "sphinx-autodoc-typehints",
-    "sphinx-book-theme",
-    "sphinx-immaterial",
-    "sphinx-issues",
-    "sphinx-material",
-    "sphinx-rtd-theme",
-    "sphinx-tabs",
-    "sphinx-toolbox",
-    "sphinxcontrib-apidoc",
-    "sphinxcontrib-bibtex",
-    "sphinxcontrib-htmlhelp",
-    "sphinxcontrib-images",
-    "sphinxcontrib-mermaid",
-    "sphinxcontrib-napoleon",
-    "sphinxcontrib-napoleon2",
-]
-dev = [
-    "pytest",
-    "pytest-cov",
-    "flake8",
-]
-
 
 [project.scripts]
 my-code-base = "my_code_base.cli:main"
 
 
-[tool.setuptools.dynamic]
-version = {attr = "my_code_base.__version__"}
+[dependency-groups]
+dev = [
+  {include-group = "lint"},
+  {include-group = "test"}
+]
+lint = [
+  "flake8",
+  "ruff"
+]
+test = [
+  "pytest",
+  "pytest-cov"
+]
+docs = [
+  "furo",
+  "jupyter-book",
+  "jupytext",
+  "lxml_html_clean",
+  "myst-parser",
+  "nbsphinx",
+  "pydata-sphinx-theme",
+  "rinohtype",
+  "Sphinx",
+  "sphinx-autoapi",
+  "sphinx-autodoc-defaultargs",
+  "sphinx-autodoc-typehints",
+  "sphinx-book-theme",
+  "sphinx-comments",
+  "sphinx-immaterial",
+  "sphinx-issues",
+  "sphinx-material",
+  "sphinx-rtd-theme",
+  "sphinx-tabs",
+  "sphinx-toolbox",
+  "sphinxcontrib-apidoc",
+  "sphinxcontrib-bibtex",
+  "sphinxcontrib-htmlhelp",
+  "sphinxcontrib-images",
+  "sphinxcontrib-mermaid",
+  "sphinxcontrib-napoleon",
+  "sphinxcontrib-napoleon2"
+]
 
 
-[tool.setuptools.packages.find]
-where = ["src"]
-
+[build-system]
+requires = ["uv_build>=0.10.2,<0.11.0"]
+build-backend = "uv_build"
+ 
 
 [tool.jupytext]
 formats = "ipynb,py:percent,md:myst"
@@ -92,7 +99,6 @@ testpaths = [
     "src"
     ]
 addopts = [
-    # "--import-mode=importlib",
     "--doctest-modules",
     "--doctest-continue-on-failure",
     "-ra -v",
@@ -101,11 +107,6 @@ addopts = [
     "--cov-report=html",
     "--cov-report=term-missing"
 ]
-
-
-[tool.flake8]
-max-line-length = 80
-max-complexity = 10
 
 
 [tool.cruft]
