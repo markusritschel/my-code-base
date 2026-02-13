@@ -62,5 +62,13 @@ A comparison of different methods to calculate distances.
 
 ::::
 
-```{tableofcontents}
+
+```{toctree}
+:hidden:
+:caption: Examples
+
+examples/stereographic_maps.ipynb
+examples/z_overlap
+examples/calculating-distances
+examples/detect-sea-ice-edge
 ```

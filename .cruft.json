@@ -1,6 +1,6 @@
 {
   "template": "https://github.com/markusritschel/cookiecutter-pypackage",
-  "commit": "1a31c4eb8a7af0c129ee212eac962513d16fc59f",
+  "commit": "b4410772233d7829926ceae79a2b3669fbd9724d",
   "checkout": null,
   "context": {
     "cookiecutter": {
@@ -10,17 +10,19 @@
       "project_name": "My Code Base",
       "project_slug": "my-code-base",
       "package_name": "my_code_base",
-      "project_short_description": "This is a collection of routines that I've developed over time and that I use in my daily work.",
+      "is_research_project": false,
+      "project_description": "A boilerplate for scientific projects using Python",
       "project_version": "0.1.0",
       "command_line_interface": "Click",
-      "sphinx_theme": "pydata_sphinx_theme",
       "project_license": "MIT license",
+      "sphinx_theme": "pydata_sphinx_theme",
       "_copy_without_render": [
         ".github/workflows/*",
+        "docs/references.bib",
         "justfile"
       ],
       "_template": "https://github.com/markusritschel/cookiecutter-pypackage",
-      "_commit": "1a31c4eb8a7af0c129ee212eac962513d16fc59f"
+      "_commit": "b4410772233d7829926ceae79a2b3669fbd9724d"
     }
   },
   "directory": null
