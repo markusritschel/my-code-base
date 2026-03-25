@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools @ git+https://github.com/pypa/setuptools.git@main", "wheel"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -14,10 +14,58 @@ dynamic = ["version"]
 requires-python = ">=3.10"
 dependencies = [
     "cartopy",
+    "click",
+    "flake8",
     "lxml",
     "matplotlib",
+    "mpl-axes-aligner",
+    "multipledispatch",
     "numpy",
+    "pandas",
+    "pooch",
     "pytest",
+    "pytest-cov",
+    "tqdm",
+    "typing-extensions",
+    "xarray",
+    "xarrayutils",
+]
+
+[project.optional-dependencies]
+docs = [
+    "furo",
+    "geopy",
+    "jupyter-book",
+    "jupytext",
+    "myst-parser",
+    "mystmd",
+    "lxml_html_clean",
+    "nbsphinx",
+    "pydata-sphinx-theme",
+    "rinohtype",
+    "sphinx",
+    "sphinx-autoapi",
+    "sphinx-autodoc-defaultargs",
+    "sphinx-autodoc-typehints",
+    "sphinx-book-theme",
+    "sphinx-immaterial",
+    "sphinx-issues",
+    "sphinx-material",
+    "sphinx-rtd-theme",
+    "sphinx-tabs",
+    "sphinx-toolbox",
+    "sphinxcontrib-apidoc",
+    "sphinxcontrib-bibtex",
+    "sphinxcontrib-htmlhelp",
+    "sphinxcontrib-images",
+    "sphinxcontrib-mermaid",
+    "sphinxcontrib-napoleon",
+    "sphinxcontrib-napoleon2",
+]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "flake8",
 ]
 
 
