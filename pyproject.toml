@@ -23,6 +23,7 @@ dependencies = [
   "jupyterlab",
   "jupyternotify",
   "jupytext",
+  "lxml",
   "markdown",
   "matplotlib",
   "mystmd",
