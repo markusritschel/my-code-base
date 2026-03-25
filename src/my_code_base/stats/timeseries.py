@@ -229,3 +229,15 @@ def extend_annual_series(ds):
     ds_stacked = ds_stacked.drop_vars(['year', 'month', 'year_month'])
     return ds_stacked
 
+
+def zero_crossings(x):
+    """Find the zero crossings of a time series.
+    
+    Example
+    -------
+    >>> x = np.array([1, 2, -1, -2, 1, 2])     # crossing at 2 -> -1 and -2 -> 1
+    >>> zero_crossings(x)
+    array([1, 3])
+    """
+    return np.where(np.diff(np.sign(x)))[0]
+
