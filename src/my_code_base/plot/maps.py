@@ -237,7 +237,7 @@ class StereographicAxisAccessor(GeoAxesAccessor):
 
         return self._gl
 
-    def add_features(self, gridlines=True, ruler=True, **kwargs):
+    def add_features(self, gridlines=True, ruler=True, labels=True, **kwargs):
         """Apply various features to the plot.
 
         Parameters
@@ -246,6 +246,8 @@ class StereographicAxisAccessor(GeoAxesAccessor):
             Whether to add gridlines. Defaults to True.
         ruler : bool, optional
             Whether to add a ruler. Defaults to True.
+        labels : bool, optional
+            Whether to draw labels. Defaults to True.
         kwargs : dict
             Additional keyword arguments for customization.
 
@@ -273,6 +275,7 @@ class StereographicAxisAccessor(GeoAxesAccessor):
         ocean_kwargs = kwargs.pop('ocean_kwargs', {})
         ruler_kwargs = kwargs.pop('ruler_kwargs', {})
         self._lon_grid_spacing = ruler_kwargs.get('segment_length', 30)
+        self._draw_labels = labels
 
         self.set_extent([-180, 180, *self.lat_limits])
         self.add_ocean(**ocean_kwargs)
