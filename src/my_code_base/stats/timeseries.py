@@ -248,3 +248,46 @@ def _mask_after_first_zero_crossing(x):
     return np.where(mask, x, np.nan)
 
 
+def xr_autocorr(x, dim='time', normalize=True, new_dim='lead'):
+    """Calculate the autocorrelation of a time series.
+    
+    Parameters
+    ----------
+    x : xarray.DataArray
+        The input data array containing the time series.
+    dim : str, optional
+        The dimension along which to calculate the autocorrelation. Defaults to 'time'.
+    normalize : bool, optional
+        Whether to normalize the autocorrelation. Defaults to True.
+    new_dim : str, optional
+        The name of the new dimension. Defaults to 'lead'.
+
+    Returns
+    -------
+    xarray.DataArray
+        The autocorrelation of the time series.
+    """
+    from scipy import signal
+
+    corr = xr.apply_ufunc(
+        signal.correlate,
+        x,
+        x,
+        kwargs=dict(mode='same'),
+        input_core_dims=[[dim], [dim]],
+        output_core_dims=[[dim]],
+        vectorize=True,
+        dask='parallelized',
+        output_dtypes=[x.dtype],
+        keep_attrs=False
+    )
+
+    if normalize:
+        corr /= corr.max(dim=dim)
+    corr = corr.rename({dim: new_dim})
+    nlags = len(x[dim])//2
+    corr[new_dim] = np.arange(-nlags, nlags)
+    
+    return corr
+
+
