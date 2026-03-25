@@ -241,3 +241,10 @@ def zero_crossings(x):
     """
     return np.where(np.diff(np.sign(x)))[0]
 
+
+def _mask_after_first_zero_crossing(x):
+    first_zc = zero_crossings(x)[0]
+    mask = np.arange(len(x)) <= first_zc
+    return np.where(mask, x, np.nan)
+
+
