@@ -60,7 +60,7 @@ class GeoAxesAccessor(ABC):
 
     def add_ocean(self, **kwargs):
         """
-        Add ocean feature to the :class:`~cartopy.mpl.geoaxes.GeoAxes`.
+        Add ocean features to the :class:`~cartopy.mpl.geoaxes.GeoAxes`.
 
         Parameters
         ----------
@@ -73,7 +73,7 @@ class GeoAxesAccessor(ABC):
 
     def add_land(self, **kwargs):
         """
-        Add land feature to the :class:`~cartopy.mpl.geoaxes.GeoAxes`.
+        Add land features to the :class:`~cartopy.mpl.geoaxes.GeoAxes`.
 
         Parameters
         ----------
@@ -167,8 +167,8 @@ class StereographicAxisAccessor(GeoAxesAccessor):
         ----------
         kwargs : dict
             Additional keyword arguments for customization.
-            These include `segment_length`, `offset`, `primary_color`, 
-            `secondary_color`, and `width`. For details see :func:`add_circular_ruler`.
+            These include ``segment_length``, ``offset``, ``primary_color``, 
+            ``secondary_color``, and ``width``. For details see :func:`add_circular_ruler`.
         """
         kwargs.setdefault('segment_length', self._lon_grid_spacing)
         add_circular_ruler(self.geo_axes, **kwargs)
@@ -202,8 +202,8 @@ class StereographicAxisAccessor(GeoAxesAccessor):
         The latitude grid spacing is set to 10 degrees.
         The longitude grid spacing is determined by the latitude grid spacing 
         and the x_spacing_factor.
-        The gridlines are created using the `gridlines` method of the `geo_axes` object.
-        The `draw_labels` argument is set to True for the first set of gridlines 
+        The gridlines are created using the :meth:`~cartopy.mpl.geoaxes.GeoAxes.gridlines` method of the ``geo_axes`` object.
+        The ``draw_labels`` argument is set to True for the first set of gridlines 
         and False for the second set.
         """
         kwargs.setdefault('zorder', 1)
