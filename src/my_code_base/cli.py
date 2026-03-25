@@ -6,22 +6,36 @@
 # eMail:  git@markusritschel.de
 # Date:   2024-06-11
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#
+#    
 """Console script for my-code-base."""
 
-from __future__ import absolute_import, division, print_function, with_statement
-import sys
-import click
+import typer
+from rich.console import Console
+
+app = typer.Typer()
+console = Console()
 
 
-@click.command()
-def main(args=None):
-    """Console script for my-code-base."""
-    click.echo("Replace this message by putting your code into "
-               "my-code-base.cli.main")
-    click.echo("See click documentation at https://click.palletsprojects.com/")
-    return None
+
+@app.command()
+def main():
+    """CLI script for my_code_base."""
+    console.print(r"""
+  $$\      $$\           $$\                                             
+  $$ | $\  $$ |          $$ |                                            
+  $$ |$$$\ $$ | $$$$$$\  $$ | $$$$$$$\  $$$$$$\  $$$$$$\$$$$\   $$$$$$\  
+  $$ $$ $$\$$ |$$  __$$\ $$ |$$  _____|$$  __$$\ $$  _$$  _$$\ $$  __$$\ 
+  $$$$  _$$$$ |$$$$$$$$ |$$ |$$ /      $$ /  $$ |$$ / $$ / $$ |$$$$$$$$ |
+  $$$  / \$$$ |$$   ____|$$ |$$ |      $$ |  $$ |$$ | $$ | $$ |$$   ____|
+  $$  /   \$$ |\$$$$$$$\ $$ |\$$$$$$$\ \$$$$$$  |$$ | $$ | $$ |\$$$$$$$\ 
+  \__/     \__| \_______|\__| \_______| \______/ \__| \__| \__| \_______|
+                                                                      
+    """, style="green")
+    # https://patorjk.com/software/taag/
+    console.print("Replace this message by putting your code into "
+               "my_code_base.cli.main")
+    console.print("See Typer documentation at https://typer.tiangolo.com/")
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    app()

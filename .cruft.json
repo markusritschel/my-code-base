@@ -1,6 +1,6 @@
 {
-  "template": "https://github.com/markusritschel/cookiecutter-pypackage",
-  "commit": "b4410772233d7829926ceae79a2b3669fbd9724d",
+  "template": "https://github.com/markusritschel/cookiecutter-pyproject",
+  "commit": "7d0c57565c9bab09fbfa8b9156e6d3b0e06e8b37",
   "checkout": null,
   "context": {
     "cookiecutter": {
@@ -15,14 +15,14 @@
       "project_version": "0.1.0",
       "command_line_interface": "Click",
       "project_license": "MIT license",
-      "sphinx_theme": "pydata_sphinx_theme",
+      "docs_engine": "Sphinx",
       "_copy_without_render": [
         ".github/workflows/*",
         "docs/references.bib",
         "justfile"
       ],
-      "_template": "https://github.com/markusritschel/cookiecutter-pypackage",
-      "_commit": "b4410772233d7829926ceae79a2b3669fbd9724d"
+      "_template": "https://github.com/markusritschel/cookiecutter-pyproject",
+      "_commit": "7d0c57565c9bab09fbfa8b9156e6d3b0e06e8b37"
     }
   },
   "directory": null
