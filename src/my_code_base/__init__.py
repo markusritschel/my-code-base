@@ -7,7 +7,7 @@
 import sys
 from pathlib import Path
 from dotenv import find_dotenv, load_dotenv
-from .core.utils import save, setup_logger
+from .core.utils import save
 
 __version__ = '0.1.0'
 
