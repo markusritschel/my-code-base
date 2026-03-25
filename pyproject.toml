@@ -23,18 +23,23 @@ dependencies = [
   "jupyterlab",
   "jupyternotify",
   "jupytext",
+  "lxml",
   "markdown",
   "matplotlib",
+  "mpl_axes_aligner",
+  "multipledispatch",
   "mystmd",
   "nodejs",
   "numpy",
   "pandas",
   "pandoc",
+  "pooch",
   "python-dotenv",
   "rich",
   "tqdm",
   "typer",
-  "xarray"
+  "xarray",
+  "xarrayutils"
 ]
 
 [project.scripts]
