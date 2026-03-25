@@ -1,4 +1,4 @@
-# Introduction
+# My Code Base Documentation
 
 Welcome to the documentation of *My Code Base*!
 
@@ -60,3 +60,23 @@ to run the tests via `pytest`.
 ## Contact
 
 For any questions or issues, please contact me via git@markusritschel.de or open an [issue](https://github.com/markusritschel/my-code-base/issues).
+
+
+
+```{toctree}
+:hidden:
+:caption: Examples
+
+examples
+faq
+```
+
+
+```{toctree}
+:hidden:
+:caption: Project information
+
+_autoapi/index   # will be generated automatically
+bibliography
+readme
+```
