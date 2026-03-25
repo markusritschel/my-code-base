@@ -99,13 +99,13 @@ class GeoAxesAccessor(ABC):
         kwargs.setdefault('zorder', 3)
         self.geo_axes.coastlines(*args, **kwargs)
 
-    def set_extent(self, extent, crs=cartopy.crs.PlateCarree()):
+    def set_extent(self, extent: tuple | list, crs=cartopy.crs.PlateCarree()):
         """
         Set the extent of the :class:`~cartopy.mpl.geoaxes.GeoAxes`.
 
         Parameters
         ----------
-        extent : tuple
+        extent : tuple | list
             The extent of the :class:`~cartopy.mpl.geoaxes.GeoAxes`. It should be a tuple of the form (xmin, xmax, ymin, ymax).
         crs : cartopy.crs
             The coordinate reference system in which the extent is expressed. Default is :class:`~cartopy.crs.PlateCarree`.
@@ -163,8 +163,12 @@ class StereographicAxisAccessor(GeoAxesAccessor):
         See :func:`add_circular_ruler` for customization arguments.
         The `ax` argument is not needed to be handed over when using the accessor's method.
 
-        Args:
-            kwargs: Additional keyword arguments for customization.
+        Parameters
+        ----------
+        kwargs : dict
+            Additional keyword arguments for customization.
+            These include `segment_length`, `offset`, `primary_color`, 
+            `secondary_color`, and `width`. For details see :func:`add_circular_ruler`.
         """
         kwargs.setdefault('segment_length', self._lon_grid_spacing)
         add_circular_ruler(self.geo_axes, **kwargs)
@@ -175,7 +179,7 @@ class StereographicAxisAccessor(GeoAxesAccessor):
 
         Parameters
         ----------
-        **kwargs : dict
+        kwargs : dict
             Additional keyword arguments for customization.
 
         Returns
@@ -196,9 +200,11 @@ class StereographicAxisAccessor(GeoAxesAccessor):
 
         The gridlines are added based on the latitude limits of the plot.
         The latitude grid spacing is set to 10 degrees.
-        The longitude grid spacing is determined by the latitude grid spacing and the x_spacing_factor.
+        The longitude grid spacing is determined by the latitude grid spacing 
+        and the x_spacing_factor.
         The gridlines are created using the `gridlines` method of the `geo_axes` object.
-        The `draw_labels` argument is set to True for the first set of gridlines and False for the second set.
+        The `draw_labels` argument is set to True for the first set of gridlines 
+        and False for the second set.
         """
         kwargs.setdefault('zorder', 1)
         kwargs.setdefault('linestyle', '-')
@@ -240,7 +246,7 @@ class StereographicAxisAccessor(GeoAxesAccessor):
             Whether to add gridlines. Defaults to True.
         ruler : bool, optional
             Whether to add a ruler. Defaults to True.
-        **kwargs
+        kwargs : dict
             Additional keyword arguments for customization.
 
         Returns
