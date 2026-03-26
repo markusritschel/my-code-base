@@ -75,7 +75,10 @@ class EnsembleAccessor(ABC):
         self._obj.attrs['_ens_member_keys'] = value
 
     @abstractmethod
-    def _init_member_keys(self, member_values):
+    def _init_member_keys(self):
+        ...
+
+    def _set_member_keys(self, member_values):
         self._verify_member_keys(member_values)
         member_table = _build_member_mapping_table(member_values, self.key_template.split('.'))
         self.member_keys = member_table
@@ -118,8 +121,8 @@ def _build_member_mapping_table(member_values, member_id_elements):
 
 @pd.api.extensions.register_dataframe_accessor("ens")
 class PandasEnsembleAccessor(EnsembleAccessor):
-    def _init_member_keys(self, **kwargs):
-        super()._init_member_keys(self._obj.columns)
+    def _init_member_keys(self):
+        self._set_member_keys(self._obj.columns)
 
     def groupby(self, key):
         self._init_member_keys()
@@ -133,8 +136,8 @@ class XarrayEnsembleAccessor(EnsembleAccessor):
     `key_template` attribute of the form 'source_id.member_id.grid_label', following the 
     structure of the entries of the 'member' coordinate.
     """
-    def _init_member_keys(self, **kwargs):
-        if not 'member' in self._obj.coords:
+    def _init_member_keys(self):
+        if 'member' not in self._obj.coords:
             raise AttributeError("No coordinate 'member' found in xarray object.")
-        super()._init_member_keys(self._obj.member.values)
+        self._set_member_keys(self._obj.member.values)
         self.member_keys = self.member_keys.to_xarray()
