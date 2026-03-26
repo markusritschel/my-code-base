@@ -55,9 +55,15 @@ class HistoryAccessor:
         self._obj.attrs['history'] += f"{timestamp}: {msg}; "
         log.debug("Wrote '%s' to history", msg)
         return self._obj
-    
 
-def compress_xarray(data: xr.Dataset | xr.DataArray, complevel: int) -> xr.Dataset | xr.DataArray:
+
+@deprecated("Use xr_compress() instead.")
+def compress_xarray(*args, **kwargs):
+    """.. deprecated:: Use :func:`xr_compress` instead."""
+    return xr_compress(*args, **kwargs)
+
+
+def xr_compress(data: xr.Dataset | xr.DataArray, complevel: int) -> xr.Dataset | xr.DataArray:
     """Compress :class:`xarray.Dataset` or :class:`xarray.DataArray`.
     
     Parameters
@@ -105,11 +111,5 @@ def get_dim_index(da: xr.DataArray, dim: str) -> int:
     >>> get_dim_index(da, 'lat')
     1
     """
-    warnings.warn(
-        "Will be removed in a future version."
-        "Use xr.DataArray.get_axis_num(dim) instead.",
-        DeprecationWarning,
-        stacklevel=2
-    )
     assert isinstance(da, xr.DataArray), "First argument must be of type xr.DataArray."
     return da.dims.index(dim)
