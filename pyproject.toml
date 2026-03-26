@@ -11,7 +11,6 @@ requires-python = ">=3.10"
 dependencies = [
   "cartopy",
   "click",
-  "colorama",
   "dask",
   "Deprecated",
   "docopt",
