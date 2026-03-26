@@ -300,14 +300,14 @@ class StereographicAxisAccessor(GeoAxesAccessor):
     def rotate_lat_labels(self, target_lon=118, orig_lon=150):
         """Move the latitude labels to another longitude.
 
+        Source: https://stackoverflow.com/a/66587492/5925453 with minor adaptions.
+
         Parameters
         ----------
         target_lon : int
             The longitude to which the labels should be moved.
         orig_lon : int
             The longitude at which the labels are located per default [default: 150].
-
-        Source: https://stackoverflow.com/a/66587492/5925453 with minor adaptions.
         """
         plt.draw()
         for tx in self._gl.label_artists:
