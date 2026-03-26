@@ -371,7 +371,7 @@ def add_circular_ruler(ax, segment_length=30, offset=0, primary_color='k', secon
 
     # plot background circle (default: black, slightly broader)
     segments_array = np.linspace(0, 360, 361, endpoint=True)
-    plot_circle(segments_array, color=primary_color, lw=width * 2 + 1, zorder=999, ax=ax)
+    plot_circle(segments_array, color=primary_color, lw=width + 1, zorder=999, ax=ax)
 
     # plot white circle segments on top
     segment_bnds_array = (
@@ -385,7 +385,7 @@ def add_circular_ruler(ax, segment_length=30, offset=0, primary_color='k', secon
             for bnds in segment_bnds_array
         ]
     )
-    plot_circle(segments_array, color=secondary_color, lw=width * 2, zorder=1000, ax=ax)
+    plot_circle(segments_array, color=secondary_color, lw=width, zorder=1000, ax=ax)
 
 
 def _str2float(label):
