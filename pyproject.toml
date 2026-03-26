@@ -26,7 +26,6 @@ dependencies = [
   "markdown",
   "matplotlib",
   "mpl_axes_aligner",
-  "multipledispatch",
   "mystmd",
   "nodejs",
   "numpy",
