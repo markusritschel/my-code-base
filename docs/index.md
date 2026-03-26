@@ -100,7 +100,6 @@ faq
 :hidden:
 :caption: Project information
 
-_autoapi/index   # will be generated automatically
+api/index   # will be generated automatically
 bibliography
-readme
 ```
