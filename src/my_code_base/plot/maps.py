@@ -69,7 +69,8 @@ class GeoAxesAccessor(ABC):
         """
         log.debug('Add ocean to axis')
         kwargs.setdefault('zorder', 0)
-        self.geo_axes.add_feature(cartopy.feature.OCEAN, **kwargs)
+        resolution = kwargs.pop('resolution', '110m')
+        self.geo_axes.add_feature(cartopy.feature.OCEAN.with_scale(resolution), **kwargs)
 
     def add_land(self, **kwargs):
         """
@@ -82,7 +83,8 @@ class GeoAxesAccessor(ABC):
         """
         log.debug('Add land to axis')
         kwargs.setdefault('zorder', 2)
-        self.geo_axes.add_feature(cartopy.feature.LAND, **kwargs)
+        resolution = kwargs.pop('resolution', '110m')
+        self.geo_axes.add_feature(cartopy.feature.LAND.with_scale(resolution), **kwargs)
 
     def add_coastlines(self, *args, **kwargs):
         """
@@ -97,7 +99,8 @@ class GeoAxesAccessor(ABC):
         """
         log.debug('Add coastlines to axis')
         kwargs.setdefault('zorder', 3)
-        self.geo_axes.coastlines(*args, **kwargs)
+        resolution = kwargs.pop('resolution', '110m')
+        self.geo_axes.add_feature(cartopy.feature.COASTLINE.with_scale(resolution), *args, **kwargs)
 
     def set_extent(self, extent: tuple | list, crs=cartopy.crs.PlateCarree()):
         """
@@ -237,7 +240,7 @@ class StereographicAxisAccessor(GeoAxesAccessor):
 
         return self._gl
 
-    def add_features(self, gridlines=True, ruler=True, labels=True, **kwargs):
+    def add_features(self, gridlines=True, ruler=True, labels=True, resolution='110m', **kwargs):
         """Apply various features to the plot.
 
         Parameters
@@ -274,6 +277,9 @@ class StereographicAxisAccessor(GeoAxesAccessor):
         land_kwargs = kwargs.pop('land_kwargs', {})
         ocean_kwargs = kwargs.pop('ocean_kwargs', {})
         ruler_kwargs = kwargs.pop('ruler_kwargs', {})
+        coastlines_kwargs.setdefault('resolution', resolution)
+        ocean_kwargs.setdefault('resolution', resolution)
+        land_kwargs.setdefault('resolution', resolution)
         self._lon_grid_spacing = ruler_kwargs.get('segment_length', 30)
         self._draw_labels = labels
 
