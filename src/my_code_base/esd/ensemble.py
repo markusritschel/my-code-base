@@ -5,12 +5,41 @@
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
 from abc import ABC, abstractmethod
+from functools import wraps
 import logging
 import pandas as pd
 import xarray as xr
 
 
 log = logging.getLogger(__name__)
+
+
+class _ColumnGroupBy:
+    """Proxy around a transposed DataFrameGroupBy that transposes results back,
+    so column-wise groupby semantics are preserved without ``axis=1``."""
+
+    def __init__(self, groupby):
+        self._groupby = groupby
+
+    def __len__(self):
+        return len(self._groupby)
+
+    def __iter__(self):
+        for key, group in self._groupby:
+            yield key, group.T
+
+    def __getattr__(self, name):
+        attr = getattr(self._groupby, name)
+        if not callable(attr):
+            return attr
+
+        @wraps(attr)
+        def wrapper(*args, **kwargs):
+            result = attr(*args, **kwargs)
+            if isinstance(result, pd.DataFrame):
+                return result.T
+            return result
+        return wrapper
 
 
 class EnsembleAccessor(ABC):
@@ -94,7 +123,7 @@ class PandasEnsembleAccessor(EnsembleAccessor):
 
     def groupby(self, key):
         self._init_member_keys()
-        return self._obj.groupby(self.member_keys[key], axis=1)
+        return _ColumnGroupBy(self._obj.T.groupby(self.member_keys[key]))
 
 
 @xr.register_dataset_accessor("ens")
