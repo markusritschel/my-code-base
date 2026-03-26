@@ -17,17 +17,16 @@ class EnsembleAccessor(ABC):
     def __init__(self, data_obj) -> None:
         super().__init__()
         self._obj = data_obj
-        self._key_template = None
-        self.member_keys = None
 
     @property
     def key_template(self):
         """Return the key template"""
-        if not self._key_template:
+        template = self._obj.attrs.get('_ens_key_template')
+        if not template:
             raise KeyError("key_template not set. Make sure the attributes of the "
                            "'member' coordinate comprise a 'key_template' value. "
                            "You can set this via ds.ens.key_template = 'your.template'.")
-        return self._key_template
+        return template
 
     @key_template.setter
     def key_template(self, template_string):
@@ -36,7 +35,15 @@ class EnsembleAccessor(ABC):
         if 'member' in template_string.split('.'):
             raise ValueError("key_template must not contain 'member'! "
                              "Please choose a different identifier.")
-        self._key_template = template_string
+        self._obj.attrs['_ens_key_template'] = template_string
+
+    @property
+    def member_keys(self):
+        return self._obj.attrs.get('_ens_member_keys')
+
+    @member_keys.setter
+    def member_keys(self, value):
+        self._obj.attrs['_ens_member_keys'] = value
 
     @abstractmethod
     def _init_member_keys(self, member_values):
