@@ -34,6 +34,11 @@ This is a **caption**!
 
 Adding features to polar plots.
 {glue}`./examples/stereographic_maps.ipynb::polar_plot_features`
+
+```{glue} polar_plot_features
+:doc: ./examples/stereographic_maps.ipynb
+```
+
 :::
 
 :::{grid-item-card} Polar contour artifacts
