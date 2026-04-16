@@ -37,7 +37,8 @@ dependencies = [
   "tqdm",
   "typer",
   "xarray",
-  "xarrayutils"
+  "xarrayutils",
+  "multipledispatch>=1.0.0",
 ]
 
 [project.scripts]

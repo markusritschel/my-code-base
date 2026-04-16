@@ -5,10 +5,14 @@
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
 import logging
+
+import numpy as np
+import pandas as pd
 import xarray as xr
 from multipledispatch import dispatch
-from .timeseries import extend_annual_series, weighted_annual_mean
+from scipy import stats
 
+from .timeseries import extend_annual_series, weighted_annual_mean, xr_deseasonalize
 
 log = logging.getLogger(__name__)
 
@@ -183,7 +187,7 @@ def xr_linregress(x, y, dim='time', dof=None, deseasonalize: bool = True):
         # COMMENT: Seasonal autocorrelation inflates τ, making n_eff artificially small (overly conservative).
         # → Deseasonalize, but only if the data has sub-annual frequency. See Issue #17
         if deseasonalize and _has_seasonal_frequency(x, dim=dim):
-        x = xr_deseasonalize(x)
+            x = xr_deseasonalize(x)
         x_autocorr = xr_autocorr(x, dim=dim, normalize=True)
         positive_r = x_autocorr.sel(lead=slice(0, None))
         threshold = 1 / np.e if integral_cutoff == "1/e" else 0.0
@@ -214,8 +218,8 @@ def xr_linregress(x, y, dim='time', dof=None, deseasonalize: bool = True):
     elif dof == "effective_sample_size":
         # See Issue #16
         if deseasonalize and _has_seasonal_frequency(x, dim=dim):
-        x = xr_deseasonalize(x)
-        y = xr_deseasonalize(y)
+            x = xr_deseasonalize(x)
+            y = xr_deseasonalize(y)
         r1 = xr_autocorr(x, dim=dim, normalize=True).sel(lead=1)
         r2 = xr_autocorr(y, dim=dim, normalize=True).sel(lead=1)
         n_eff = n * (1 - r1 * r2) / (1 + r1 * r2)
