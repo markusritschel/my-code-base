@@ -465,3 +465,25 @@ def effective_sample_size(x, y):
     return n_eff
 
 
+def ndof_lag1_autocorrelation(x, y):
+    """
+    Calculate the number of degrees of freedom (ndof) based on the lag-1 autocorrelation
+    of two time series.
+
+    Parameters
+    ----------
+    x: 1-D array-like
+        The first time series data.
+    y: 1-D array-like
+        The second time series data.
+
+    Returns
+    -------
+    dof: float
+        The number of degrees of freedom.
+    """
+    n_eff = effective_sample_size(x, y)
+    dof = n_eff - 2
+    return dof
+
+
