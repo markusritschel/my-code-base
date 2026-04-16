@@ -414,3 +414,54 @@ def ndof_integral_timescale(data, dt=1):
 _IntegralTimescaleResult = namedtuple("IntegralTimescaleResult", ["timescale", "dof"])
 
 
+def lag1_autocorrelation(x):
+    """Calculate the lag-1 autocorrelation of a time series."""
+    if len(x) < 3:
+        raise ValueError(
+            f"Need at least 3 data points for lag-1 autocorrelation, got {len(x)}."
+        )
+    return np.corrcoef(x[:-1], x[1:])[0, 1]
+
+
+def effective_sample_size(x, y):
+    """
+    Calculate the effective sample size of two time series based on the lag-1 autocorrelation.
+
+    Parameters
+    ----------
+    x : np.ndarray
+        The first time series data.
+    y : np.ndarray
+        The second time series data.
+
+    Returns
+    -------
+    float
+        The effective sample size of the two time series.
+    """
+    r1 = lag1_autocorrelation(x)
+    r2 = lag1_autocorrelation(y)
+
+    n = x.size
+    denom = 1 + r1 * r2
+    if np.isclose(denom, 0):
+        log.warning(
+            "r1*r2 ≈ -1 (denom=%.4f); effective sample size "
+            "is ill-defined, clamping to n=%d",
+            denom,
+            n,
+        )
+        return float(n)
+
+    n_eff_raw = n * (1 - r1 * r2) / denom
+    # Following Bretherton et al. (1999), eq. 31
+    # DOI: 10.1175/1520-0442(1999)012<1990:TENOSD>2.0.CO;2
+    n_eff = np.clip(n_eff_raw, 2, n)
+    if n_eff != n_eff_raw:
+        log.warning(
+            "Effective sample size clamped to [2, %d] (raw n_eff=%.2f)", n, n_eff_raw
+        )
+
+    return n_eff
+
+
