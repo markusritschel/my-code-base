@@ -13,6 +13,23 @@ from .timeseries import extend_annual_series, weighted_annual_mean
 log = logging.getLogger(__name__)
 
 
+def _has_seasonal_frequency(obj, dim="time"):
+    """Check if data has sub-annual temporal resolution."""
+    time = obj[dim]
+    if not np.issubdtype(time.dtype, np.datetime64):
+        return False
+    try:
+        freq = pd.infer_freq(time.values)
+    except ValueError:
+        freq = None
+    if freq is None:
+        # Fallback: check median spacing
+        dt = np.diff(time.values).astype("timedelta64[D]").astype(float)
+        median_days = np.median(dt)
+        return median_days < 360
+    return not freq.startswith(("A", "Y", "AS", "YS"))
+
+
 @xr.register_dataset_accessor("stats")
 @xr.register_dataarray_accessor("stats")
 class StatsAccessor:
