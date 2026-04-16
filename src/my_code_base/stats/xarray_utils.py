@@ -100,7 +100,7 @@ class StatsAccessor:
         return extend_annual_series(ds)
 
 
-def xr_linregress(x, y, dim='time', dof=None):
+def xr_linregress(x, y, dim='time', dof=None, deseasonalize: bool = True):
     """
     Calculate linear regression statistics between two :class:`xarray.DataArray` along a specified dimension.
 
@@ -112,14 +112,14 @@ def xr_linregress(x, y, dim='time', dof=None):
         The dependent variable.
     dim : str, optional
         The dimension along which to perform the regression. Defaults to 'time'.
-    dof : int or str, optional
+    dof : int, str, or tuple, optional
         The degrees of freedom for the t-distribution. If None, it is calculated as n - 2,
         where n is the sample size. If 'integral_timescale', the integral timescale is 
         calculated and used to determine the degrees of freedom. If 'effective_sample_size', 
         the effective sample size is calculated and used to determine the degrees of freedom. 
+        Can also be a tuple ``('integral_timescale', '1/e')`` to use the 1/e decay threshold
+        instead of the first zero-crossing when computing the integral timescale.
         Defaults to None.
-    deseasonalize : bool, optional
-        If True, deseasonalize x and y before performing the regression. Defaults to True.
 
     Returns
     -------
@@ -144,12 +144,16 @@ def xr_linregress(x, y, dim='time', dof=None):
       n * (1 - r1*r2) / (1 + r1*r2), where r1 and r2 are the lag-1 autocorrelation 
       coefficients of x and y, respectively.
     """
-    from ..stats.timeseries import xr_autocorr, _mask_after_first_zero_crossing
+    from ..stats.timeseries import _mask_after_threshold_crossing, xr_autocorr
+
     TINY = 1.0e-20
 
-    x = x.where(~np.isnan(x))
-    y = y.where(~np.isnan(x))
+    # n = x[dim].size
+    x = x.where(y.notnull())
+    y = y.where(x.notnull())
 
+    # COMMENT: If there are NaNs, the `n = x[dim].size` overstates the sample size, which deflates covariance/variance estimates (dividing by too-large N) and inflates DOF.
+    # → Using notnull().sum(dim) for correctness. See Issue #16
     n = y.notnull().sum(dim)
     nanmask = np.isnan(y).all(dim)
 
@@ -166,51 +170,68 @@ def xr_linregress(x, y, dim='time', dof=None):
 
     out_dict = {'sample_size': n}
 
-    if dof is None:
-        dof = n - 2
+    # Parse tuple-based dof parameter, e.g. dof=('integral_timescale', '1/e')
+    integral_cutoff = "zero_crossing"
+    if isinstance(dof, tuple):
+        dof, integral_cutoff = dof
     elif isinstance(dof, int):
         dof = dof - 2
-    elif dof == 'integral_timescale':
-        # TODO: Discuss if we should deseasonalize beforehand or not
+    if dof is None:
+        dof = n - 2
+
+    elif dof == "integral_timescale":
+        # COMMENT: Seasonal autocorrelation inflates τ, making n_eff artificially small (overly conservative).
+        # → Deseasonalize, but only if the data has sub-annual frequency. See Issue #17
+        if deseasonalize and _has_seasonal_frequency(x, dim=dim):
         x = xr_deseasonalize(x)
         x_autocorr = xr_autocorr(x, dim=dim, normalize=True)
         positive_r = x_autocorr.sel(lead=slice(0, None))
-        positive_r_till_first_zerocrossing = (
-            xr.apply_ufunc(
-                _mask_after_first_zero_crossing,
+        threshold = 1 / np.e if integral_cutoff == "1/e" else 0.0
+        positive_r_masked = xr.apply_ufunc(
+            _mask_after_threshold_crossing,
                 positive_r,
+            kwargs={"threshold": threshold},
                 input_core_dims=[['lead']],
                 output_core_dims=[['lead']],
                 dask="parallelized",
                 vectorize=True,
-                output_dtypes=['float']
-            )
+            output_dtypes=['float'],
         )
-        τ = positive_r_till_first_zerocrossing.fillna(0).integrate(coord='lead')
-        log.info(f"Integral timescale: {τ}")
+        τ = positive_r_masked.fillna(0).integrate(coord="lead")
+        log.debug(f"Integral timescale: {τ}")
         n_eff = n / τ  # Following eq. (3.15.17) in Emery & Thomson (2004)
         n_eff = n_eff.where(n_eff < n, n)  # allow a maximum of n for n_eff
 
         dof = n_eff - 2
-        out_dict.update({'autocorr': x_autocorr, 'integral_timescale': τ, 'effective_sample_size': n_eff})
-    elif dof == 'effective_sample_size':
-        # TODO: Discuss if we should deseasonalize beforehand or not
+        out_dict.update(
+            {
+                "autocorr": x_autocorr,
+                "integral_timescale": τ,
+                "effective_sample_size": n_eff,
+            }
+        )
+
+    elif dof == "effective_sample_size":
+        # See Issue #16
+        if deseasonalize and _has_seasonal_frequency(x, dim=dim):
         x = xr_deseasonalize(x)
         y = xr_deseasonalize(y)
-        r1 = x_autocorr = xr_autocorr(x, dim=dim, normalize=True).sel(lead=1)
-        r2 = y_autocorr = xr_autocorr(y, dim=dim, normalize=True).sel(lead=1)
-        n_eff = n * (1 - r1*r2) / (1 + r1*r2)
+        r1 = xr_autocorr(x, dim=dim, normalize=True).sel(lead=1)
+        r2 = xr_autocorr(y, dim=dim, normalize=True).sel(lead=1)
+        n_eff = n * (1 - r1 * r2) / (1 + r1 * r2)
         dof = n_eff - 2
         out_dict.update({'effective_sample_size': n_eff})
+
     out_dict.update({'dof': dof})
     log.info(f"Degrees of freedom: {dof}")
 
     tstats = cor * np.sqrt(dof / ((1.0 - cor + TINY) * (1.0 + cor + TINY)))
     stderr = slope / tstats
+    # Issue #15: Should we scale with σ?
 
     pval = (
         xr.apply_ufunc(
-            stats.distributions.t.sf,   # sf is the survival function (1 - cdf)
+            stats.distributions.t.sf,  # sf is the survival function (1 - cdf)
             abs(tstats),
             dof,
             dask="parallelized",
@@ -219,14 +240,32 @@ def xr_linregress(x, y, dim='time', dof=None):
         * 2  # Convert pval to a two-tailed test
     )
 
-    out_dict.update({
+    out_dict.update(
+        {
         "slope": slope,
         "intercept": intercept,
         "r_value": cor.fillna(0).where(~nanmask),
         "p_value": pval,
         "std_err": stderr.where(~np.isinf(stderr), 0),
-    })
-
-    return xr.Dataset(
-        out_dict
+        }
     )
+
+    ds = xr.Dataset(out_dict)
+
+    _metadata = {
+        "sample_size": {"long_name": "Number of valid observations"},
+        "dof": {"long_name": "Degrees of freedom"},
+        "slope": {"long_name": "Regression slope", "units": "[y] / [x]"},
+        "intercept": {"long_name": "Regression intercept", "units": "[y]"},
+        "r_value": {"long_name": "Pearson correlation coefficient"},
+        "p_value": {"long_name": "Two-tailed p-value"},
+        "std_err": {"long_name": "Standard error of the slope", "units": "[y] / [x]"},
+        "autocorr": {"long_name": "Autocorrelation function"},
+        "integral_timescale": {"long_name": "Integral timescale", "units": "[x]"},
+        "effective_sample_size": {"long_name": "Effective sample size"},
+    }
+    for var, attrs in _metadata.items():
+        if var in ds:
+            ds[var].attrs.update(attrs)
+
+    return ds
