@@ -314,3 +314,59 @@ def xr_autocorr(x, dim="time", normalize=True, new_dim="lead"):
     return corr
 
 
+def integral_timescale(data, dt=1):
+    """
+    Calculate the integral timescale of decorrelation of a time series.
+
+    Parameters
+    ----------
+    data : np.ndarray
+        The input data array containing the time series.
+        Must be NaN-free; pass pre-cleaned data to avoid
+        destroying temporal structure.
+    dt : float
+        The time step of the data.
+
+    Returns
+    -------
+    float
+        The integral timescale of the time series.
+
+    Raises
+    ------
+    ValueError
+        If the input data contains NaN values.
+
+    Notes
+    -----
+    The integral timescale is calculated as the integral of the
+    autocorrelation function (ACF) of the time series up to the
+    first zero crossing.
+    """
+    from scipy.signal import correlate
+
+    if np.any(np.isnan(data)):
+        raise ValueError(
+            "Input data contains NaN values. Remove NaNs before calling this function."
+        )
+
+    data = data - data.mean()
+
+    # Calculate autocorrelation, use only 2nd half (non-negative lags), and normalize
+    autocorr = correlate(data, data, mode="full")
+    autocorr = autocorr[autocorr.size // 2 :]
+    autocorr = autocorr / autocorr.max()
+
+
+    autocorr = _mask_after_first_zero_crossing(autocorr)
+    autocorr = np.nan_to_num(autocorr)
+
+    τ = np.trapezoid(autocorr, dx=dt)
+
+    return τ
+
+
+# alias
+decorrelation_timescale = integral_timescale
+
+
