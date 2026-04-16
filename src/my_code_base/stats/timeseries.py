@@ -257,7 +257,7 @@ def _mask_after_first_zero_crossing(x):
     return _mask_after_threshold_crossing(x, threshold=0.0)
 
 
-def xr_autocorr(x, dim='time', normalize=True, new_dim='lead'):
+def xr_autocorr(x, dim="time", normalize=True, new_dim="lead"):
     """Calculate the autocorrelation of a time series.
     
     Parameters
@@ -282,19 +282,19 @@ def xr_autocorr(x, dim='time', normalize=True, new_dim='lead'):
         signal.correlate,
         x,
         x,
-        kwargs=dict(mode='same'),
+        kwargs=dict(mode="same"),
         input_core_dims=[[dim], [dim]],
         output_core_dims=[[dim]],
         vectorize=True,
-        dask='parallelized',
+        dask="parallelized",
         output_dtypes=[x.dtype],
-        keep_attrs=False
+        keep_attrs=False,
     )
 
     if normalize:
         corr /= corr.max(dim=dim)
     corr = corr.rename({dim: new_dim})
-    nlags = len(x[dim])//2
+    nlags = len(x[dim]) // 2
     corr[new_dim] = np.arange(-nlags, nlags)
     
     return corr
