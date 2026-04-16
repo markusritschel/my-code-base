@@ -242,12 +242,19 @@ def zero_crossings(x):
     return np.where(np.diff(np.sign(x)))[0]
 
 
+def _mask_after_threshold_crossing(arr, threshold=0.0):
+    """Mask values after the signal first drops below *threshold*."""
+    below = arr < threshold
+    if not np.any(below):
+        return arr
+    first_idx = np.argmax(below)
+    out = arr.copy()
+    out[first_idx:] = np.nan
+    return out
+
+
 def _mask_after_first_zero_crossing(x):
-    zc = zero_crossings(x)
-    if len(zc) == 0:
-        return x
-    mask = np.arange(len(x)) <= zc[0]
-    return np.where(mask, x, np.nan)
+    return _mask_after_threshold_crossing(x, threshold=0.0)
 
 
 def xr_autocorr(x, dim='time', normalize=True, new_dim='lead'):
