@@ -7,6 +7,8 @@
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
 import logging
+from collections import namedtuple
+
 import numpy as np
 import pandas as pd
 import xarray as xr
@@ -368,5 +370,47 @@ def integral_timescale(data, dt=1):
 
 # alias
 decorrelation_timescale = integral_timescale
+
+
+def ndof_integral_timescale(data, dt=1):
+    """
+    Calculate the number of degrees of freedom (dof) of the integral
+    timescale of decorrelation of a time series.
+
+    Parameters
+    ----------
+    data : np.ndarray
+        The input data array containing the time series.
+    dt : float
+        The time step of the data.
+
+    Returns
+    -------
+    IntegralTimescaleResult
+        Named tuple with fields ``timescale`` (the integral timescale)
+        and ``dof`` (the degrees of freedom).
+
+    Notes
+    -----
+    The effective sample size is calculated as ``n * dt / τ`` following
+    Emery & Thomson (2004), eq. (3.15.17). It is clamped to ``[2, n]``
+    to ensure valid degrees of freedom.
+    """
+    data = data[~np.isnan(data)]
+    data = data - data.mean()
+
+    τ = integral_timescale(data, dt)
+    m = len(data)
+    n_eff_raw = m * dt / τ if τ > 0 else float(m)
+    n_eff = np.clip(n_eff_raw, 2, m)
+    if n_eff != n_eff_raw:
+        log.warning(
+            "Effective sample size clamped to [2, %d] (raw n_eff=%.2f)", m, n_eff_raw
+        )
+    dof = n_eff - 2
+    return _IntegralTimescaleResult(τ, dof)
+
+
+_IntegralTimescaleResult = namedtuple("IntegralTimescaleResult", ["timescale", "dof"])
 
 
