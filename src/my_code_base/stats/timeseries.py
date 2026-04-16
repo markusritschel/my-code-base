@@ -59,7 +59,7 @@ def weighted_annual_mean(ds: xr.Dataset | xr.DataArray):
         except:
             log.warning("Cannot infer frequency")
             return
-    
+
     check_for_frequency(ds)
 
     # Determine the month length
@@ -119,10 +119,10 @@ def xr_deseasonalize(da, freq=12, dim="time"):
 
     deseasonalized_detrended = (
         detrended.groupby(f"{dim}.month") - detrended.groupby(f"{dim}.month").mean()
-        )
+    )
     return deseasonalized_detrended + trend
-    
-    
+
+
 def xr_seasonal_decompose(da, dim="time"):
     """
     Perform seasonal decomposition of a time series using the given dataset.
@@ -136,11 +136,11 @@ def xr_seasonal_decompose(da, dim="time"):
 
     Returns
     -------
-    xarray.Dataset: 
+    xarray.Dataset:
         A new dataset containing the decomposed components: trend, detrended, seasonality, residuals, and deseasonalized.
     """
     assert isinstance(da, xr.DataArray), "Input should be xarray.DataArray"
-    
+
     res = xarrayutils.linear_trend(da, dim=dim)
     time_index = xr.DataArray(
         np.arange(da[dim].size), dims={dim: da[dim]}, coords={dim: da[dim]}
@@ -159,7 +159,7 @@ def xr_seasonal_decompose(da, dim="time"):
     result["seasonality"] = seasonality
     result["residuals"] = residuals
     result["deseasonalized"] = deseasonalized
-    
+
     return result
 
 
@@ -202,7 +202,7 @@ def pd_seasonal_decompose(x, freq=12):
 def extend_annual_series(ds):
     """
     Fill a time series with only annual values (one such timeseries could be generated
-    via :func:`weighted_annual_mean`, for example) such that all months are represented again but the value 
+    via :func:`weighted_annual_mean`, for example) such that all months are represented again but the value
     for all 12 months within a year is equal to the annual value.
 
     Parameters
@@ -248,7 +248,7 @@ def extend_annual_series(ds):
 
 def zero_crossings(x):
     """Find the zero crossings of a time series.
-    
+
     Example
     -------
     >>> x = np.array([1, 2, -1, -2, 1, 2])     # crossing at 2 -> -1 and -2 -> 1
@@ -275,7 +275,7 @@ def _mask_after_first_zero_crossing(x):
 
 def xr_autocorr(x, dim="time", normalize=True, new_dim="lead"):
     """Calculate the autocorrelation of a time series.
-    
+
     Parameters
     ----------
     x : xarray.DataArray
@@ -312,7 +312,7 @@ def xr_autocorr(x, dim="time", normalize=True, new_dim="lead"):
     corr = corr.rename({dim: new_dim})
     nlags = len(x[dim]) // 2
     corr[new_dim] = np.arange(-nlags, nlags)
-    
+
     return corr
 
 

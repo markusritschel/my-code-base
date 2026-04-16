@@ -118,16 +118,16 @@ def xr_linregress(x, y, dim='time', dof=None, deseasonalize: bool = True):
         The dimension along which to perform the regression. Defaults to 'time'.
     dof : int, str, or tuple, optional
         The degrees of freedom for the t-distribution. If None, it is calculated as n - 2,
-        where n is the sample size. If 'integral_timescale', the integral timescale is 
-        calculated and used to determine the degrees of freedom. If 'effective_sample_size', 
-        the effective sample size is calculated and used to determine the degrees of freedom. 
+        where n is the sample size. If 'integral_timescale', the integral timescale is
+        calculated and used to determine the degrees of freedom. If 'effective_sample_size',
+        the effective sample size is calculated and used to determine the degrees of freedom.
         Can also be a tuple ``('integral_timescale', '1/e')`` to use the 1/e decay threshold
         instead of the first zero-crossing when computing the integral timescale.
         Defaults to None.
 
     Returns
     -------
-    xarray.Dataset: 
+    xarray.Dataset:
         A dataset containing the following regression statistics:
         - 'sample_size': The number of non-null values along the specified dimension.
         - 'slope': The slope of the regression line.
@@ -139,13 +139,13 @@ def xr_linregress(x, y, dim='time', dof=None, deseasonalize: bool = True):
     Notes
     -----
     - NaN values are automatically excluded from the calculations.
-    - The correlation coefficient, p-value, and standard error are calculated using the 
+    - The correlation coefficient, p-value, and standard error are calculated using the
       t-distribution.
-    - If dof is 'integral_timescale', the integral timescale is calculated as the sum 
-      of autocorrelation values until the first zero-crossing. The effective sample size 
+    - If dof is 'integral_timescale', the integral timescale is calculated as the sum
+      of autocorrelation values until the first zero-crossing. The effective sample size
       is then calculated as the total sample size divided by the integral timescale.
-    - If dof is 'effective_sample_size', the effective sample size is calculated as 
-      n * (1 - r1*r2) / (1 + r1*r2), where r1 and r2 are the lag-1 autocorrelation 
+    - If dof is 'effective_sample_size', the effective sample size is calculated as
+      n * (1 - r1*r2) / (1 + r1*r2), where r1 and r2 are the lag-1 autocorrelation
       coefficients of x and y, respectively.
     """
     from ..stats.timeseries import _mask_after_threshold_crossing, xr_autocorr
@@ -193,12 +193,12 @@ def xr_linregress(x, y, dim='time', dof=None, deseasonalize: bool = True):
         threshold = 1 / np.e if integral_cutoff == "1/e" else 0.0
         positive_r_masked = xr.apply_ufunc(
             _mask_after_threshold_crossing,
-                positive_r,
+            positive_r,
             kwargs={"threshold": threshold},
-                input_core_dims=[['lead']],
-                output_core_dims=[['lead']],
-                dask="parallelized",
-                vectorize=True,
+            input_core_dims=[['lead']],
+            output_core_dims=[['lead']],
+            dask="parallelized",
+            vectorize=True,
             output_dtypes=['float'],
         )
         τ = positive_r_masked.fillna(0).integrate(coord="lead")
@@ -246,11 +246,11 @@ def xr_linregress(x, y, dim='time', dof=None, deseasonalize: bool = True):
 
     out_dict.update(
         {
-        "slope": slope,
-        "intercept": intercept,
-        "r_value": cor.fillna(0).where(~nanmask),
-        "p_value": pval,
-        "std_err": stderr.where(~np.isinf(stderr), 0),
+            "slope": slope,
+            "intercept": intercept,
+            "r_value": cor.fillna(0).where(~nanmask),
+            "p_value": pval,
+            "std_err": stderr.where(~np.isinf(stderr), 0),
         }
     )
 
