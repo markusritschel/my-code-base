@@ -20,7 +20,7 @@ def weighted_annual_mean(ds: xr.Dataset | xr.DataArray):
     Compute the weighted annual mean of an :class:`xarray.Dataset` or :class:`xarray.DataArray`.
 
     Parameters
-    ---------
+    ----------
     ds :
         The input dataset or data array.
 
@@ -46,11 +46,14 @@ def weighted_annual_mean(ds: xr.Dataset | xr.DataArray):
     The function assumes that the input dataset or data array has a 'time' dimension.
 
     """
+
     def check_for_frequency(ds):
         try:
             estimated_frequency = xr.infer_freq(ds.time)
-            if not estimated_frequency.startswith('M'):
-                log.warning("Frequency seems to be not monthly. Consider another averaging method.")
+            if not estimated_frequency.startswith("M"):
+                log.warning(
+                    "Frequency seems to be not monthly. Consider another averaging method."
+                )
         except:
             log.warning("Cannot infer frequency")
             return
@@ -63,11 +66,14 @@ def weighted_annual_mean(ds: xr.Dataset | xr.DataArray):
     # Calculate the weights
     # In each 4th year, the total amount of days differs compared to other years
     # Therefore, weights need to be calculated on an annual base
-    weights = month_length.groupby("time.year") / month_length.groupby("time.year").sum()
+    weights = (
+        month_length.groupby("time.year") / month_length.groupby("time.year").sum()
+    )
 
     # Make sure the weights in each year add up to 1
-    assert np.allclose(weights.groupby("time.year").sum(xr.ALL_DIMS), 1.0), \
+    assert np.allclose(weights.groupby("time.year").sum(xr.ALL_DIMS), 1.0), (
         "The sum of the weights should be 1.0!"
+    )
 
     # Setup our masking for nan values
     ones = xr.where(ds.isnull(), 0.0, 1.0)
@@ -83,11 +89,13 @@ def weighted_annual_mean(ds: xr.Dataset | xr.DataArray):
     # Return the weighted average
     output = ds_sum / ones_out
 
-    output = output.assign_coords(year=('time', output.time.dt.year.values), keep_attrs=True)
-    return output.swap_dims({'time': 'year'}).drop_vars('time')
+    output = output.assign_coords(
+        year=("time", output.time.dt.year.values), keep_attrs=True
+    )
+    return output.swap_dims({"time": "year"}).drop_vars("time")
 
 
-def xr_deseasonalize(da, freq=12, dim='time'):
+def xr_deseasonalize(da, freq=12, dim="time"):
     """Remove the seasonal cycle of an :class:`xr.Dataset` object.
     Data get first detrended, then the long-term average of every season is subtracted for
     each season. Finally, the trend is added again.
@@ -100,18 +108,20 @@ def xr_deseasonalize(da, freq=12, dim='time'):
         The name of the time dimension.
     """
     res = xarrayutils.linear_trend(da, dim=dim)
-    time_index = xr.DataArray(np.arange(da[dim].size), dims={dim:da[dim]}, coords={dim:da[dim]})
-    trend = res.intercept + time_index*res.slope
+    time_index = xr.DataArray(
+        np.arange(da[dim].size), dims={dim: da[dim]}, coords={dim: da[dim]}
+    )
+    trend = res.intercept + time_index * res.slope
 
     detrended = da - trend
 
     deseasonalized_detrended = (
-        detrended.groupby(f'{dim}.month') - detrended.groupby(f'{dim}.month').mean()
+        detrended.groupby(f"{dim}.month") - detrended.groupby(f"{dim}.month").mean()
         )
     return deseasonalized_detrended + trend
     
     
-def xr_seasonal_decompose(da, dim='time'):
+def xr_seasonal_decompose(da, dim="time"):
     """
     Perform seasonal decomposition of a time series using the given dataset.
 
@@ -130,21 +140,23 @@ def xr_seasonal_decompose(da, dim='time'):
     assert isinstance(da, xr.DataArray), "Input should be xarray.DataArray"
     
     res = xarrayutils.linear_trend(da, dim=dim)
-    time_index = xr.DataArray(np.arange(da[dim].size), dims={dim:da[dim]}, coords={dim:da[dim]})
+    time_index = xr.DataArray(
+        np.arange(da[dim].size), dims={dim: da[dim]}, coords={dim: da[dim]}
+    )
 
-    trend = res.intercept + time_index*res.slope
+    trend = res.intercept + time_index * res.slope
     detrended = da - trend
-    seasonality = detrended.groupby(f'{dim}.month').mean()
-    residuals = detrended.groupby(f'{dim}.month') - seasonality
+    seasonality = detrended.groupby(f"{dim}.month").mean()
+    residuals = detrended.groupby(f"{dim}.month") - seasonality
     deseasonalized = residuals + trend
 
     # Create a new dataset to store the results
     result = xr.Dataset()
-    result['trend'] = trend
-    result['detrended'] = detrended
-    result['seasonality'] = seasonality
-    result['residuals'] = residuals
-    result['deseasonalized'] = deseasonalized
+    result["trend"] = trend
+    result["detrended"] = detrended
+    result["seasonality"] = seasonality
+    result["residuals"] = residuals
+    result["deseasonalized"] = deseasonalized
     
     return result
 
@@ -170,7 +182,7 @@ def pd_seasonal_decompose(x, freq=12):
 
     # calculate the trend component
     # TODO: decide if this should be calculated based on a running mean or the linear trend
-    df["trend"] = df["raw"].rolling(window=freq+1, center=True).mean()
+    df["trend"] = df["raw"].rolling(window=freq + 1, center=True).mean()
 
     # detrend the series
     df["detrended"] = df["raw"] - df["trend"]
@@ -182,7 +194,7 @@ def pd_seasonal_decompose(x, freq=12):
     # get the residuals
     df["residuals"] = df["detrended"] - df["seasonality"]
 
-    return df[['raw', 'trend', 'seasonality', 'detrended', 'residuals']]
+    return df[["raw", "trend", "seasonality", "detrended", "residuals"]]
 
 
 def extend_annual_series(ds):
@@ -212,21 +224,23 @@ def extend_annual_series(ds):
     ...                  'value': np.random.rand(24)})
     >>> extended_ds = extend_annual_series(ds)
     """
-    if 'year' not in ds.dims:
-        ds = (ds.assign_coords(year=('time', ds.time.dt.year.values))
-              .swap_dims({'time': 'year'})).drop_vars(['time'])
+    if "year" not in ds.dims:
+        ds = (ds.assign_coords(year=("time", ds.time.dt.year.values))
+              .swap_dims({"time": "year"})).drop_vars(["time"])
 
-    assert 'year' in ds.dims, 'Dataset needs to have `year` as dimension'
+    assert "year" in ds.dims, "Dataset needs to have `year` as dimension"
 
     ds_monthly = ds.expand_dims(month=np.arange(1, 13))
-    ds_stacked = ds_monthly.stack(year_month=('year', 'month'))
+    ds_stacked = ds_monthly.stack(year_month=("year", "month"))
 
-    _datetime = pd.to_datetime([f"{y}-{m}" for y in ds_monthly.year.values
-                                           for m in np.arange(1, 13)])
-    ds_stacked = ds_stacked.assign_coords(time=('year_month', _datetime))
-    ds_stacked = ds_stacked.swap_dims({'year_month': 'time'})
+    # Convert `year` coordinate back to `time`
+    _datetime = pd.to_datetime(
+        [f"{y}-{m}" for y in ds_monthly.year.values for m in np.arange(1, 13)]
+    )
+    ds_stacked = ds_stacked.assign_coords(time=("year_month", _datetime))
+    ds_stacked = ds_stacked.swap_dims({"year_month": "time"})
 
-    ds_stacked = ds_stacked.drop_vars(['year', 'month', 'year_month'])
+    ds_stacked = ds_stacked.drop_vars(["year", "month", "year_month"])
     return ds_stacked
 
 
