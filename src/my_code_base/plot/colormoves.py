@@ -27,17 +27,22 @@ def xml_to_cmap(xml):
     """
     Convert an XML file to a matplotlib colormap.
 
-    Args:
-        xml (str): The path to the XML file.
-
-    Returns:
-        matplotlib.colors.LinearSegmentedColormap: The generated colormap.
-
-    Raises:
-        ValueError: If the length of position is not the same as colors.
-        ValueError: If position does not start with 0 and end with 1.
-
     Source: http://schubert.atmos.colostate.edu/~cslocum/custom_cmap.html
+
+    Parameters
+    ----------
+    xml: str
+        The path to the XML file.
+
+    Returns
+    -------
+    matplotlib.colors.LinearSegmentedColormap:
+        The generated colormap.
+
+    Raises
+    ------
+    ValueError: If the length of position is not the same as colors.
+    ValueError: If position does not start with 0 and end with 1.
     """
     vals = _load_xml(xml)
     colors, position = vals["color_vals"], vals["data_vals"]

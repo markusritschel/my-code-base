@@ -37,7 +37,7 @@ def check_input_for_duplicates(func):
     >>> @check_input_for_duplicates
     >>> def process_files(file_list):
     >>>     # Process the files
-    >>>     pass
+    >>>     ...
 
     .. note::
         The wrapped function can still be parsed by Sphinx due to the :obj:`functools.wraps` decorator.

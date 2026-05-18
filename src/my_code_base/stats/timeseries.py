@@ -229,3 +229,65 @@ def extend_annual_series(ds):
     ds_stacked = ds_stacked.drop_vars(['year', 'month', 'year_month'])
     return ds_stacked
 
+
+def zero_crossings(x):
+    """Find the zero crossings of a time series.
+    
+    Example
+    -------
+    >>> x = np.array([1, 2, -1, -2, 1, 2])     # crossing at 2 -> -1 and -2 -> 1
+    >>> zero_crossings(x)
+    array([1, 3])
+    """
+    return np.where(np.diff(np.sign(x)))[0]
+
+
+def _mask_after_first_zero_crossing(x):
+    first_zc = zero_crossings(x)[0]
+    mask = np.arange(len(x)) <= first_zc
+    return np.where(mask, x, np.nan)
+
+
+def xr_autocorr(x, dim='time', normalize=True, new_dim='lead'):
+    """Calculate the autocorrelation of a time series.
+    
+    Parameters
+    ----------
+    x : xarray.DataArray
+        The input data array containing the time series.
+    dim : str, optional
+        The dimension along which to calculate the autocorrelation. Defaults to 'time'.
+    normalize : bool, optional
+        Whether to normalize the autocorrelation. Defaults to True.
+    new_dim : str, optional
+        The name of the new dimension. Defaults to 'lead'.
+
+    Returns
+    -------
+    xarray.DataArray
+        The autocorrelation of the time series.
+    """
+    from scipy import signal
+
+    corr = xr.apply_ufunc(
+        signal.correlate,
+        x,
+        x,
+        kwargs=dict(mode='same'),
+        input_core_dims=[[dim], [dim]],
+        output_core_dims=[[dim]],
+        vectorize=True,
+        dask='parallelized',
+        output_dtypes=[x.dtype],
+        keep_attrs=False
+    )
+
+    if normalize:
+        corr /= corr.max(dim=dim)
+    corr = corr.rename({dim: new_dim})
+    nlags = len(x[dim])//2
+    corr[new_dim] = np.arange(-nlags, nlags)
+    
+    return corr
+
+

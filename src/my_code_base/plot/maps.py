@@ -28,7 +28,7 @@ def register_geoaxes_accessor(accessor_name):
     >>> @register_geoaxes_accessor("my_accessor")
     >>> class MyCustomAccessor:
     >>>     def some_method(self):
-    >>>         pass
+    >>>         ...
     >>>
     >>> ax = plt.subplot(projection=cartopy.crs.NorthPolarStereo())
     >>> ax.my_accessor.some_method()
@@ -60,7 +60,7 @@ class GeoAxesAccessor(ABC):
 
     def add_ocean(self, **kwargs):
         """
-        Add ocean feature to the :class:`~cartopy.mpl.geoaxes.GeoAxes`.
+        Add ocean features to the :class:`~cartopy.mpl.geoaxes.GeoAxes`.
 
         Parameters
         ----------
@@ -69,11 +69,12 @@ class GeoAxesAccessor(ABC):
         """
         log.debug('Add ocean to axis')
         kwargs.setdefault('zorder', 0)
-        self.geo_axes.add_feature(cartopy.feature.OCEAN, **kwargs)
+        resolution = kwargs.pop('resolution', '110m')
+        self.geo_axes.add_feature(cartopy.feature.OCEAN.with_scale(resolution), **kwargs)
 
     def add_land(self, **kwargs):
         """
-        Add land feature to the :class:`~cartopy.mpl.geoaxes.GeoAxes`.
+        Add land features to the :class:`~cartopy.mpl.geoaxes.GeoAxes`.
 
         Parameters
         ----------
@@ -82,7 +83,8 @@ class GeoAxesAccessor(ABC):
         """
         log.debug('Add land to axis')
         kwargs.setdefault('zorder', 2)
-        self.geo_axes.add_feature(cartopy.feature.LAND, **kwargs)
+        resolution = kwargs.pop('resolution', '110m')
+        self.geo_axes.add_feature(cartopy.feature.LAND.with_scale(resolution), **kwargs)
 
     def add_coastlines(self, *args, **kwargs):
         """
@@ -97,15 +99,16 @@ class GeoAxesAccessor(ABC):
         """
         log.debug('Add coastlines to axis')
         kwargs.setdefault('zorder', 3)
-        self.geo_axes.coastlines(*args, **kwargs)
+        resolution = kwargs.pop('resolution', '110m')
+        self.geo_axes.add_feature(cartopy.feature.COASTLINE.with_scale(resolution), *args, **kwargs)
 
-    def set_extent(self, extent, crs=cartopy.crs.PlateCarree()):
+    def set_extent(self, extent: tuple | list, crs=cartopy.crs.PlateCarree()):
         """
         Set the extent of the :class:`~cartopy.mpl.geoaxes.GeoAxes`.
 
         Parameters
         ----------
-        extent : tuple
+        extent : tuple | list
             The extent of the :class:`~cartopy.mpl.geoaxes.GeoAxes`. It should be a tuple of the form (xmin, xmax, ymin, ymax).
         crs : cartopy.crs
             The coordinate reference system in which the extent is expressed. Default is :class:`~cartopy.crs.PlateCarree`.
@@ -115,11 +118,11 @@ class GeoAxesAccessor(ABC):
 
     @abstractmethod
     def add_gridlines(self):
-        pass
+        ...
 
     @abstractmethod
     def add_features(self):
-        pass
+        ...
 
 
 @register_geoaxes_accessor("polar")
@@ -163,8 +166,12 @@ class StereographicAxisAccessor(GeoAxesAccessor):
         See :func:`add_circular_ruler` for customization arguments.
         The `ax` argument is not needed to be handed over when using the accessor's method.
 
-        Args:
-            kwargs: Additional keyword arguments for customization.
+        Parameters
+        ----------
+        kwargs : dict
+            Additional keyword arguments for customization.
+            These include ``segment_length``, ``offset``, ``primary_color``, 
+            ``secondary_color``, and ``width``. For details see :func:`add_circular_ruler`.
         """
         kwargs.setdefault('segment_length', self._lon_grid_spacing)
         add_circular_ruler(self.geo_axes, **kwargs)
@@ -175,7 +182,7 @@ class StereographicAxisAccessor(GeoAxesAccessor):
 
         Parameters
         ----------
-        **kwargs : dict
+        kwargs : dict
             Additional keyword arguments for customization.
 
         Returns
@@ -196,9 +203,11 @@ class StereographicAxisAccessor(GeoAxesAccessor):
 
         The gridlines are added based on the latitude limits of the plot.
         The latitude grid spacing is set to 10 degrees.
-        The longitude grid spacing is determined by the latitude grid spacing and the x_spacing_factor.
-        The gridlines are created using the `gridlines` method of the `geo_axes` object.
-        The `draw_labels` argument is set to True for the first set of gridlines and False for the second set.
+        The longitude grid spacing is determined by the latitude grid spacing 
+        and the x_spacing_factor.
+        The gridlines are created using the :meth:`~cartopy.mpl.geoaxes.GeoAxes.gridlines` method of the ``geo_axes`` object.
+        The ``draw_labels`` argument is set to True for the first set of gridlines 
+        and False for the second set.
         """
         kwargs.setdefault('zorder', 1)
         kwargs.setdefault('linestyle', '-')
@@ -231,7 +240,7 @@ class StereographicAxisAccessor(GeoAxesAccessor):
 
         return self._gl
 
-    def add_features(self, gridlines=True, ruler=True, **kwargs):
+    def add_features(self, gridlines=True, ruler=True, labels=True, resolution='110m', **kwargs):
         """Apply various features to the plot.
 
         Parameters
@@ -240,7 +249,9 @@ class StereographicAxisAccessor(GeoAxesAccessor):
             Whether to add gridlines. Defaults to True.
         ruler : bool, optional
             Whether to add a ruler. Defaults to True.
-        **kwargs
+        labels : bool, optional
+            Whether to draw labels. Defaults to True.
+        kwargs : dict
             Additional keyword arguments for customization.
 
         Returns
@@ -266,7 +277,11 @@ class StereographicAxisAccessor(GeoAxesAccessor):
         land_kwargs = kwargs.pop('land_kwargs', {})
         ocean_kwargs = kwargs.pop('ocean_kwargs', {})
         ruler_kwargs = kwargs.pop('ruler_kwargs', {})
+        coastlines_kwargs.setdefault('resolution', resolution)
+        ocean_kwargs.setdefault('resolution', resolution)
+        land_kwargs.setdefault('resolution', resolution)
         self._lon_grid_spacing = ruler_kwargs.get('segment_length', 30)
+        self._draw_labels = labels
 
         self.set_extent([-180, 180, *self.lat_limits])
         self.add_ocean(**ocean_kwargs)
@@ -285,14 +300,14 @@ class StereographicAxisAccessor(GeoAxesAccessor):
     def rotate_lat_labels(self, target_lon=118, orig_lon=150):
         """Move the latitude labels to another longitude.
 
+        Source: https://stackoverflow.com/a/66587492/5925453 with minor adaptions.
+
         Parameters
         ----------
         target_lon : int
             The longitude to which the labels should be moved.
         orig_lon : int
             The longitude at which the labels are located per default [default: 150].
-
-        Source: https://stackoverflow.com/a/66587492/5925453 with minor adaptions.
         """
         plt.draw()
         for tx in self._gl.label_artists:
@@ -356,7 +371,7 @@ def add_circular_ruler(ax, segment_length=30, offset=0, primary_color='k', secon
 
     # plot background circle (default: black, slightly broader)
     segments_array = np.linspace(0, 360, 361, endpoint=True)
-    plot_circle(segments_array, color=primary_color, lw=width * 2 + 1, zorder=999, ax=ax)
+    plot_circle(segments_array, color=primary_color, lw=width + 1, zorder=999, ax=ax)
 
     # plot white circle segments on top
     segment_bnds_array = (
@@ -370,7 +385,7 @@ def add_circular_ruler(ax, segment_length=30, offset=0, primary_color='k', secon
             for bnds in segment_bnds_array
         ]
     )
-    plot_circle(segments_array, color=secondary_color, lw=width * 2, zorder=1000, ax=ax)
+    plot_circle(segments_array, color=secondary_color, lw=width, zorder=1000, ax=ax)
 
 
 def _str2float(label):

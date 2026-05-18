@@ -81,3 +81,135 @@ class StatsAccessor:
         if not self._is_annual():
             raise ValueError("Time series is not of yearly frequency.")
         return extend_annual_series(ds)
+
+
+def xr_linregress(x, y, dim='time', dof=None):
+    """
+    Calculate linear regression statistics between two :class:`xarray.DataArray` along a specified dimension.
+
+    Parameters
+    ----------
+    x : xarray.DataArray
+        The independent variable.
+    y : xarray.DataArray
+        The dependent variable.
+    dim : str, optional
+        The dimension along which to perform the regression. Defaults to 'time'.
+    dof : int or str, optional
+        The degrees of freedom for the t-distribution. If None, it is calculated as n - 2,
+        where n is the sample size. If 'integral_timescale', the integral timescale is 
+        calculated and used to determine the degrees of freedom. If 'effective_sample_size', 
+        the effective sample size is calculated and used to determine the degrees of freedom. 
+        Defaults to None.
+    deseasonalize : bool, optional
+        If True, deseasonalize x and y before performing the regression. Defaults to True.
+
+    Returns
+    -------
+    xarray.Dataset: 
+        A dataset containing the following regression statistics:
+        - 'sample_size': The number of non-null values along the specified dimension.
+        - 'slope': The slope of the regression line.
+        - 'intercept': The intercept of the regression line.
+        - 'r_value': The correlation coefficient between x and y.
+        - 'p_value': The two-tailed p-value for the null hypothesis that the slope is zero.
+        - 'std_err': The standard error of the slope.
+
+    Notes
+    -----
+    - NaN values are automatically excluded from the calculations.
+    - The correlation coefficient, p-value, and standard error are calculated using the 
+      t-distribution.
+    - If dof is 'integral_timescale', the integral timescale is calculated as the sum 
+      of autocorrelation values until the first zero-crossing. The effective sample size 
+      is then calculated as the total sample size divided by the integral timescale.
+    - If dof is 'effective_sample_size', the effective sample size is calculated as 
+      n * (1 - r1*r2) / (1 + r1*r2), where r1 and r2 are the lag-1 autocorrelation 
+      coefficients of x and y, respectively.
+    """
+    from ..stats.timeseries import xr_autocorr, _mask_after_first_zero_crossing
+    TINY = 1.0e-20
+
+    x = x.where(~np.isnan(x))
+    y = y.where(~np.isnan(x))
+
+    n = y.notnull().sum(dim)
+    nanmask = np.isnan(y).all(dim)
+
+    xmean = x.mean(dim)
+    ymean = y.mean(dim)
+    xstd = x.std(dim)
+    ystd = y.std(dim)
+
+    cov = ((x - xmean) * (y - ymean)).sum(dim) / n
+    cor = cov / (xstd * ystd)
+
+    slope = cov / (xstd**2)
+    intercept = ymean - xmean * slope
+
+    out_dict = {'sample_size': n}
+
+    if dof is None:
+        dof = n - 2
+    elif isinstance(dof, int):
+        dof = dof - 2
+    elif dof == 'integral_timescale':
+        # TODO: Discuss if we should deseasonalize beforehand or not
+        x = xr_deseasonalize(x)
+        x_autocorr = xr_autocorr(x, dim=dim, normalize=True)
+        positive_r = x_autocorr.sel(lead=slice(0, None))
+        positive_r_till_first_zerocrossing = (
+            xr.apply_ufunc(
+                _mask_after_first_zero_crossing,
+                positive_r,
+                input_core_dims=[['lead']],
+                output_core_dims=[['lead']],
+                dask="parallelized",
+                vectorize=True,
+                output_dtypes=['float']
+            )
+        )
+        τ = positive_r_till_first_zerocrossing.fillna(0).integrate(coord='lead')
+        log.info(f"Integral timescale: {τ}")
+        n_eff = n / τ  # Following eq. (3.15.17) in Emery & Thomson (2004)
+        n_eff = n_eff.where(n_eff < n, n)  # allow a maximum of n for n_eff
+
+        dof = n_eff - 2
+        out_dict.update({'autocorr': x_autocorr, 'integral_timescale': τ, 'effective_sample_size': n_eff})
+    elif dof == 'effective_sample_size':
+        # TODO: Discuss if we should deseasonalize beforehand or not
+        x = xr_deseasonalize(x)
+        y = xr_deseasonalize(y)
+        r1 = x_autocorr = xr_autocorr(x, dim=dim, normalize=True).sel(lead=1)
+        r2 = y_autocorr = xr_autocorr(y, dim=dim, normalize=True).sel(lead=1)
+        n_eff = n * (1 - r1*r2) / (1 + r1*r2)
+        dof = n_eff - 2
+        out_dict.update({'effective_sample_size': n_eff})
+    out_dict.update({'dof': dof})
+    log.info(f"Degrees of freedom: {dof}")
+
+    tstats = cor * np.sqrt(dof / ((1.0 - cor + TINY) * (1.0 + cor + TINY)))
+    stderr = slope / tstats
+
+    pval = (
+        xr.apply_ufunc(
+            stats.distributions.t.sf,   # sf is the survival function (1 - cdf)
+            abs(tstats),
+            dof,
+            dask="parallelized",
+            output_dtypes=[y.dtype],
+        )
+        * 2  # Convert pval to a two-tailed test
+    )
+
+    out_dict.update({
+        "slope": slope,
+        "intercept": intercept,
+        "r_value": cor.fillna(0).where(~nanmask),
+        "p_value": pval,
+        "std_err": stderr.where(~np.isinf(stderr), 0),
+    })
+
+    return xr.Dataset(
+        out_dict
+    )
