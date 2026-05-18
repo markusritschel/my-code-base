@@ -1,7 +1,6 @@
 # My Code Base <!-- omit in toc -->
 
 [![build](https://github.com/markusritschel/my-code-base/actions/workflows/main.yml/badge.svg)](https://github.com/markusritschel/my-code-base/actions/)
-
 [![License MIT license](https://img.shields.io/github/license/markusritschel/my-code-base)](./LICENSE)
 
 
