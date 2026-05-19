@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding utf-8 -*-
 #
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -6,21 +5,20 @@
 # eMail:  git@markusritschel.de
 # Date:   2024-06-11
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#    
 """Console script for my-code-base."""
 
-import typer
 from rich.console import Console
+import typer
 
 app = typer.Typer()
 console = Console()
 
 
-
 @app.command()
 def main():
     """CLI script for my_code_base."""
-    console.print(r"""
+    console.print(
+        r"""
   $$\      $$\           $$\                                             
   $$ | $\  $$ |          $$ |                                            
   $$ |$$$\ $$ | $$$$$$\  $$ | $$$$$$$\  $$$$$$\  $$$$$$\$$$$\   $$$$$$\  
@@ -30,10 +28,11 @@ def main():
   $$  /   \$$ |\$$$$$$$\ $$ |\$$$$$$$\ \$$$$$$  |$$ | $$ | $$ |\$$$$$$$\ 
   \__/     \__| \_______|\__| \_______| \______/ \__| \__| \__| \_______|
                                                                       
-    """, style="green")
+    """,
+        style="green",
+    )
     # https://patorjk.com/software/taag/
-    console.print("Replace this message by putting your code into "
-               "my_code_base.cli.main")
+    console.print("Replace this message by putting your code into my_code_base.cli.main")
     console.print("See Typer documentation at https://typer.tiangolo.com/")
 
 
