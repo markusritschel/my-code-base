@@ -11,7 +11,7 @@ import pandas as pd
 import pytest
 import xarray as xr
 
-from my_code_base.core.xarray_utils import *
+from my_code_base.core.xarray_utils import HistoryAccessor  # noqa: F401
 from my_code_base.stats.xarray_utils import _has_seasonal_frequency
 
 log = logging.getLogger(__name__)

@@ -207,15 +207,15 @@ class TestNdofIntegralTimescale:
 
 class TestLag1Autocorrelation:
     def test_raises_for_empty_array(self):
-        with pytest.raises(ValueError):
+        with pytest.raises(ValueError, match="Need at least 3 data points"):
             lag1_autocorrelation(np.array([]))
 
     def test_raises_for_single_element(self):
-        with pytest.raises(ValueError, match="at least 3"):
+        with pytest.raises(ValueError, match="Need at least 3 data points"):
             lag1_autocorrelation(np.array([1.0]))
 
     def test_raises_for_length_two(self):
-        with pytest.raises(ValueError, match="at least 3"):
+        with pytest.raises(ValueError, match="Need at least 3 data points"):
             lag1_autocorrelation(np.array([1.0, 2.0]))
 
     def test_length_three_works(self):
