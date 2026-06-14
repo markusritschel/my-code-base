@@ -4,19 +4,20 @@
 # Date:   2024-03-26
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
+import logging
 from abc import ABC, abstractmethod
 from functools import wraps
-import logging
+
 import pandas as pd
 import xarray as xr
-
 
 log = logging.getLogger(__name__)
 
 
 class _ColumnGroupBy:
     """Proxy around a transposed DataFrameGroupBy that transposes results back,
-    so column-wise groupby semantics are preserved without ``axis=1``."""
+    so column-wise groupby semantics are preserved without ``axis=1``.
+    """
 
     def __init__(self, groupby):
         self._groupby = groupby
@@ -59,7 +60,7 @@ class EnsembleAccessor(ABC):
 
     @key_template.setter
     def key_template(self, template_string):
-        if '.' not in template_string: 
+        if '.' not in template_string:
             raise ValueError("Elements must be divided by a dot (.).")
         if 'member' in template_string.split('.'):
             raise ValueError("key_template must not contain 'member'! "
@@ -102,7 +103,7 @@ class EnsembleAccessor(ABC):
 
 
 def _build_member_mapping_table(member_values, member_id_elements):
-    """Create a mapping table for member keys. Each member name follows the same format, 
+    """Create a mapping table for member keys. Each member name follows the same format,
     e.g. `source_id.member_id.grid_label`. The mapping represents a table with each key of
     `(source_id, member_id, grid_label)` as a column.
 
@@ -131,11 +132,12 @@ class PandasEnsembleAccessor(EnsembleAccessor):
 
 @xr.register_dataset_accessor("ens")
 class XarrayEnsembleAccessor(EnsembleAccessor):
-    """An :class:`xarray.Dataset` accessor supporting the grouping of ensemble members by 
+    """An :class:`xarray.Dataset` accessor supporting the grouping of ensemble members by
     model id and similar. The `member` coordinate in the :class:`xr.Dataset` must have a 
     `key_template` attribute of the form 'source_id.member_id.grid_label', following the 
     structure of the entries of the 'member' coordinate.
     """
+
     def _init_member_keys(self):
         if 'member' not in self._obj.coords:
             raise AttributeError("No coordinate 'member' found in xarray object.")

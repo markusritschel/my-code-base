@@ -4,11 +4,11 @@
 # Date:   2024-04-04
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
-from functools import singledispatch
 import logging
+from functools import singledispatch
+
 import numpy as np
 import pandas as pd
-
 
 log = logging.getLogger(__name__)
 
@@ -30,7 +30,7 @@ def _(df: pd.DataFrame):
 
 
 def empirical_covariance(x, bias=False):
-    """
+    r"""
     Compute the empirical covariance matrix of a given dataset:
 
     .. math::

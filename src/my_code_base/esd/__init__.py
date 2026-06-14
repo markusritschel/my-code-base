@@ -7,6 +7,5 @@
 """A module for helping process Earth System Data"""
 import logging
 
-
 log = logging.getLogger(__name__)
 

@@ -9,18 +9,17 @@ import logging
 import numpy as np
 import scipy.stats
 
-
 log = logging.getLogger(__name__)
 
 
 def t_statistic(r, dof):
-    """
+    r"""
     Calculate the t-statistic for a given correlation coefficient and number of effective samples.
 
     The formula is given by:
 
     .. math::
-        t_\\text{score} = r \\cdot \\frac{ \\sqrt{dof} }{ \\sqrt{1 - r^2} } 
+        t_\\text{score} = r \\cdot \\frac{ \\sqrt{dof} }{ \\sqrt{1 - r^2} }
                         = r \\cdot \\frac{ \\sqrt{n_\\text{eff}-2} }{ \\sqrt{1 - r^2} }
 
     where $r$ is the Pearson correlation coefficient, $dof$ is the number of degrees of freedom, 
@@ -44,7 +43,7 @@ def t_statistic(r, dof):
 
 
 def tstats_p_value(t, dof):
-    """
+    r"""
     Calculate the p-value for a given t-statistic and number of degrees of freedom.
 
     The formula is given by:

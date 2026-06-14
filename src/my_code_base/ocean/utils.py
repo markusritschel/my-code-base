@@ -5,10 +5,10 @@
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
 import logging
+
 import numpy as np
 
 from ..core.units import pressure2atm, pressure2mbar, temperature2C, temperature2K
-
 
 log = logging.getLogger(__name__)
 
@@ -93,7 +93,7 @@ def water_vapor_pressure(T, S):
 
 
 def ppm2uatm(xCO2, p_equ, input='wet', T=None, S=None):
-    """Convert mole fraction concentration (in ppm) into partial pressure (in µatm) following :cite:t:`dickson_guide_2007`
+    r"""Convert mole fraction concentration (in ppm) into partial pressure (in µatm) following :cite:t:`dickson_guide_2007`
 
     .. math::
         pCO_2 = xCO_2 \\cdot p_\\text{equ}
@@ -121,7 +121,7 @@ def ppm2uatm(xCO2, p_equ, input='wet', T=None, S=None):
     elif input == "wet":
         pH2O = 0
     else:
-        raise IOError("Input must be either 'dry' or 'wet'.")
+        raise OSError("Input must be either 'dry' or 'wet'.")
 
     pCO2_wet_equ = xCO2*(p_equ - pH2O)
 

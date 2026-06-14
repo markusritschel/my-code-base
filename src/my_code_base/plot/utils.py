@@ -5,9 +5,8 @@
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
 import logging
-from mpl_axes_aligner import align
-import pytest
 
+from mpl_axes_aligner import align
 
 log = logging.getLogger(__name__)
 
@@ -37,12 +36,12 @@ def align_curves(ax1, y1, ax2, y2):
     >>> y1 = np.sin(x) + 10
     >>> y2 = np.sin(x)*1.4 + .3*x + 9
     >>> y3 = 1.6*np.sin(x) + 3
-    >>> 
+    >>>
     >>> fig, (ax1, ax2) = plt.subplots(1,2, figsize=(10,4))
     >>> ax1.plot(x, y1, lw=4, alpha=.7, zorder=-1, color='blue')
     >>> ax1.plot(x, y2, lw=1.5, color='steelblue')
     >>> ax1.tick_params(colors='b')
-    >>> 
+    >>>
     >>> ax12 = ax1.twinx()
     >>> ax12.plot(x, y3, alpha=.7, marker='+', color='red', lw=1)
     >>> ax12.tick_params(colors='r')

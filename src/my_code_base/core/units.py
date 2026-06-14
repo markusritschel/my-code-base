@@ -5,11 +5,12 @@
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
 import logging
-import pandas as pd
-import numpy as np
 from copy import copy
-from .utils import order_of_magnitude
 
+import numpy as np
+import pandas as pd
+
+from .utils import order_of_magnitude
 
 log = logging.getLogger(__name__)
 
@@ -40,7 +41,7 @@ def pressure2atm(p):
     elif -1 <= np.nanmedian(np.rint(order_of_magnitude(p))) <= 1:
         log.info("Pressure is assumed to be already in atm (no conversion)")
     else:
-        raise IOError("Pressure must be given in hPa, Pa or atm")
+        raise OSError("Pressure must be given in hPa, Pa or atm")
     return p
 
 
@@ -70,7 +71,7 @@ def pressure2mbar(p):
         log.info("Pressure is assumed to be in atm and was converted to mbar (hPa)")
         p *= 1013.25
     else:
-        raise IOError("Pressure must be given in hPa, Pa or atm")
+        raise OSError("Pressure must be given in hPa, Pa or atm")
     return p
 
 

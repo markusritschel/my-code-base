@@ -6,9 +6,9 @@
 #
 import colorsys
 import logging
+
 import matplotlib.colors as mcolors
 import numpy as np
-
 
 log = logging.getLogger(__name__)
 
@@ -81,9 +81,9 @@ def build_continuous_cmap(hex_list: list[str], float_list=None, N=256, name='my_
 
     cdict = dict()
     for num, col in enumerate(['red', 'green', 'blue']):
-        col_list = [[float_list[i], 
-                     rgb_list[i][num], 
-                     rgb_list[i][num]] 
+        col_list = [[float_list[i],
+                     rgb_list[i][num],
+                     rgb_list[i][num]]
                     for i in range(len(float_list))]
         cdict[col] = col_list
     cmap = mcolors.LinearSegmentedColormap(name, segmentdata=cdict, N=N)

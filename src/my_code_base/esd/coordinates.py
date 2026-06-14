@@ -5,6 +5,7 @@
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
 import logging
+
 import xarray as xr
 
 log = logging.getLogger(__name__)
@@ -12,8 +13,7 @@ log = logging.getLogger(__name__)
 
 
 def adjust_lons(ds, lon_name="lon"):
-    """Adjust longitude values to make sure they are in the range between -180° and 180°.
-    """
+    """Adjust longitude values to make sure they are in the range between -180° and 180°."""
     ds["_longitude_adjusted"] = xr.where(
         ds[lon_name] > 180, ds[lon_name] - 360, ds[lon_name]
     )

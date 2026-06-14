@@ -4,16 +4,15 @@
 # Date:   2024-03-04
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
-from abc import ABC, abstractmethod
 import functools
+import logging
+from abc import ABC, abstractmethod
+
 import cartopy
 import cartopy.mpl.geoaxes
-import logging
-import matplotlib.pyplot as plt
 import matplotlib.path as mpath
+import matplotlib.pyplot as plt
 import numpy as np
-import pytest
-from .z_overlap import fix_overlap
 
 log = logging.getLogger(__name__)
 
@@ -128,7 +127,8 @@ class GeoAxesAccessor(ABC):
 @register_geoaxes_accessor("polar")
 class StereographicAxisAccessor(GeoAxesAccessor):
     """An accessor to handle features and finishing of stereographic plots produced with `cartopy`.
-    Can handle both :class:`~cartopy.crs.NorthPolarStereo` and :class:`~cartopy.crs.SouthPolarStereo` projections."""
+    Can handle both :class:`~cartopy.crs.NorthPolarStereo` and :class:`~cartopy.crs.SouthPolarStereo` projections.
+    """
 
     def __init__(self, ax):
         super().__init__(ax)
@@ -318,13 +318,11 @@ class StereographicAxisAccessor(GeoAxesAccessor):
         return
 
     def rotate_lon_labels(self):
-        """
-        Rotate the longitude labels of a stereographic plot for better readability and nicer look.
-        """
+        """Rotate the longitude labels of a stereographic plot for better readability and nicer look."""
         self._gl.rotate_labels = False
         plt.gcf().canvas.draw()
 
-        all_label_artists = [label for label in self._gl.label_artists if label.get_text()[-1] 
+        all_label_artists = [label for label in self._gl.label_artists if label.get_text()[-1]
                             in ['E', 'W', '°']]
         for label in all_label_artists:
             alphanumeric_label = label.get_text()
@@ -353,8 +351,9 @@ def add_circular_ruler(ax, segment_length=30, offset=0, primary_color='k', secon
         The scaled thickness of the ruler. Defaults to 1/80 of the axes' width.
     """
     def plot_circle(degrees, radius=0.5, **kwargs):
-        """Plot a circle of given radius (based on Axis dimensions) 
-        for a list of degree segments."""
+        """Plot a circle of given radius (based on Axis dimensions)
+        for a list of degree segments.
+        """
         ax = kwargs.pop("ax", plt.gca())
         arc_angles = np.deg2rad(degrees)
         arc_xs = radius * np.cos(arc_angles) + 0.5
@@ -431,7 +430,8 @@ def _rotate_and_align_label(label, longitude, rot_degree, pole):
 
 def set_circular_boundary(ax):
     """Compute a circle in axes coordinates, which we can use as a boundary for the map.
-    We can pan/zoom as much as we like – the boundary will be permanently circular."""
+    We can pan/zoom as much as we like – the boundary will be permanently circular.
+    """
     theta = np.linspace(0, 2*np.pi, 100)
     center, radius = [0.5, 0.5], 0.5
     vertices = np.vstack([np.sin(theta), np.cos(theta)]).T

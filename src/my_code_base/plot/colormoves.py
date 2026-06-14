@@ -4,7 +4,7 @@
 # Date:   2024-03-10
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
-"""This module provides functions to read in colormaps generated with ColorMoves.
+"""Provide functions to read in colormaps generated with ColorMoves.
 
 Sources:
 
@@ -13,12 +13,11 @@ Sources:
 - https://sciviscolor.org/tools/
 """
 import logging
-from lxml import etree
 
 import matplotlib as mpl
-from matplotlib import pyplot as plt
 import numpy as np
-
+from lxml import etree
+from matplotlib import pyplot as plt
 
 log = logging.getLogger(__name__)
 
@@ -61,10 +60,10 @@ def xml_to_cmap(xml):
 def _load_xml(xml):
     try:
         xmldoc = etree.parse(xml)
-    except IOError:
-        raise IOError('Invalid input file. It must be a colormap xml file. Visit' 
+    except OSError as exc:
+        raise OSError('Invalid input file. It must be a colormap xml file. Visit'
                       'https://sciviscolor.org/home/colormaps/ for options. '
-                      'Visit https://sciviscolor.org/matlab-matplotlib-pv44/ for an example use of this script.')
+                      'Visit https://sciviscolor.org/matlab-matplotlib-pv44/ for an example use of this script.') from exc
 
     points = [(float(s.attrib['x']),
                (float(s.attrib['r']),
@@ -77,7 +76,7 @@ def _load_xml(xml):
 
 
 def plot_cmap(colormap):
-    """This is a quick example plotting the 8 by 1 gradient of the colormap"""
+    """A quick example plotting the 8 by 1 gradient of the colormap"""
     plt.imshow(np.vstack((np.linspace(0, 1, 256),) * 2), aspect='auto', cmap=plt.get_cmap(colormap))
     plt.axis('off')
     plt.tight_layout()

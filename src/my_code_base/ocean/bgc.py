@@ -5,11 +5,11 @@
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
 import logging
+
 import numpy as np
 import pandas as pd
 
 from ..core.units import pressure2atm, temperature2K
-
 
 log = logging.getLogger(__name__)
 
@@ -21,7 +21,7 @@ def temperature_correction(
     method: str="Takahashi2009",
     **kwargs
 ):
-    """Apply a temperature correction. This might be necessary when the in-situ temperatures (at the water intake,
+    r"""Apply a temperature correction. This might be necessary when the in-situ temperatures (at the water intake,
     often outside the ship) differ from where the CO2 measurement is done (often in a ferry-box onboard the ship).
     The correction used here follows :cite:t:`takahashi_climatological_2009`:
 
@@ -54,13 +54,13 @@ def temperature_correction(
     elif method=="Takahashi1993":
         CO2_out = CO2 * np.exp(0.0423*(T_out - T_in))
     else:
-        raise IOError("Unknown method for temperature conversion.")
+        raise OSError("Unknown method for temperature conversion.")
 
     return CO2_out
 
 
 def fugacity(pCO2, p_equ, SST, xCO2=None):
-    """Calculate the fugacity of CO2. Can be done either before or after a :func:`.temperature_correction`.
+    r"""Calculate the fugacity of CO2. Can be done either before or after a :func:`.temperature_correction`.
     The formulas follow :cite:t:`dickson_guide_2007`, mainly SOP 5, Chapter 8. "Calculation and expression of results".
 
     .. math::
@@ -68,7 +68,7 @@ def fugacity(pCO2, p_equ, SST, xCO2=None):
             \\exp{\\Big(p_\\text{equ}\\cdot\\frac{\\left[ B(CO_2,SST) + 2\\,\\left(1-(xCO_2)^\\text{wet}_{SST}\\right)^2 \\, \\delta(CO_2,SST)\\right]}{R\\cdot SST}\\Big)}
 
     where :math:`SST` is the sea surface temperature in K, :math:`R` the gas constant and :math:`B(CO_2,SST)` and
-    :math:`\delta(CO_2,SST)` are the virial coefficients for :math:`CO_2` (both in :math:`\\text{cm}^3\\,\\text{mol}^{-1}`), which are given as
+    :math:`\\delta(CO_2,SST)` are the virial coefficients for :math:`CO_2` (both in :math:`\\text{cm}^3\\,\\text{mol}^{-1}`), which are given as
 
     .. math::
        B(CO_2,T) = -1636.75 + 12.0408\\,T - 0.0327957\\,T^2 + 0.0000316528\\,T^3

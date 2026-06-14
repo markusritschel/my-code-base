@@ -5,10 +5,9 @@
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
 import logging
-import warnings
-from typing_extensions import deprecated
-import numpy as np
+
 import xarray as xr
+from typing_extensions import deprecated
 
 log = logging.getLogger(__name__)
 
@@ -107,6 +106,8 @@ def get_dim_index(da: xr.DataArray, dim: str) -> int:
 
     Examples
     --------
+    >>> import numpy as np
+    >>> import xarray as xr
     >>> da = xr.DataArray(np.random.rand(2, 3, 4), dims=['time', 'lat', 'lon'])
     >>> get_dim_index(da, 'lat')
     1

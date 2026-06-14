@@ -5,11 +5,11 @@
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
 import logging
+
 import numpy as np
 import pandas as pd
-import pytest
-from .utils import centered_bins
 
+from .utils import centered_bins
 
 log = logging.getLogger(__name__)
 

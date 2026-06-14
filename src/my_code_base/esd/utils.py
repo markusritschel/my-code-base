@@ -9,7 +9,6 @@ import warnings
 
 import numpy as np
 
-
 log = logging.getLogger(__name__)
 
 
@@ -75,8 +74,9 @@ def compute_weighted_mean(ds):
 
 def rename_obs(ds, rename_dict=None):
     """Homogenize observation datasets to common naming.
-    Following the function :obj:`xmip.preprocessing.rename_cmip6`, thereby 
-    omitting `source_id` and extending the renaming_dict."""
+    Following the function :obj:`xmip.preprocessing.rename_cmip6`, thereby
+    omitting `source_id` and extending the renaming_dict.
+    """
     ds = ds.copy()
 
     if rename_dict is None:

@@ -6,6 +6,7 @@
 #
 import functools
 import logging
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -74,7 +75,7 @@ def add_metadata(func):
 
 
 class BunchDict(dict):
-    """BunchDict is a subclass of the built-in dict class that allows 
+    """BunchDict is a subclass of the built-in dict class that allows
     accessing dictionary keys as attributes.
 
     This class overrides the `__getattr__` and `__setattr__` methods to 
@@ -168,7 +169,7 @@ def _(df, path, *args, **kwargs):
 
 @save.register(xr.Dataset)
 def _(ds, path, *args, **kwargs):
-    from .xarray_utils import HistoryAccessor
+    from .xarray_utils import HistoryAccessor  # noqa: F401
     metadata = kwargs.pop('metadata')
     msg = f"File saved by {metadata['relative_code_path']}#{metadata['line_number']} @git-commit:{metadata['git_commit']}"
     ds = ds.history.add(msg)
