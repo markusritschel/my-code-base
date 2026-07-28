@@ -14,15 +14,23 @@ log = logging.getLogger(__name__)
 
 @xr.register_dataset_accessor("history")
 class HistoryAccessor:
-    def __init__(self, xr_obj):
-        """
-        A class for accessing and manipulating the 'history' attribute of an xarray object.
+    """Accessor for managing the 'history' attribute of xarray objects.
+    
+    This class provides methods to add and manipulate the 'history' attribute
+    of xarray Dataset or DataArray objects with timestamps.
+    
+    Parameters
+    ----------
+    xr_obj: xarray.Dataset or xarray.DataArray
+        The xarray object to be accessed.
 
-        Parameters
-        ----------
-        xr_obj: xarray.Dataset or xarray.DataArray
-            The xarray object to be accessed.
-        """
+    Attributes
+    ----------
+    _obj : xarray.Dataset or xarray.DataArray
+        The xarray object being accessed.
+    """
+
+    def __init__(self, xr_obj):
         self._obj = xr_obj
         self._ensure_history()
 
