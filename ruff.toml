@@ -1,6 +1,10 @@
 # See https://docs.astral.sh/ruff/ for settings
 line-length = 88
 indent-width = 4
+# Pinned explicitly rather than inferred from `requires-python`, so that raising the
+# project's floor stays a separate, deliberate decision from raising ruff's fix target.
+# CI tests 3.10 and 3.12 (.github/workflows/main.yml) — `UP` must not emit 3.11+ syntax.
+target-version = "py310"
 
 # Specify which files/directories to check
 include = ["src/**/*.py", "tests/**/*.py", "scripts/**/*.py"]
@@ -55,14 +59,28 @@ ignore = [
     "C419",  # unnecessary list comprehension in any()/all() — see https://github.com/astral-sh/ruff/issues/10838
     "C420",  # dict.fromkeys() over comprehension — fromkeys is explicit and widely understood
 
+    # pep8-naming — this is scientific code; the domain notation IS the readable name.
+    # Renaming `SST`, `CO2`, `pH2O`, `xCO2`, `T_in`, `R` (gas constant) or `S` (salinity)
+    # to snake_case would obscure their correspondence to the cited literature.
+    "N803",  # argument name should be lowercase
+    "N806",  # variable in function should be lowercase
+
     # pydocstyle
+    "D100",  # undocumented public module — every module already carries an authorship header
+    "D104",  # undocumented public package — same, and __init__ files are mostly re-exports
     "D205",  # missing blank line after summary — not required by the NumPy convention
+    "D400",  # first line should end with a period — often omitted in one-line summaries
+    "D401",  # first line should be in imperative mood — not universally applicable
 
     # pyupgrade
     "UP035", # deprecated typing imports — project targets Python ≥ 3.10 but enforcing this is disruptive
 
     # NumPy (NPY selected; NPY002 kept as intentional exception)
     "NPY002", # replace legacy np.random.* calls — common in existing code; migrate gradually
+
+    # Ruff-specific — Greek letters (σ, τ) and µ are correct notation here, not homoglyph typos
+    "RUF002", # ambiguous unicode character in docstring
+    "RUF003", # ambiguous unicode character in comment
 ]
 
 # Allow unused variables when underscore-prefixed.
