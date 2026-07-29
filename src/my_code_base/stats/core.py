@@ -52,7 +52,7 @@ def tstats_p_value(t, dof):
         f_p &= 2 \\cdot (1 - \\text{cdf}(t, dof)) \\\\
             &= 2 \\cdot \\text{sf}(t, dof)
 
-    ``sf`` is the survival function of the t-distribution from :obj:`scipy.stats.t` 
+    ``sf`` is the survival function of the t-distribution from :obj:`scipy.stats.t`
     and is equivalent to ``1-cdf``.
     The number of degrees of freedom (dof) is typically the number of effective samples - 2.
 

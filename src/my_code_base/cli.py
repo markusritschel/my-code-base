@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding utf-8 -*-
 #
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -6,7 +5,6 @@
 # eMail:  git@markusritschel.de
 # Date:   2024-06-11
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#
 """Console script for my-code-base."""
 
 from rich.console import Console

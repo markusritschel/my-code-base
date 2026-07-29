@@ -39,8 +39,8 @@ class HistoryAccessor:
         Ensure that the 'history' attribute exists in the xarray object.
         If it doesn't exist, create an empty 'history' attribute.
         """
-        if 'history' not in self._obj.attrs.keys():
-            self._obj.attrs['history'] = ""
+        if "history" not in self._obj.attrs.keys():
+            self._obj.attrs["history"] = ""
 
     def add(self, msg):
         """
@@ -54,13 +54,13 @@ class HistoryAccessor:
         Example
         -------
         >>> da.history.add("New entry to history")  # doctest: +SKIP
-        >>> da.attrs['history']  # doctest: +SKIP
+        >>> da.attrs["history"]  # doctest: +SKIP
         '...: New entry to history; '
         """
         from datetime import datetime
 
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        self._obj.attrs['history'] += f"{timestamp}: {msg}; "
+        self._obj.attrs["history"] += f"{timestamp}: {msg}; "
         log.debug("Wrote '%s' to history", msg)
         return self._obj
 
@@ -119,8 +119,8 @@ def get_dim_index(da: xr.DataArray, dim: str) -> int:
     --------
     >>> import numpy as np
     >>> import xarray as xr
-    >>> da = xr.DataArray(np.random.rand(2, 3, 4), dims=['time', 'lat', 'lon'])
-    >>> get_dim_index(da, 'lat')
+    >>> da = xr.DataArray(np.random.rand(2, 3, 4), dims=["time", "lat", "lon"])
+    >>> get_dim_index(da, "lat")
     1
     """
     assert isinstance(da, xr.DataArray), "First argument must be of type xr.DataArray."

@@ -35,18 +35,18 @@ def grid_dataframe(points, vals, xi, export_grid=False):
     >>> xi = np.linspace(-5, 45, 40)
     >>> yi = np.linspace(35, 53, 50)
     >>> gridded = grid_dataframe((df.lon, df.lat), df.data, (xi, yi))
-    >>> plt.pcolormesh(xi, yi, gridded, shading='auto', cmap='Greens_r')
+    >>> plt.pcolormesh(xi, yi, gridded, shading="auto", cmap="Greens_r")
     >>> plt.scatter(
     ...     df.lon,
     ...     df.lat,
     ...     c=df.data,
-    ...     marker='.',
+    ...     marker=".",
     ...     lw=0.75,
-    ...     cmap='Reds',
-    ...     label='raw data',
+    ...     cmap="Reds",
+    ...     label="raw data",
     ... )
-    >>> plt.xlabel('Longitude')
-    >>> plt.ylabel('Latitude')
+    >>> plt.xlabel("Longitude")
+    >>> plt.ylabel("Latitude")
     >>> plt.legend()
     >>> plt.show()
 
@@ -65,14 +65,14 @@ def grid_dataframe(points, vals, xi, export_grid=False):
     yy_ = yy.ravel()
     target_ = target.ravel()
 
-    df = pd.DataFrame({'vals': vals, 'x': x, 'y': y})
+    df = pd.DataFrame({"vals": vals, "x": x, "y": y})
 
-    df['x_binned'] = pd.cut(df.x, bins=centered_bins(X), labels=X)
-    df['y_binned'] = pd.cut(df.y, bins=centered_bins(Y), labels=Y)
+    df["x_binned"] = pd.cut(df.x, bins=centered_bins(X), labels=X)
+    df["y_binned"] = pd.cut(df.y, bins=centered_bins(Y), labels=Y)
 
-    df['points'] = df[['x_binned', 'y_binned']].apply(tuple, axis=1)
+    df["points"] = df[["x_binned", "y_binned"]].apply(tuple, axis=1)
 
-    df_points_avg = df.groupby('points').mean()
+    df_points_avg = df.groupby("points").mean()
 
     for idx, row in df_points_avg.iterrows():
         target_[(xx_ == idx[0]) & (yy_ == idx[1])] = row.vals

@@ -27,6 +27,6 @@ def adjust_lons(ds, lon_name="lon"):
     )
 
     ds = ds.rename({"_longitude_adjusted": lon_name})
-    ds[lon_name].attrs['units'] = 'degrees_east'
-    ds[lon_name].attrs['standard_name'] = 'longitude'
+    ds[lon_name].attrs["units"] = "degrees_east"
+    ds[lon_name].attrs["standard_name"] = "longitude"
     return ds

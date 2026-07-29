@@ -38,21 +38,21 @@ def align_curves(ax1, y1, ax2, y2):
     >>> y3 = 1.6 * np.sin(x) + 3
     >>>
     >>> fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4))
-    >>> ax1.plot(x, y1, lw=4, alpha=0.7, zorder=-1, color='blue')
-    >>> ax1.plot(x, y2, lw=1.5, color='steelblue')
-    >>> ax1.tick_params(colors='b')
+    >>> ax1.plot(x, y1, lw=4, alpha=0.7, zorder=-1, color="blue")
+    >>> ax1.plot(x, y2, lw=1.5, color="steelblue")
+    >>> ax1.tick_params(colors="b")
     >>>
     >>> ax12 = ax1.twinx()
-    >>> ax12.plot(x, y3, alpha=0.7, marker='+', color='red', lw=1)
-    >>> ax12.tick_params(colors='r')
+    >>> ax12.plot(x, y3, alpha=0.7, marker="+", color="red", lw=1)
+    >>> ax12.tick_params(colors="r")
     >>>
-    >>> ax2.plot(x, y1, lw=4, alpha=0.7, zorder=-1, color='blue')
-    >>> ax2.plot(x, y2, lw=1.5, color='steelblue')
-    >>> ax2.tick_params(colors='b')
+    >>> ax2.plot(x, y1, lw=4, alpha=0.7, zorder=-1, color="blue")
+    >>> ax2.plot(x, y2, lw=1.5, color="steelblue")
+    >>> ax2.tick_params(colors="b")
     >>>
     >>> ax22 = ax2.twinx()
-    >>> ax22.plot(x, y3, alpha=0.7, marker='+', color='red', lw=1)
-    >>> ax22.tick_params(colors='r')
+    >>> ax22.plot(x, y3, alpha=0.7, marker="+", color="red", lw=1)
+    >>> ax22.tick_params(colors="r")
 
     Align the limits such that the blue and the red curve match again
 

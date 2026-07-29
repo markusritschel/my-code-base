@@ -64,7 +64,7 @@ def compute_weighted_mean(ds):
 
     """
     # Compute weights based on the xarray you pass
-    weights = np.cos(np.deg2rad(ds['lat']))
+    weights = np.cos(np.deg2rad(ds["lat"]))
     weights.name = "weights"
     # Compute weighted mean
     weighted = ds.weighted(weights)
@@ -84,8 +84,8 @@ def rename_obs(ds, rename_dict=None):
         rename_dict = _RENAME_DICT
 
         # add new entries
-        rename_dict['x'][1:1] = ['xc', 'xgrid']
-        rename_dict['y'][1:1] = ['yc', 'ygrid']
+        rename_dict["x"][1:1] = ["xc", "xgrid"]
+        rename_dict["y"][1:1] = ["yc", "ygrid"]
 
     # rename variables
     if len(rename_dict) == 0:

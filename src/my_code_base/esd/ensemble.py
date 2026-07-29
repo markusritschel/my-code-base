@@ -52,7 +52,7 @@ class EnsembleAccessor(ABC):
     @property
     def key_template(self):
         """Return the key template"""
-        template = self._obj.attrs.get('_ens_key_template')
+        template = self._obj.attrs.get("_ens_key_template")
         if not template:
             raise KeyError(
                 "key_template not set. Make sure the attributes of the "
@@ -63,33 +63,33 @@ class EnsembleAccessor(ABC):
 
     @key_template.setter
     def key_template(self, template_string):
-        if '.' not in template_string:
+        if "." not in template_string:
             raise ValueError("Elements must be divided by a dot (.).")
-        if 'member' in template_string.split('.'):
+        if "member" in template_string.split("."):
             raise ValueError(
                 "key_template must not contain 'member'! Please choose a different identifier."
             )
-        self._obj.attrs['_ens_key_template'] = template_string
+        self._obj.attrs["_ens_key_template"] = template_string
 
     @property
     def member_keys(self):
-        return self._obj.attrs.get('_ens_member_keys')
+        return self._obj.attrs.get("_ens_member_keys")
 
     @member_keys.setter
     def member_keys(self, value):
-        self._obj.attrs['_ens_member_keys'] = value
+        self._obj.attrs["_ens_member_keys"] = value
 
     @abstractmethod
     def _init_member_keys(self): ...
 
     def _set_member_keys(self, member_values):
         self._verify_member_keys(member_values)
-        member_table = _build_member_mapping_table(member_values, self.key_template.split('.'))
+        member_table = _build_member_mapping_table(member_values, self.key_template.split("."))
         self.member_keys = member_table
 
     def _verify_member_keys(self, member_values):
         def _consistent_key_pattern():
-            number_of_keys = [len(x.split('.')) for x in member_values]
+            number_of_keys = [len(x.split(".")) for x in member_values]
             return len(set(number_of_keys)) == 1
 
         if not _consistent_key_pattern():
@@ -118,7 +118,7 @@ def _build_member_mapping_table(member_values, member_id_elements):
 
     And `member_id_elements` would be a list like ['source_id','member_id','grid_label'].
     """
-    member_table = pd.Series(member_values).str.split('.', expand=True)
+    member_table = pd.Series(member_values).str.split(".", expand=True)
     member_table.index = member_values
     member_table.index.name = "member"
     member_table.columns = member_id_elements
@@ -144,7 +144,7 @@ class XarrayEnsembleAccessor(EnsembleAccessor):
     """
 
     def _init_member_keys(self):
-        if 'member' not in self._obj.coords:
+        if "member" not in self._obj.coords:
             raise AttributeError("No coordinate 'member' found in xarray object.")
         self._set_member_keys(self._obj.member.values)
         self.member_keys = self.member_keys.to_xarray()

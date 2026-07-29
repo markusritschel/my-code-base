@@ -37,10 +37,10 @@ def register_geoaxes_accessor(accessor_name):
         @functools.wraps(cls)
         def accessor(geo_axes):
             log.debug("`accessor` func")
-            if not hasattr(geo_axes, '_' + accessor_name):
+            if not hasattr(geo_axes, "_" + accessor_name):
                 log.debug("No instance of accessor found. Add as attribute.")
-                setattr(geo_axes, '_' + accessor_name, cls(geo_axes))
-            return getattr(geo_axes, '_' + accessor_name)
+                setattr(geo_axes, "_" + accessor_name, cls(geo_axes))
+            return getattr(geo_axes, "_" + accessor_name)
 
         setattr(cartopy.mpl.geoaxes.GeoAxes, accessor_name, property(accessor))
 
@@ -51,12 +51,12 @@ def register_geoaxes_accessor(accessor_name):
 
 class GeoAxesAccessor(ABC):
     def __init__(self, ax):
-        log.debug('Initialize accessor')
+        log.debug("Initialize accessor")
         self.geo_axes = ax
         self._projection = self._get_cartopy_projection()
 
     def _get_cartopy_projection(self):
-        return type(self.geo_axes._projection_init[1]['projection'])
+        return type(self.geo_axes._projection_init[1]["projection"])
 
     def add_ocean(self, **kwargs):
         """
@@ -67,9 +67,9 @@ class GeoAxesAccessor(ABC):
         kwargs : dict
             Keyword arguments to be passed to the :meth:`~cartopy.mpl.geoaxes.GeoAxes.add_feature` method of :class:`~cartopy.mpl.geoaxes.GeoAxes`.
         """
-        log.debug('Add ocean to axis')
-        kwargs.setdefault('zorder', 0)
-        resolution = kwargs.pop('resolution', '110m')
+        log.debug("Add ocean to axis")
+        kwargs.setdefault("zorder", 0)
+        resolution = kwargs.pop("resolution", "110m")
         self.geo_axes.add_feature(cartopy.feature.OCEAN.with_scale(resolution), **kwargs)
 
     def add_land(self, **kwargs):
@@ -81,9 +81,9 @@ class GeoAxesAccessor(ABC):
         kwargs : dict
             Keyword arguments to be passed to the :meth:`~cartopy.mpl.geoaxes.GeoAxes.add_feature` method of :class:`~cartopy.mpl.geoaxes.GeoAxes`.
         """
-        log.debug('Add land to axis')
-        kwargs.setdefault('zorder', 2)
-        resolution = kwargs.pop('resolution', '110m')
+        log.debug("Add land to axis")
+        kwargs.setdefault("zorder", 2)
+        resolution = kwargs.pop("resolution", "110m")
         self.geo_axes.add_feature(cartopy.feature.LAND.with_scale(resolution), **kwargs)
 
     def add_coastlines(self, *args, **kwargs):
@@ -97,9 +97,9 @@ class GeoAxesAccessor(ABC):
         kwargs : dict
             Keyword arguments to be passed to the :meth:`~cartopy.mpl.geoaxes.GeoAxes.coastlines` method of :class:`~cartopy.mpl.geoaxes.GeoAxes`.
         """
-        log.debug('Add coastlines to axis')
-        kwargs.setdefault('zorder', 3)
-        resolution = kwargs.pop('resolution', '110m')
+        log.debug("Add coastlines to axis")
+        kwargs.setdefault("zorder", 3)
+        resolution = kwargs.pop("resolution", "110m")
         self.geo_axes.add_feature(cartopy.feature.COASTLINE.with_scale(resolution), *args, **kwargs)
 
     def set_extent(self, extent: tuple | list, crs=cartopy.crs.PlateCarree()):
@@ -113,7 +113,7 @@ class GeoAxesAccessor(ABC):
         crs : cartopy.crs
             The coordinate reference system in which the extent is expressed. Default is :class:`~cartopy.crs.PlateCarree`.
         """
-        log.debug('Set axis extent to %s', extent)
+        log.debug("Set axis extent to %s", extent)
         self.geo_axes.set_extent(extent, crs)
 
     @abstractmethod
@@ -132,8 +132,8 @@ class StereographicAxisAccessor(GeoAxesAccessor):
     def __init__(self, ax):
         super().__init__(ax)
         self._pole = {
-            cartopy.crs.SouthPolarStereo: 'south',
-            cartopy.crs.NorthPolarStereo: 'north',
+            cartopy.crs.SouthPolarStereo: "south",
+            cartopy.crs.NorthPolarStereo: "north",
         }[self._projection]
         self._lat_limits = None
         self._lon_grid_spacing = 30
@@ -144,7 +144,7 @@ class StereographicAxisAccessor(GeoAxesAccessor):
     def lat_limits(self):
         """Get and set the latitude limits for the plot."""
         if self._lat_limits is None:
-            self._lat_limits = {'south': [-90, -50], 'north': [50, 90]}[self._pole]
+            self._lat_limits = {"south": [-90, -50], "north": [50, 90]}[self._pole]
         return self._lat_limits
 
     @lat_limits.setter
@@ -174,7 +174,7 @@ class StereographicAxisAccessor(GeoAxesAccessor):
             These include ``segment_length``, ``offset``, ``primary_color``,
             ``secondary_color``, and ``width``. For details see :func:`add_circular_ruler`.
         """
-        kwargs.setdefault('segment_length', self._lon_grid_spacing)
+        kwargs.setdefault("segment_length", self._lon_grid_spacing)
         add_circular_ruler(self.geo_axes, **kwargs)
 
     def add_gridlines(self, **kwargs):
@@ -210,16 +210,16 @@ class StereographicAxisAccessor(GeoAxesAccessor):
         The ``draw_labels`` argument is set to True for the first set of gridlines
         and False for the second set.
         """
-        kwargs.setdefault('zorder', 1)
-        kwargs.setdefault('linestyle', '-')
-        kwargs.setdefault('linewidth', 0.5)
-        kwargs.setdefault('color', 'gray')
-        kwargs.setdefault('alpha', 0.7)
+        kwargs.setdefault("zorder", 1)
+        kwargs.setdefault("linestyle", "-")
+        kwargs.setdefault("linewidth", 0.5)
+        kwargs.setdefault("color", "gray")
+        kwargs.setdefault("alpha", 0.7)
 
         lat0, lat1 = self.lat_limits
         lat_grid_spacing = 10
         ygrid_locs = np.arange(lat0, lat1 + 1, lat_grid_spacing)
-        fac1, fac2 = {'north': [1, 2], 'south': [2, 1]}[self._pole]
+        fac1, fac2 = {"north": [1, 2], "south": [2, 1]}[self._pole]
 
         def draw_gridlines(x_spacing_factor, ylim):
             return self.geo_axes.gridlines(
@@ -230,16 +230,16 @@ class StereographicAxisAccessor(GeoAxesAccessor):
                 **kwargs,
             )
 
-        lat_breakpoint = {'south': -80, 'north': +80}[self._pole]
+        lat_breakpoint = {"south": -80, "north": +80}[self._pole]
 
         gl1 = draw_gridlines(fac1, [lat0, lat_breakpoint])
         gl2 = draw_gridlines(fac2, [lat_breakpoint, lat1])
 
-        self._gl = {'north': gl1, 'south': gl2}[self._pole]
+        self._gl = {"north": gl1, "south": gl2}[self._pole]
 
         return self._gl
 
-    def add_features(self, gridlines=True, ruler=True, labels=True, resolution='110m', **kwargs):
+    def add_features(self, gridlines=True, ruler=True, labels=True, resolution="110m", **kwargs):
         """Apply various features to the plot.
 
         Parameters
@@ -271,15 +271,15 @@ class StereographicAxisAccessor(GeoAxesAccessor):
 
         :glue:`/examples/stereographic_maps.ipynb::polar_plot_features`
         """
-        coastlines_kwargs = kwargs.pop('coastlines_kwargs', {})
-        gridlines_kwargs = kwargs.pop('gridlines_kwargs', {})
-        land_kwargs = kwargs.pop('land_kwargs', {})
-        ocean_kwargs = kwargs.pop('ocean_kwargs', {})
-        ruler_kwargs = kwargs.pop('ruler_kwargs', {})
-        coastlines_kwargs.setdefault('resolution', resolution)
-        ocean_kwargs.setdefault('resolution', resolution)
-        land_kwargs.setdefault('resolution', resolution)
-        self._lon_grid_spacing = ruler_kwargs.get('segment_length', 30)
+        coastlines_kwargs = kwargs.pop("coastlines_kwargs", {})
+        gridlines_kwargs = kwargs.pop("gridlines_kwargs", {})
+        land_kwargs = kwargs.pop("land_kwargs", {})
+        ocean_kwargs = kwargs.pop("ocean_kwargs", {})
+        ruler_kwargs = kwargs.pop("ruler_kwargs", {})
+        coastlines_kwargs.setdefault("resolution", resolution)
+        ocean_kwargs.setdefault("resolution", resolution)
+        land_kwargs.setdefault("resolution", resolution)
+        self._lon_grid_spacing = ruler_kwargs.get("segment_length", 30)
         self._draw_labels = labels
 
         self.set_extent([-180, 180, *self.lat_limits])
@@ -313,7 +313,7 @@ class StereographicAxisAccessor(GeoAxesAccessor):
             xy = tx.get_position()
             if xy[0] == orig_lon:
                 tx.set_position([target_lon, xy[1]])
-                tx.set_size('small')
+                tx.set_size("small")
         return
 
     def rotate_lon_labels(self):
@@ -322,7 +322,7 @@ class StereographicAxisAccessor(GeoAxesAccessor):
         plt.gcf().canvas.draw()
 
         all_label_artists = [
-            label for label in self._gl.label_artists if label.get_text()[-1] in ['E', 'W', '°']
+            label for label in self._gl.label_artists if label.get_text()[-1] in ["E", "W", "°"]
         ]
         for label in all_label_artists:
             alphanumeric_label = label.get_text()
@@ -333,7 +333,7 @@ class StereographicAxisAccessor(GeoAxesAccessor):
 
 
 def add_circular_ruler(
-    ax, segment_length=30, offset=0, primary_color='k', secondary_color='w', width=1
+    ax, segment_length=30, offset=0, primary_color="k", secondary_color="w", width=1
 ):
     """Add a ruler around a polar stereographic plot.
 
@@ -393,10 +393,10 @@ def add_circular_ruler(
 def _str2float(label):
     """Turn geographic longitude grid labels into numeric values of degrees east."""
     # Extract the numbers from the label
-    number = label.split('°')[0]
+    number = label.split("°")[0]
     number = float(number)
     # Turn longitudes west of the meridian into negative numbers
-    if 'W' in label:
+    if "W" in label:
         number = -number
     return number
 
@@ -407,7 +407,7 @@ def _lon2rot(lon, pole):
     if abs(lon) >= 90:
         rot_rad = lon - 180
 
-    if pole == 'south':
+    if pole == "south":
         rot_rad = 0 - rot_rad
         if np.abs(lon) == 90:
             rot_rad -= 180
@@ -418,16 +418,16 @@ def _lon2rot(lon, pole):
 def _rotate_and_align_label(label, longitude, rot_degree, pole):
     """Rotate and align longitude labels."""
     label.set_rotation_mode(
-        'anchor'
+        "anchor"
     )  # rotation_mode='anchor' aligns the unrotated text first and then rotates the text around the point of alignment.
     label.set_rotation(rot_degree)
-    label.set_size('small')
-    label.set_horizontalalignment('center')
+    label.set_size("small")
+    label.set_horizontalalignment("center")
 
-    if pole == 'north':
-        alignment = 'top' if abs(longitude) < 90 else 'bottom'
-    elif pole == 'south':
-        alignment = 'top' if abs(longitude) > 90 else 'bottom'
+    if pole == "north":
+        alignment = "top" if abs(longitude) < 90 else "bottom"
+    elif pole == "south":
+        alignment = "top" if abs(longitude) > 90 else "bottom"
     label.set_verticalalignment(alignment)
 
     return label

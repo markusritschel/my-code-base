@@ -48,9 +48,9 @@ def temperature_correction(
         Either "Takahashi2009" :cite:p:`takahashi_climatological_2009` or "Takahashi1993" :cite:p:`takahashi_seasonal_1993`, describing the method of the respectively published paper.
     """
     if T_out is None:
-        T_out = kwargs.pop('T_insitu')
+        T_out = kwargs.pop("T_insitu")
     if T_in is None:
-        T_in = kwargs.pop('T_equ')
+        T_in = kwargs.pop("T_equ")
     if method == "Takahashi2009":
         CO2_out = CO2 * np.exp(0.0433 * (T_out - T_in) - 4.35e-5 * (T_out**2 - T_in**2))
     elif method == "Takahashi1993":

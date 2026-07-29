@@ -129,7 +129,7 @@ class StatsAccessor:
         return ds_weighted.mean(dims)
 
 
-def xr_linregress(x, y, dim='time', dof=None, deseasonalize: bool = True):
+def xr_linregress(x, y, dim="time", dof=None, deseasonalize: bool = True):
     """
     Calculate linear regression statistics between two :class:`xarray.DataArray` along a specified dimension.
 
@@ -197,7 +197,7 @@ def xr_linregress(x, y, dim='time', dof=None, deseasonalize: bool = True):
     slope = cov / (xstd**2)
     intercept = ymean - xmean * slope
 
-    out_dict = {'sample_size': n}
+    out_dict = {"sample_size": n}
 
     # Parse tuple-based dof parameter, e.g. dof=('integral_timescale', '1/e')
     integral_cutoff = "zero_crossing"
@@ -220,11 +220,11 @@ def xr_linregress(x, y, dim='time', dof=None, deseasonalize: bool = True):
             _mask_after_threshold_crossing,
             positive_r,
             kwargs={"threshold": threshold},
-            input_core_dims=[['lead']],
-            output_core_dims=[['lead']],
+            input_core_dims=[["lead"]],
+            output_core_dims=[["lead"]],
             dask="parallelized",
             vectorize=True,
-            output_dtypes=['float'],
+            output_dtypes=["float"],
         )
         τ = positive_r_masked.fillna(0).integrate(coord="lead")
         log.debug(f"Integral timescale: {τ}")
@@ -249,9 +249,9 @@ def xr_linregress(x, y, dim='time', dof=None, deseasonalize: bool = True):
         r2 = xr_autocorr(y, dim=dim, normalize=True).sel(lead=1)
         n_eff = n * (1 - r1 * r2) / (1 + r1 * r2)
         dof = n_eff - 2
-        out_dict.update({'effective_sample_size': n_eff})
+        out_dict.update({"effective_sample_size": n_eff})
 
-    out_dict.update({'dof': dof})
+    out_dict.update({"dof": dof})
     log.info(f"Degrees of freedom: {dof}")
 
     tstats = cor * np.sqrt(dof / ((1.0 - cor + TINY) * (1.0 + cor + TINY)))

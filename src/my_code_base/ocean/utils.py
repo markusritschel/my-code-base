@@ -92,7 +92,7 @@ def water_vapor_pressure(T, S):
     return pH2O
 
 
-def ppm2uatm(xCO2, p_equ, input='wet', T=None, S=None):
+def ppm2uatm(xCO2, p_equ, input="wet", T=None, S=None):
     r"""Convert mole fraction concentration (in ppm) into partial pressure (in µatm) following :cite:t:`dickson_guide_2007`
 
     .. math::
