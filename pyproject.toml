@@ -42,7 +42,7 @@ dependencies = [
 ]
 
 [project.scripts]
-my_code_base = "my_code_base.cli:app"
+my-code-base = "my_code_base.cli:app"
 
 
 [dependency-groups]
