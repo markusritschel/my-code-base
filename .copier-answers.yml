@@ -1,5 +1,5 @@
 # Changes here will be overwritten by Copier
-_commit: 1.0.0-45-gdccd24b
+_commit: 1.1.0
 _src_path: gh:markusritschel/cookiecutter-pyproject
 command_line_interface: Click
 docs_engine: Sphinx
