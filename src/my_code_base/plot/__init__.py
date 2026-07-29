@@ -10,4 +10,6 @@ import logging
 
 from .colormoves import xml_to_cmap
 
+__all__ = ["xml_to_cmap"]
+
 log = logging.getLogger(__name__)

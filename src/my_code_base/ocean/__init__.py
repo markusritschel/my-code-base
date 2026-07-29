@@ -15,4 +15,6 @@ import logging
 
 log = logging.getLogger(__name__)
 
-from .utils import *
+from .utils import cond2sal, ppm2uatm, water_vapor_pressure
+
+__all__ = ["cond2sal", "ppm2uatm", "water_vapor_pressure"]
