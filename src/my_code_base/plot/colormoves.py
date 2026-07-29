@@ -15,10 +15,10 @@ Sources:
 
 import logging
 
-import matplotlib as mpl
-import numpy as np
 from lxml import etree
+import matplotlib as mpl
 from matplotlib import pyplot as plt
+import numpy as np
 
 log = logging.getLogger(__name__)
 

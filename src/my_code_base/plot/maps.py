@@ -4,9 +4,9 @@
 # Date:   2024-03-04
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
+from abc import ABC, abstractmethod
 import functools
 import logging
-from abc import ABC, abstractmethod
 
 import cartopy
 import cartopy.mpl.geoaxes
@@ -70,9 +70,7 @@ class GeoAxesAccessor(ABC):
         log.debug('Add ocean to axis')
         kwargs.setdefault('zorder', 0)
         resolution = kwargs.pop('resolution', '110m')
-        self.geo_axes.add_feature(
-            cartopy.feature.OCEAN.with_scale(resolution), **kwargs
-        )
+        self.geo_axes.add_feature(cartopy.feature.OCEAN.with_scale(resolution), **kwargs)
 
     def add_land(self, **kwargs):
         """
@@ -102,9 +100,7 @@ class GeoAxesAccessor(ABC):
         log.debug('Add coastlines to axis')
         kwargs.setdefault('zorder', 3)
         resolution = kwargs.pop('resolution', '110m')
-        self.geo_axes.add_feature(
-            cartopy.feature.COASTLINE.with_scale(resolution), *args, **kwargs
-        )
+        self.geo_axes.add_feature(cartopy.feature.COASTLINE.with_scale(resolution), *args, **kwargs)
 
     def set_extent(self, extent: tuple | list, crs=cartopy.crs.PlateCarree()):
         """
@@ -141,7 +137,8 @@ class StereographicAxisAccessor(GeoAxesAccessor):
         }[self._projection]
         self._lat_limits = None
         self._lon_grid_spacing = 30
-        self._draw_labels = True  # or should this rather be an attribute of self.geo_axes._draw_labels ?
+        self._draw_labels = True
+        # NOTE: should this rather be an attribute of self.geo_axes._draw_labels ?
 
     @property
     def lat_limits(self):
@@ -242,9 +239,7 @@ class StereographicAxisAccessor(GeoAxesAccessor):
 
         return self._gl
 
-    def add_features(
-        self, gridlines=True, ruler=True, labels=True, resolution='110m', **kwargs
-    ):
+    def add_features(self, gridlines=True, ruler=True, labels=True, resolution='110m', **kwargs):
         """Apply various features to the plot.
 
         Parameters
@@ -327,9 +322,7 @@ class StereographicAxisAccessor(GeoAxesAccessor):
         plt.gcf().canvas.draw()
 
         all_label_artists = [
-            label
-            for label in self._gl.label_artists
-            if label.get_text()[-1] in ['E', 'W', '°']
+            label for label in self._gl.label_artists if label.get_text()[-1] in ['E', 'W', '°']
         ]
         for label in all_label_artists:
             alphanumeric_label = label.get_text()
@@ -390,9 +383,7 @@ def add_circular_ruler(
     )
     segments_array = np.hstack(
         [
-            np.hstack(
-                [np.linspace(*bnds, segment_length, endpoint=True), np.array(np.nan)]
-            )
+            np.hstack([np.linspace(*bnds, segment_length, endpoint=True), np.array(np.nan)])
             for bnds in segment_bnds_array
         ]
     )

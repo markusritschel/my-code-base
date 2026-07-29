@@ -58,9 +58,7 @@ def cond2sal(C, T, p):
 
     rT = c0 + c1 * T + c2 * T**2 + c3 * T**3 + c4 * T**4
 
-    alpha = (A1 * p + A2 * p**2 + A3 * p**3) / (
-        1 + B1 * T + B2 * T**2 + B3 * R + B4 * T * R
-    )
+    alpha = (A1 * p + A2 * p**2 + A3 * p**3) / (1 + B1 * T + B2 * T**2 + B3 * R + B4 * T * R)
 
     Rp = 1 + alpha
 
@@ -90,9 +88,7 @@ def water_vapor_pressure(T, S):
     """
     T = temperature2K(T)
 
-    pH2O = np.exp(
-        24.4543 - 67.4509 * (100 / T) - 4.8489 * np.log(T / 100) - 0.000544 * S
-    )
+    pH2O = np.exp(24.4543 - 67.4509 * (100 / T) - 4.8489 * np.log(T / 100) - 0.000544 * S)
     return pH2O
 
 

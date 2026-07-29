@@ -41,9 +41,9 @@ def add_metadata(func):
         The decorated function.
     """
     import os
+    from pathlib import Path
     import subprocess
     import sys
-    from pathlib import Path
 
     @functools.wraps(func)
     def wrapper(*args, **kwargs):

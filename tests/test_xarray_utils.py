@@ -40,9 +40,7 @@ def da_annual():
 
 @pytest.fixture
 def da_integer_years():
-    return xr.DataArray(
-        np.ones(10), dims=["time"], coords={"time": np.arange(2000, 2010)}
-    )
+    return xr.DataArray(np.ones(10), dims=["time"], coords={"time": np.arange(2000, 2010)})
 
 
 @pytest.fixture

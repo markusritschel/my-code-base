@@ -5,8 +5,8 @@
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
 import cartopy.crs as ccrs
-import pytest
 from matplotlib import pyplot as plt
+import pytest
 
 from my_code_base.plot.maps import _lon2rot
 
@@ -25,9 +25,7 @@ def ax_southpolar(request):
 
 def test_projection_class(ax_northpolar, ax_southpolar):
     proj_type = type(ax_northpolar._projection_init[1]["projection"])
-    assert proj_type == ccrs.NorthPolarStereo, (
-        "ax should be instance of ccrs.NorthPolarStereo"
-    )
+    assert proj_type == ccrs.NorthPolarStereo, "ax should be instance of ccrs.NorthPolarStereo"
     assert ax_northpolar.polar._projection == ccrs.NorthPolarStereo, (
         "ax should be instance of ccrs.NorthPolarStereo"
     )
@@ -40,16 +38,10 @@ def test_projection_class(ax_northpolar, ax_southpolar):
 
 
 def test_geoaxes_latlimits(ax_northpolar, ax_southpolar):
-    assert ax_northpolar.polar.lat_limits == [50, 90], (
-        "Expected different latitude limits"
-    )
-    assert ax_southpolar.polar.lat_limits == [-90, -50], (
-        "Expected different latitude limits"
-    )
+    assert ax_northpolar.polar.lat_limits == [50, 90], "Expected different latitude limits"
+    assert ax_southpolar.polar.lat_limits == [-90, -50], "Expected different latitude limits"
     ax_northpolar.polar.lat_limits = [30, 70]
-    assert ax_northpolar.polar.lat_limits == [30, 70], (
-        "Expected different latitude limits"
-    )
+    assert ax_northpolar.polar.lat_limits == [30, 70], "Expected different latitude limits"
 
 
 def test_helper():

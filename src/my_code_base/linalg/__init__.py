@@ -4,8 +4,8 @@
 # Date:   2024-04-04
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
-import logging
 from functools import singledispatch
+import logging
 
 import numpy as np
 import pandas as pd

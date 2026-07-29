@@ -7,7 +7,6 @@
 from functools import singledispatchmethod
 import logging
 
-from multipledispatch import dispatch
 import numpy as np
 import pandas as pd
 from scipy import stats
@@ -63,9 +62,7 @@ class TSAccessor:
             If the data does not have ``year`` as a dimension.
         """
         if not self._is_annual():
-            raise KeyError(
-                "'year' dimension not found. Data must have 'year' as a dimension."
-            )
+            raise KeyError("'year' dimension not found. Data must have 'year' as a dimension.")
         return extend_annual_series(self._obj)
 
 
@@ -73,7 +70,7 @@ class TSAccessor:
 @xr.register_dataarray_accessor("stats")
 class StatsAccessor:
     """
-    This class provides statistical operations on xarray data.
+    Provide statistical operations on xarray data.
 
     Parameters
     ----------
@@ -114,21 +111,17 @@ class StatsAccessor:
             return extend_annual_series(weighted_mean)
         else:
             time_coords = pd.to_datetime(weighted_mean.year, format="%Y")
-            weighted_mean = weighted_mean.assign_coords(
-                time=("year", time_coords)
-            ).swap_dims({"year": "time"})
+            weighted_mean = weighted_mean.assign_coords(time=("year", time_coords)).swap_dims(
+                {"year": "time"}
+            )
 
         return weighted_mean
 
     @weighted_mean.register(list)
     @weighted_mean.register(tuple)
     def _(self, dims):
-        """
-        Calculate the spatial weighted field average.
-        """
-        log.debug(
-            f"Identified multiple dimensions {dims}. Building spatial weighted mean."
-        )
+        """Calculate the spatial weighted field average."""
+        log.debug(f"Identified multiple dimensions {dims}. Building spatial weighted mean.")
         ds = self._obj
         weights = np.cos(np.deg2rad(ds.lat))
         weights.name = "weights"

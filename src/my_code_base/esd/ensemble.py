@@ -4,9 +4,9 @@
 # Date:   2024-03-26
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
-import logging
 from abc import ABC, abstractmethod
 from functools import wraps
+import logging
 
 import pandas as pd
 import xarray as xr
@@ -67,8 +67,7 @@ class EnsembleAccessor(ABC):
             raise ValueError("Elements must be divided by a dot (.).")
         if 'member' in template_string.split('.'):
             raise ValueError(
-                "key_template must not contain 'member'! "
-                "Please choose a different identifier."
+                "key_template must not contain 'member'! Please choose a different identifier."
             )
         self._obj.attrs['_ens_key_template'] = template_string
 
@@ -85,9 +84,7 @@ class EnsembleAccessor(ABC):
 
     def _set_member_keys(self, member_values):
         self._verify_member_keys(member_values)
-        member_table = _build_member_mapping_table(
-            member_values, self.key_template.split('.')
-        )
+        member_table = _build_member_mapping_table(member_values, self.key_template.split('.'))
         self.member_keys = member_table
 
     def _verify_member_keys(self, member_values):

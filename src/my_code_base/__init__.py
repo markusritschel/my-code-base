@@ -5,8 +5,8 @@
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 """Provide global path variables, version information, and utility functions for the package."""
 
-import sys
 from pathlib import Path
+import sys
 
 from dotenv import find_dotenv, load_dotenv
 

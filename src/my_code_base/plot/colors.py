@@ -85,8 +85,7 @@ def build_continuous_cmap(
     cdict = dict()
     for num, col in enumerate(['red', 'green', 'blue']):
         col_list = [
-            [float_list[i], rgb_list[i][num], rgb_list[i][num]]
-            for i in range(len(float_list))
+            [float_list[i], rgb_list[i][num], rgb_list[i][num]] for i in range(len(float_list))
         ]
         cdict[col] = col_list
     cmap = mcolors.LinearSegmentedColormap(name, segmentdata=cdict, N=N)

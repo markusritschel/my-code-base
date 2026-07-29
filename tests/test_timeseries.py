@@ -276,9 +276,7 @@ class TestNdofLag1Autocorrelation:
         rng = np.random.default_rng(7)
         x = rng.standard_normal(100)
         y = rng.standard_normal(100)
-        assert ndof_lag1_autocorrelation(x, y) == pytest.approx(
-            effective_sample_size(x, y) - 2
-        )
+        assert ndof_lag1_autocorrelation(x, y) == pytest.approx(effective_sample_size(x, y) - 2)
 
     def test_dof_is_non_negative(self, white_noise):
         assert ndof_lag1_autocorrelation(white_noise, white_noise) >= 0

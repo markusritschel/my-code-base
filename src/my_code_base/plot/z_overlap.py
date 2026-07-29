@@ -12,9 +12,7 @@ import numpy as np
 log = logging.getLogger(__name__)
 
 
-def fix_overlap(
-    da, ax, lon_name='lon', lat_name='lat', source_projection=ccrs.Geodetic()
-):
+def fix_overlap(da, ax, lon_name='lon', lat_name='lat', source_projection=ccrs.Geodetic()):
     """
     Fix overlapping geographic dimensions.
     This avoids artifacts when plotting contour lines of geographic data on a stereographic map
@@ -78,9 +76,7 @@ def z_masked_overlap(axe, X, Y, Z, source_projection=None):
     ptx, pty, Z : list(numpy.ndarray)
         The transformed coordinates and data.
     """
-    if not hasattr(axe, 'projection') or not isinstance(
-        axe.projection, ccrs.Projection
-    ):
+    if not hasattr(axe, 'projection') or not isinstance(axe.projection, ccrs.Projection):
         return X, Y, Z
 
     if len(X.shape) != 2 or len(Y.shape) != 2:
@@ -93,12 +89,8 @@ def z_masked_overlap(axe, X, Y, Z, source_projection=None):
         ptx, pty = X, Y
 
     with np.errstate(invalid='ignore'):
-        diagonal0_lengths = np.hypot(
-            ptx[1:, 1:] - ptx[:-1, :-1], pty[1:, 1:] - pty[:-1, :-1]
-        )
-        diagonal1_lengths = np.hypot(
-            ptx[1:, :-1] - ptx[:-1, 1:], pty[1:, :-1] - pty[:-1, 1:]
-        )
+        diagonal0_lengths = np.hypot(ptx[1:, 1:] - ptx[:-1, :-1], pty[1:, 1:] - pty[:-1, :-1])
+        diagonal1_lengths = np.hypot(ptx[1:, :-1] - ptx[:-1, 1:], pty[1:, :-1] - pty[:-1, 1:])
         x_range = abs(axe.projection.x_limits[1] - axe.projection.x_limits[0])
         to_mask = (
             (diagonal0_lengths > x_range / 2)

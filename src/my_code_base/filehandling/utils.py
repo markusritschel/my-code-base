@@ -5,8 +5,8 @@
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
 import filecmp
-import logging
 from functools import wraps
+import logging
 
 log = logging.getLogger(__name__)
 

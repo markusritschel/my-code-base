@@ -6,8 +6,8 @@
 #
 import logging
 
-import xarray as xr
 from typing_extensions import deprecated
+import xarray as xr
 
 log = logging.getLogger(__name__)
 
@@ -71,9 +71,7 @@ def compress_xarray(*args, **kwargs):
     return xr_compress(*args, **kwargs)
 
 
-def xr_compress(
-    data: xr.Dataset | xr.DataArray, complevel: int
-) -> xr.Dataset | xr.DataArray:
+def xr_compress(data: xr.Dataset | xr.DataArray, complevel: int) -> xr.Dataset | xr.DataArray:
     """Compress :class:`xarray.Dataset` or :class:`xarray.DataArray`.
 
     Parameters

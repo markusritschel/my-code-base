@@ -18,9 +18,7 @@ log = logging.getLogger(__name__)
 def test_inv_dataframe():
     df = pd.DataFrame({"A": [1, 2], "B": [3, 4]})
     result = inv(df)
-    expected = pd.DataFrame(
-        np.linalg.inv(df.values), columns=df.columns, index=df.index
-    )
+    expected = pd.DataFrame(np.linalg.inv(df.values), columns=df.columns, index=df.index)
     pd.testing.assert_frame_equal(result, expected, check_dtype=False)
 
 

@@ -6,8 +6,8 @@
 # Date:   2024-03-03
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
-import logging
 from collections import namedtuple
+import logging
 
 import numpy as np
 import pandas as pd
@@ -53,9 +53,7 @@ def weighted_annual_mean(ds: xr.Dataset | xr.DataArray):
         try:
             estimated_frequency = xr.infer_freq(ds.time)
             if not estimated_frequency.startswith("M"):
-                log.warning(
-                    "Frequency seems to be not monthly. Consider another averaging method."
-                )
+                log.warning("Frequency seems to be not monthly. Consider another averaging method.")
         except:
             log.warning("Cannot infer frequency")
             return
@@ -68,9 +66,7 @@ def weighted_annual_mean(ds: xr.Dataset | xr.DataArray):
     # Calculate the weights
     # In each 4th year, the total amount of days differs compared to other years
     # Therefore, weights need to be calculated on an annual base
-    weights = (
-        month_length.groupby("time.year") / month_length.groupby("time.year").sum()
-    )
+    weights = month_length.groupby("time.year") / month_length.groupby("time.year").sum()
 
     # Make sure the weights in each year add up to 1
     assert np.allclose(weights.groupby("time.year").sum(xr.ALL_DIMS), 1.0), (
@@ -91,9 +87,7 @@ def weighted_annual_mean(ds: xr.Dataset | xr.DataArray):
     # Return the weighted average
     output = ds_sum / ones_out
 
-    output = output.assign_coords(
-        year=("time", output.time.dt.year.values), keep_attrs=True
-    )
+    output = output.assign_coords(year=("time", output.time.dt.year.values), keep_attrs=True)
     return output.swap_dims({"time": "year"}).drop_vars("time")
 
 
@@ -110,9 +104,7 @@ def xr_deseasonalize(da, freq=12, dim="time"):
         The name of the time dimension.
     """
     res = xarrayutils.linear_trend(da, dim=dim)
-    time_index = xr.DataArray(
-        np.arange(da[dim].size), dims={dim: da[dim]}, coords={dim: da[dim]}
-    )
+    time_index = xr.DataArray(np.arange(da[dim].size), dims={dim: da[dim]}, coords={dim: da[dim]})
     trend = res.intercept + time_index * res.slope
 
     detrended = da - trend
@@ -142,9 +134,7 @@ def xr_seasonal_decompose(da, dim="time"):
     assert isinstance(da, xr.DataArray), "Input should be xarray.DataArray"
 
     res = xarrayutils.linear_trend(da, dim=dim)
-    time_index = xr.DataArray(
-        np.arange(da[dim].size), dims={dim: da[dim]}, coords={dim: da[dim]}
-    )
+    time_index = xr.DataArray(np.arange(da[dim].size), dims={dim: da[dim]}, coords={dim: da[dim]})
 
     trend = res.intercept + time_index * res.slope
     detrended = da - trend
@@ -233,9 +223,7 @@ def extend_annual_series(ds):
     """
     if "year" not in ds.dims:
         ds = (
-            ds.assign_coords(year=("time", ds.time.dt.year.values)).swap_dims(
-                {"time": "year"}
-            )
+            ds.assign_coords(year=("time", ds.time.dt.year.values)).swap_dims({"time": "year"})
         ).drop_vars(["time"])
 
     assert "year" in ds.dims, "Dataset needs to have `year` as dimension"
@@ -421,9 +409,7 @@ def ndof_integral_timescale(data, dt=1):
     n_eff_raw = m * dt / τ if τ > 0 else float(m)
     n_eff = np.clip(n_eff_raw, 2, m)
     if n_eff != n_eff_raw:
-        log.warning(
-            "Effective sample size clamped to [2, %d] (raw n_eff=%.2f)", m, n_eff_raw
-        )
+        log.warning("Effective sample size clamped to [2, %d] (raw n_eff=%.2f)", m, n_eff_raw)
     dof = n_eff - 2
     return _IntegralTimescaleResult(τ, dof)
 
@@ -434,9 +420,7 @@ _IntegralTimescaleResult = namedtuple("IntegralTimescaleResult", ["timescale", "
 def lag1_autocorrelation(x):
     """Calculate the lag-1 autocorrelation of a time series."""
     if len(x) < 3:
-        raise ValueError(
-            f"Need at least 3 data points for lag-1 autocorrelation, got {len(x)}."
-        )
+        raise ValueError(f"Need at least 3 data points for lag-1 autocorrelation, got {len(x)}.")
     return np.corrcoef(x[:-1], x[1:])[0, 1]
 
 
@@ -463,8 +447,7 @@ def effective_sample_size(x, y):
     denom = 1 + r1 * r2
     if np.isclose(denom, 0):
         log.warning(
-            "r1*r2 ≈ -1 (denom=%.4f); effective sample size "
-            "is ill-defined, clamping to n=%d",
+            "r1*r2 ≈ -1 (denom=%.4f); effective sample size is ill-defined, clamping to n=%d",
             denom,
             n,
         )
@@ -475,9 +458,7 @@ def effective_sample_size(x, y):
     # DOI: 10.1175/1520-0442(1999)012<1990:TENOSD>2.0.CO;2
     n_eff = np.clip(n_eff_raw, 2, n)
     if n_eff != n_eff_raw:
-        log.warning(
-            "Effective sample size clamped to [2, %d] (raw n_eff=%.2f)", n, n_eff_raw
-        )
+        log.warning("Effective sample size clamped to [2, %d] (raw n_eff=%.2f)", n, n_eff_raw)
 
     return n_eff
 
