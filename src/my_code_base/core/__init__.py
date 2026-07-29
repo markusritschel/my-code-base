@@ -5,7 +5,7 @@
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
 """Provide a set of core functions"""
+
 import logging
 
 log = logging.getLogger(__name__)
-

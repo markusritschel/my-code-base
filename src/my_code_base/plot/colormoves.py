@@ -12,6 +12,7 @@ Sources:
 - https://sciviscolor.org/colormaps/
 - https://sciviscolor.org/tools/
 """
+
 import logging
 
 import matplotlib as mpl
@@ -51,25 +52,31 @@ def xml_to_cmap(xml):
     if position[0] != 0 or position[-1] != 1:
         raise ValueError("position must start with 0 and end with 1")
 
-    cdict = {color: [(pos, col, col) for pos, col in zip(position, cols)] for color, cols in zip(["red", "green", "blue"], zip(*colors))}
+    cdict = {
+        color: [(pos, col, col) for pos, col in zip(position, cols)]
+        for color, cols in zip(["red", "green", "blue"], zip(*colors))
+    }
 
     return mpl.colors.LinearSegmentedColormap("my_colormap", cdict, 256)
-
 
 
 def _load_xml(xml):
     try:
         xmldoc = etree.parse(xml)
     except OSError as exc:
-        raise OSError('Invalid input file. It must be a colormap xml file. Visit'
-                      'https://sciviscolor.org/home/colormaps/ for options. '
-                      'Visit https://sciviscolor.org/matlab-matplotlib-pv44/ for an example use of this script.') from exc
+        raise OSError(
+            'Invalid input file. It must be a colormap xml file. Visit'
+            'https://sciviscolor.org/home/colormaps/ for options. '
+            'Visit https://sciviscolor.org/matlab-matplotlib-pv44/ for an example use of this script.'
+        ) from exc
 
-    points = [(float(s.attrib['x']),
-               (float(s.attrib['r']),
-                float(s.attrib['g']),
-                float(s.attrib['b'])))
-              for s in xmldoc.getroot().findall('.//Point')]
+    points = [
+        (
+            float(s.attrib['x']),
+            (float(s.attrib['r']), float(s.attrib['g']), float(s.attrib['b'])),
+        )
+        for s in xmldoc.getroot().findall('.//Point')
+    ]
 
     data_vals, color_vals = zip(*points)
     return {'color_vals': color_vals, 'data_vals': data_vals}
@@ -77,7 +84,11 @@ def _load_xml(xml):
 
 def plot_cmap(colormap):
     """A quick example plotting the 8 by 1 gradient of the colormap"""
-    plt.imshow(np.vstack((np.linspace(0, 1, 256),) * 2), aspect='auto', cmap=plt.get_cmap(colormap))
+    plt.imshow(
+        np.vstack((np.linspace(0, 1, 256),) * 2),
+        aspect='auto',
+        cmap=plt.get_cmap(colormap),
+    )
     plt.axis('off')
     plt.tight_layout()
     plt.show()

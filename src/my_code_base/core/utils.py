@@ -16,6 +16,7 @@ logging.basicConfig(level="INFO")
 
 log = logging.getLogger(__name__)
 
+
 def add_metadata(func):
     """
     A decorator that adds metadata to the function's output.
@@ -24,7 +25,7 @@ def add_metadata(func):
 
     Parameters
     ----------
-    func : callable 
+    func : callable
         The function to be decorated.
 
     Returns
@@ -52,25 +53,31 @@ def add_metadata(func):
             suffix += f"_{meta.git_commit}"
         output_path = f'{path.parent}/{path.stem}{suffix}{path.suffix}'
         args[1] = output_path
-        
+
         obj_type = get_obj_type_str(obj)
-        log.info(f"Saved {obj_type} to {output_path}, produced by {meta.relative_code_path}#{meta.line_number} @git-commit:{meta.git_commit}")
+        log.info(
+            f"Saved {obj_type} to {output_path}, produced by {meta.relative_code_path}#{meta.line_number} @git-commit:{meta.git_commit}"
+        )
 
         return func(*args, **kwargs)
 
     def collect_metadata():
         frame = sys._getframe(1).f_back
         code_filename = frame.f_code.co_filename
-        line_number = frame.f_lineno #- 1   # TODO: <-- check!
+        line_number = frame.f_lineno  # - 1   # TODO: <-- check!
         relative_code_path = os.path.relpath(code_filename)
-        git_commit = subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD']).decode('ascii').strip()
+        git_commit = (
+            subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD'])
+            .decode('ascii')
+            .strip()
+        )
 
         metadata = {}
         metadata['relative_code_path'] = relative_code_path
         metadata['line_number'] = str(line_number)
         metadata['git_commit'] = git_commit
         return BunchDict(metadata)
-        
+
     return wrapper
 
 
@@ -78,11 +85,11 @@ class BunchDict(dict):
     """BunchDict is a subclass of the built-in dict class that allows
     accessing dictionary keys as attributes.
 
-    This class overrides the `__getattr__` and `__setattr__` methods to 
+    This class overrides the `__getattr__` and `__setattr__` methods to
     provide attribute-style access to dictionary keys.
-    When an attribute is accessed, it is treated as a dictionary key 
+    When an attribute is accessed, it is treated as a dictionary key
     and the corresponding value is returned.
-    When an attribute is set, it is treated as a dictionary key and 
+    When an attribute is set, it is treated as a dictionary key and
     the corresponding value is updated.
 
     .. note::
@@ -108,7 +115,7 @@ class BunchDict(dict):
 
 def get_obj_type_str(obj):
     """Transform the output of `type` to a simplified descriptor:
-    
+
     Turns
         "<class 'xarray.core.dataset.Dataset'>"
     into "Dataset"
@@ -121,10 +128,10 @@ def get_obj_type_str(obj):
 def save(obj, path, *args, **kwargs):
     """Save the given object including metadata.
 
-    This is a dispatchable function. That is, there are several 
-    implementations for different types of objects (e.g. 
-    :class:`matplotlib.figure.Figure`, :class:`pandas.DataFrame`, 
-    :class:`xarray.Dataset`). In case there is no implementation, 
+    This is a dispatchable function. That is, there are several
+    implementations for different types of objects (e.g.
+    :class:`matplotlib.figure.Figure`, :class:`pandas.DataFrame`,
+    :class:`xarray.Dataset`). In case there is no implementation,
     the function will throw a :class:`NotImplementedError`.
 
     Parameters
@@ -146,20 +153,23 @@ def save(obj, path, *args, **kwargs):
 
     Examples
     --------
-    >>> ds = xr.tutorial.load_dataset('air_temperature')       # doctest: +SKIP
-    >>> save(ds, '/tmp/mynetcdf.nc', add_hash=True)            # doctest: +SKIP
+    >>> ds = xr.tutorial.load_dataset('air_temperature')  # doctest: +SKIP
+    >>> save(ds, '/tmp/mynetcdf.nc', add_hash=True)  # doctest: +SKIP
     >>> !ncdump -h /tmp/mynetcdf_500e15f.nc | grep history     # doctest: +SKIP
     :history = "2024-06-12 16:18:16: File saved by myscript.py#3 @git-commit:500e15f;"
-    >>> save(my_object, '/tmp/myobj')                          # doctest: +SKIP
+    >>> save(my_object, '/tmp/myobj')  # doctest: +SKIP
     NotImplementedError: Cannot save object of type <class 'type'> using `save` method. Please use the native method.
     """
-    raise NotImplementedError(f"No implementation of `save` found for object of type {type(obj)}. "
-                               "Please use the native method.")
+    raise NotImplementedError(
+        f"No implementation of `save` found for object of type {type(obj)}. "
+        "Please use the native method."
+    )
 
 
 @save.register(plt.Figure)
 def _(fig, path, *args, **kwargs):
     fig.savefig(path, *args, **kwargs)
+
 
 @save.register(pd.DataFrame)
 def _(df, path, *args, **kwargs):
@@ -170,6 +180,7 @@ def _(df, path, *args, **kwargs):
 @save.register(xr.Dataset)
 def _(ds, path, *args, **kwargs):
     from .xarray_utils import HistoryAccessor  # noqa: F401
+
     metadata = kwargs.pop('metadata')
     msg = f"File saved by {metadata['relative_code_path']}#{metadata['line_number']} @git-commit:{metadata['git_commit']}"
     ds = ds.history.add(msg)
@@ -201,9 +212,9 @@ def find_nearest(items: list | np.ndarray, pivot: float) -> float:
 
     Parameters
     ----------
-    items: 
+    items:
         A list of elements to search from.
-    pivot: 
+    pivot:
         The pivot element to find the closest element to.
 
     Returns
@@ -213,8 +224,8 @@ def find_nearest(items: list | np.ndarray, pivot: float) -> float:
 
     Examples
     --------
-    >>> result = find_nearest(np.array([2,4,5,7,9,10]), 4.6)
-    >>> int(result)      # Cast to int for consistent comparison
+    >>> result = find_nearest(np.array([2, 4, 5, 7, 9, 10]), 4.6)
+    >>> int(result)  # Cast to int for consistent comparison
     5
     """
     return min(items, key=lambda x: abs(x - pivot))
@@ -231,7 +242,7 @@ def order_of_magnitude(x: int | float | np.ndarray | pd.Series) -> np.ndarray:
     array([2.])
     >>> order_of_magnitude(1)
     array([0.])
-    >>> order_of_magnitude(.15)
+    >>> order_of_magnitude(0.15)
     array([-1.])
     >>> order_of_magnitude(np.array([24.13, 254.2]))
     array([1., 2.])

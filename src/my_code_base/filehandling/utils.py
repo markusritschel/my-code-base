@@ -34,21 +34,24 @@ def check_input_for_duplicates(func):
     >>> pytest.skip()
     >>> @check_input_for_duplicates
     >>> def process_files(file_list):
-    >>>     # Process the files
+    >>> # Process the files
     >>>     ...
 
     .. note::
         The wrapped function can still be parsed by Sphinx due to the :obj:`functools.wraps` decorator.
 
     """
+
     @wraps(func)
     def wrapper(file_list):
         if not isinstance(file_list, list) or len(file_list) <= 1:
             return func(file_list)
         remove_idx = []
         for i, f1 in enumerate(file_list):
-            for f2 in file_list[i + 1:]:
-                res = filecmp.cmp(f1,f2, shallow=True)  # Note: shallow=False would compare the actual file contents
+            for f2 in file_list[i + 1 :]:
+                res = filecmp.cmp(
+                    f1, f2, shallow=True
+                )  # Note: shallow=False would compare the actual file contents
                 if res:
                     remove_idx.append(i)
         filtered_file_list = [i for j, i in enumerate(file_list) if j not in remove_idx]

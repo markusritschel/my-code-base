@@ -31,23 +31,23 @@ _RENAME_DICT = {
         "lev_bnds",
         "olevel_bounds",
         "zlev_bnds",
-        ],
+    ],
     "lon_bounds": [
         "bounds_lon",
         "bounds_nav_lon",
         "lon_bnds",
         "x_bnds",
         "vertices_longitude",
-        ],
+    ],
     "lat_bounds": [
         "bounds_lat",
         "bounds_nav_lat",
         "lat_bnds",
         "y_bnds",
         "vertices_latitude",
-        ],
+    ],
     "time_bounds": ["time_bounds", "time_bnds"],
-    }
+}
 
 
 def compute_weighted_mean(ds):
@@ -92,18 +92,16 @@ def rename_obs(ds, rename_dict=None):
         warnings.warn(
             "Input dictionary empty.",
             UserWarning,
-            )
+        )
     else:
         for di in rename_dict.keys():
-
             # make sure the input is a list
             if not isinstance(rename_dict[di], list):
                 raise ValueError(
                     f"Input dict must have a list as value. Got {rename_dict[di]} for key {di}"
-                    )
+                )
 
             if di not in ds.variables:
-
                 # For now just stop in the list if the dimension is already there, or one 'hit'
                 # was already encountered.
                 trigger = False

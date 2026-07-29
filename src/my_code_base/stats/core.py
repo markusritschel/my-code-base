@@ -22,7 +22,7 @@ def t_statistic(r, dof):
         t_\\text{score} = r \\cdot \\frac{ \\sqrt{dof} }{ \\sqrt{1 - r^2} }
                         = r \\cdot \\frac{ \\sqrt{n_\\text{eff}-2} }{ \\sqrt{1 - r^2} }
 
-    where $r$ is the Pearson correlation coefficient, $dof$ is the number of degrees of freedom, 
+    where $r$ is the Pearson correlation coefficient, $dof$ is the number of degrees of freedom,
     typicallyt he number of effective sample size - 2.
 
     Source: https://en.wikipedia.org/wiki/Student%27s_t-test

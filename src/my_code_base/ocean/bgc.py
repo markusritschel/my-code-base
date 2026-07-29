@@ -18,8 +18,8 @@ def temperature_correction(
     CO2: float | pd.Series,
     T_out: float | pd.Series = None,
     T_in: float | pd.Series = None,
-    method: str="Takahashi2009",
-    **kwargs
+    method: str = "Takahashi2009",
+    **kwargs,
 ):
     r"""Apply a temperature correction. This might be necessary when the in-situ temperatures (at the water intake,
     often outside the ship) differ from where the CO2 measurement is done (often in a ferry-box onboard the ship).
@@ -40,19 +40,21 @@ def temperature_correction(
         - xCO2 (mole fraction in ppm)
         - pCO2 (partial pressure in hPa, Pa, atm or µatm)
         - fCO2 (:func:`.fugacity` in hPa, Pa, atm or µatm)
-    T_out: 
+    T_out:
         The temperature towards which the data shall be corrected. Typically, the in-situ temperature (°C or K), at which the water was sampled.
-    T_in: 
+    T_in:
         The temperature from which the data shall be corrected. Typically, the temperature (°C or K) at the equilibrator, at which the water was measured.
     method:
         Either "Takahashi2009" :cite:p:`takahashi_climatological_2009` or "Takahashi1993" :cite:p:`takahashi_seasonal_1993`, describing the method of the respectively published paper.
     """
-    if T_out is None: T_out = kwargs.pop('T_insitu')
-    if T_in is None: T_in = kwargs.pop('T_equ')
-    if method=="Takahashi2009":
-        CO2_out = CO2 * np.exp(0.0433*(T_out - T_in) - 4.35e-5*(T_out**2 - T_in**2))
-    elif method=="Takahashi1993":
-        CO2_out = CO2 * np.exp(0.0423*(T_out - T_in))
+    if T_out is None:
+        T_out = kwargs.pop('T_insitu')
+    if T_in is None:
+        T_in = kwargs.pop('T_equ')
+    if method == "Takahashi2009":
+        CO2_out = CO2 * np.exp(0.0433 * (T_out - T_in) - 4.35e-5 * (T_out**2 - T_in**2))
+    elif method == "Takahashi1993":
+        CO2_out = CO2 * np.exp(0.0423 * (T_out - T_in))
     else:
         raise OSError("Unknown method for temperature conversion.")
 
@@ -98,20 +100,20 @@ def fugacity(pCO2, p_equ, SST, xCO2=None):
     SST = temperature2K(SST)
 
     # respectively in cm³/mol
-    B_CO2 = -1636.75 + 12.0408*SST - 3.27957e-2*SST**2 + 3.16528e-5*SST**3
-    δ_CO2 = 57.7 - 0.118*SST
+    B_CO2 = -1636.75 + 12.0408 * SST - 3.27957e-2 * SST**2 + 3.16528e-5 * SST**3
+    δ_CO2 = 57.7 - 0.118 * SST
 
     # gas constant
-    R = 8.2057366080960e-2 	        #   L⋅atm⋅K−1⋅mol−1
-    R *= 1000                       # cm³⋅atm⋅K−1⋅mol−1
+    R = 8.2057366080960e-2  #   L⋅atm⋅K−1⋅mol−1
+    R *= 1000  # cm³⋅atm⋅K−1⋅mol−1
 
     if xCO2 is None:
         x_c = 1
     else:
-        x_c = (1 - xCO2*1e-6)       # can be (and is often) neglected in literature
+        x_c = 1 - xCO2 * 1e-6  # can be (and is often) neglected in literature
 
-    A = p_equ*(B_CO2 + 2 * δ_CO2 * x_c**2)
-    B = R*SST
-    f = pCO2 * np.exp(A / B)        # same unit as pCO2 (µatm)
+    A = p_equ * (B_CO2 + 2 * δ_CO2 * x_c**2)
+    B = R * SST
+    f = pCO2 * np.exp(A / B)  # same unit as pCO2 (µatm)
 
     return f

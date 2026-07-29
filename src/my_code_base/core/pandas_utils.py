@@ -36,7 +36,15 @@ def grid_dataframe(points, vals, xi, export_grid=False):
     >>> yi = np.linspace(35, 53, 50)
     >>> gridded = grid_dataframe((df.lon, df.lat), df.data, (xi, yi))
     >>> plt.pcolormesh(xi, yi, gridded, shading='auto', cmap='Greens_r')
-    >>> plt.scatter(df.lon, df.lat, c=df.data, marker='.', lw=.75, cmap='Reds', label='raw data')
+    >>> plt.scatter(
+    ...     df.lon,
+    ...     df.lat,
+    ...     c=df.data,
+    ...     marker='.',
+    ...     lw=0.75,
+    ...     cmap='Reds',
+    ...     label='raw data',
+    ... )
     >>> plt.xlabel('Longitude')
     >>> plt.ylabel('Latitude')
     >>> plt.legend()

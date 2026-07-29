@@ -32,14 +32,15 @@ def register_geoaxes_accessor(accessor_name):
     >>> ax = plt.subplot(projection=cartopy.crs.NorthPolarStereo())
     >>> ax.my_accessor.some_method()
     """
+
     def actual_decorator(cls):
         @functools.wraps(cls)
         def accessor(geo_axes):
             log.debug("`accessor` func")
-            if not hasattr(geo_axes, '_'+accessor_name):
+            if not hasattr(geo_axes, '_' + accessor_name):
                 log.debug("No instance of accessor found. Add as attribute.")
-                setattr(geo_axes, '_'+accessor_name, cls(geo_axes))
-            return getattr(geo_axes, '_'+accessor_name)
+                setattr(geo_axes, '_' + accessor_name, cls(geo_axes))
+            return getattr(geo_axes, '_' + accessor_name)
 
         setattr(cartopy.mpl.geoaxes.GeoAxes, accessor_name, property(accessor))
 
@@ -69,7 +70,9 @@ class GeoAxesAccessor(ABC):
         log.debug('Add ocean to axis')
         kwargs.setdefault('zorder', 0)
         resolution = kwargs.pop('resolution', '110m')
-        self.geo_axes.add_feature(cartopy.feature.OCEAN.with_scale(resolution), **kwargs)
+        self.geo_axes.add_feature(
+            cartopy.feature.OCEAN.with_scale(resolution), **kwargs
+        )
 
     def add_land(self, **kwargs):
         """
@@ -99,7 +102,9 @@ class GeoAxesAccessor(ABC):
         log.debug('Add coastlines to axis')
         kwargs.setdefault('zorder', 3)
         resolution = kwargs.pop('resolution', '110m')
-        self.geo_axes.add_feature(cartopy.feature.COASTLINE.with_scale(resolution), *args, **kwargs)
+        self.geo_axes.add_feature(
+            cartopy.feature.COASTLINE.with_scale(resolution), *args, **kwargs
+        )
 
     def set_extent(self, extent: tuple | list, crs=cartopy.crs.PlateCarree()):
         """
@@ -116,12 +121,10 @@ class GeoAxesAccessor(ABC):
         self.geo_axes.set_extent(extent, crs)
 
     @abstractmethod
-    def add_gridlines(self):
-        ...
+    def add_gridlines(self): ...
 
     @abstractmethod
-    def add_features(self):
-        ...
+    def add_features(self): ...
 
 
 @register_geoaxes_accessor("polar")
@@ -132,8 +135,10 @@ class StereographicAxisAccessor(GeoAxesAccessor):
 
     def __init__(self, ax):
         super().__init__(ax)
-        self._pole = {cartopy.crs.SouthPolarStereo: 'south',
-                      cartopy.crs.NorthPolarStereo: 'north'}[self._projection]
+        self._pole = {
+            cartopy.crs.SouthPolarStereo: 'south',
+            cartopy.crs.NorthPolarStereo: 'north',
+        }[self._projection]
         self._lat_limits = None
         self._lon_grid_spacing = 30
         self._draw_labels = True  # or should this rather be an attribute of self.geo_axes._draw_labels ?
@@ -142,8 +147,7 @@ class StereographicAxisAccessor(GeoAxesAccessor):
     def lat_limits(self):
         """Get and set the latitude limits for the plot."""
         if self._lat_limits is None:
-            self._lat_limits = {'south': [-90, -50],
-                            'north': [50, 90]}[self._pole]
+            self._lat_limits = {'south': [-90, -50], 'north': [50, 90]}[self._pole]
         return self._lat_limits
 
     @lat_limits.setter
@@ -162,7 +166,7 @@ class StereographicAxisAccessor(GeoAxesAccessor):
 
     def add_ruler(self, **kwargs):
         """Add a circular ruler to the plot.
-        
+
         See :func:`add_circular_ruler` for customization arguments.
         The `ax` argument is not needed to be handed over when using the accessor's method.
 
@@ -170,7 +174,7 @@ class StereographicAxisAccessor(GeoAxesAccessor):
         ----------
         kwargs : dict
             Additional keyword arguments for customization.
-            These include ``segment_length``, ``offset``, ``primary_color``, 
+            These include ``segment_length``, ``offset``, ``primary_color``,
             ``secondary_color``, and ``width``. For details see :func:`add_circular_ruler`.
         """
         kwargs.setdefault('segment_length', self._lon_grid_spacing)
@@ -203,10 +207,10 @@ class StereographicAxisAccessor(GeoAxesAccessor):
 
         The gridlines are added based on the latitude limits of the plot.
         The latitude grid spacing is set to 10 degrees.
-        The longitude grid spacing is determined by the latitude grid spacing 
+        The longitude grid spacing is determined by the latitude grid spacing
         and the x_spacing_factor.
         The gridlines are created using the :meth:`~cartopy.mpl.geoaxes.GeoAxes.gridlines` method of the ``geo_axes`` object.
-        The ``draw_labels`` argument is set to True for the first set of gridlines 
+        The ``draw_labels`` argument is set to True for the first set of gridlines
         and False for the second set.
         """
         kwargs.setdefault('zorder', 1)
@@ -218,8 +222,7 @@ class StereographicAxisAccessor(GeoAxesAccessor):
         lat0, lat1 = self.lat_limits
         lat_grid_spacing = 10
         ygrid_locs = np.arange(lat0, lat1 + 1, lat_grid_spacing)
-        fac1, fac2 = {'north': [1, 2],
-                      'south': [2, 1]}[self._pole]
+        fac1, fac2 = {'north': [1, 2], 'south': [2, 1]}[self._pole]
 
         def draw_gridlines(x_spacing_factor, ylim):
             return self.geo_axes.gridlines(
@@ -227,11 +230,10 @@ class StereographicAxisAccessor(GeoAxesAccessor):
                 ylim=ylim,
                 ylocs=ygrid_locs,
                 draw_labels=self._draw_labels if x_spacing_factor == 1 else False,
-                **kwargs
+                **kwargs,
             )
 
-        lat_breakpoint = {'south': -80,
-                          'north': +80}[self._pole]
+        lat_breakpoint = {'south': -80, 'north': +80}[self._pole]
 
         gl1 = draw_gridlines(fac1, [lat0, lat_breakpoint])
         gl2 = draw_gridlines(fac2, [lat_breakpoint, lat1])
@@ -240,7 +242,9 @@ class StereographicAxisAccessor(GeoAxesAccessor):
 
         return self._gl
 
-    def add_features(self, gridlines=True, ruler=True, labels=True, resolution='110m', **kwargs):
+    def add_features(
+        self, gridlines=True, ruler=True, labels=True, resolution='110m', **kwargs
+    ):
         """Apply various features to the plot.
 
         Parameters
@@ -261,7 +265,7 @@ class StereographicAxisAccessor(GeoAxesAccessor):
         Notes
         -----
         This method applies the following features to the plot:
-        
+
         - add ocean
         - add land
         - add coastlines
@@ -294,7 +298,7 @@ class StereographicAxisAccessor(GeoAxesAccessor):
             gl = self.add_gridlines(**gridlines_kwargs)
             self.rotate_lat_labels(target_lon=118)
             self.rotate_lon_labels()
-        
+
         return
 
     def rotate_lat_labels(self, target_lon=118, orig_lon=150):
@@ -312,7 +316,7 @@ class StereographicAxisAccessor(GeoAxesAccessor):
         plt.draw()
         for tx in self._gl.label_artists:
             xy = tx.get_position()
-            if xy[0]==orig_lon:
+            if xy[0] == orig_lon:
                 tx.set_position([target_lon, xy[1]])
                 tx.set_size('small')
         return
@@ -322,8 +326,11 @@ class StereographicAxisAccessor(GeoAxesAccessor):
         self._gl.rotate_labels = False
         plt.gcf().canvas.draw()
 
-        all_label_artists = [label for label in self._gl.label_artists if label.get_text()[-1]
-                            in ['E', 'W', '°']]
+        all_label_artists = [
+            label
+            for label in self._gl.label_artists
+            if label.get_text()[-1] in ['E', 'W', '°']
+        ]
         for label in all_label_artists:
             alphanumeric_label = label.get_text()
             longitude = _str2float(alphanumeric_label)
@@ -332,7 +339,9 @@ class StereographicAxisAccessor(GeoAxesAccessor):
         return
 
 
-def add_circular_ruler(ax, segment_length=30, offset=0, primary_color='k', secondary_color='w', width=1):
+def add_circular_ruler(
+    ax, segment_length=30, offset=0, primary_color='k', secondary_color='w', width=1
+):
     """Add a ruler around a polar stereographic plot.
 
     Parameters
@@ -350,6 +359,7 @@ def add_circular_ruler(ax, segment_length=30, offset=0, primary_color='k', secon
     width : float
         The scaled thickness of the ruler. Defaults to 1/80 of the axes' width.
     """
+
     def plot_circle(degrees, radius=0.5, **kwargs):
         """Plot a circle of given radius (based on Axis dimensions)
         for a list of degree segments.
@@ -380,7 +390,9 @@ def add_circular_ruler(ax, segment_length=30, offset=0, primary_color='k', secon
     )
     segments_array = np.hstack(
         [
-            np.hstack([np.linspace(*bnds, segment_length, endpoint=True), np.array(np.nan)])
+            np.hstack(
+                [np.linspace(*bnds, segment_length, endpoint=True), np.array(np.nan)]
+            )
             for bnds in segment_bnds_array
         ]
     )
@@ -414,12 +426,14 @@ def _lon2rot(lon, pole):
 
 def _rotate_and_align_label(label, longitude, rot_degree, pole):
     """Rotate and align longitude labels."""
-    label.set_rotation_mode('anchor')  # rotation_mode='anchor' aligns the unrotated text first and then rotates the text around the point of alignment.
+    label.set_rotation_mode(
+        'anchor'
+    )  # rotation_mode='anchor' aligns the unrotated text first and then rotates the text around the point of alignment.
     label.set_rotation(rot_degree)
     label.set_size('small')
     label.set_horizontalalignment('center')
 
-    if pole=='north':
+    if pole == 'north':
         alignment = 'top' if abs(longitude) < 90 else 'bottom'
     elif pole == 'south':
         alignment = 'top' if abs(longitude) > 90 else 'bottom'
@@ -432,10 +446,9 @@ def set_circular_boundary(ax):
     """Compute a circle in axes coordinates, which we can use as a boundary for the map.
     We can pan/zoom as much as we like – the boundary will be permanently circular.
     """
-    theta = np.linspace(0, 2*np.pi, 100)
+    theta = np.linspace(0, 2 * np.pi, 100)
     center, radius = [0.5, 0.5], 0.5
     vertices = np.vstack([np.sin(theta), np.cos(theta)]).T
-    circle = mpath.Path(vertices*radius + center)
+    circle = mpath.Path(vertices * radius + center)
     ax.set_boundary(circle, transform=ax.transAxes)
     return
-

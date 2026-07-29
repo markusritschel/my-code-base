@@ -21,7 +21,7 @@ def cond2sal(C, T, p):
     >>> cond2sal(C=52, T=25, p=1013)
     34.20810771080768
     """
-    p = pressure2mbar(p)/100  # convert hPa (mbar) -> dbar
+    p = pressure2mbar(p) / 100  # convert hPa (mbar) -> dbar
     T = temperature2C(T)
 
     a0 = 0.008
@@ -52,25 +52,27 @@ def cond2sal(C, T, p):
     B3 = 4.215e-1
     B4 = -3.107e-3
 
-    R = C/42.914  # units: mS/cm
+    R = C / 42.914  # units: mS/cm
     # TODO: check input units of Conductivity! "If you are working in conductivity units of Siemens/meter (S/m), multiply your conductivity values by 10 before using the PSS 1978 equations. "
     # TODO: maybe use units from log file for auto-conversion and print a hint or so (this could be already done during the read routine)
 
-    rT = c0 + c1*T + c2*T**2 + c3*T**3 + c4*T**4
+    rT = c0 + c1 * T + c2 * T**2 + c3 * T**3 + c4 * T**4
 
-    alpha = (A1*p + A2*p**2 + A3*p**3)/(1 + B1*T + B2*T**2 + B3*R + B4*T*R)
+    alpha = (A1 * p + A2 * p**2 + A3 * p**3) / (
+        1 + B1 * T + B2 * T**2 + B3 * R + B4 * T * R
+    )
 
     Rp = 1 + alpha
 
-    RT = R/(rT*Rp)
+    RT = R / (rT * Rp)
 
     k = 0.0162  # TODO: check sign! +/-?
 
     ξ = np.sqrt(RT)
-    ψ = b0 + b1*ξ + b2*ξ**2 + b3*ξ**3 + b4*ξ**4 + b5*ξ**5
-    dSal = ψ*(T - 15)/(1 + k*(T - 15))
+    ψ = b0 + b1 * ξ + b2 * ξ**2 + b3 * ξ**3 + b4 * ξ**4 + b5 * ξ**5
+    dSal = ψ * (T - 15) / (1 + k * (T - 15))
 
-    salinity = a0 + a1*ξ + a2*ξ**2 + a3*ξ**3 + a4*ξ**4 + a5*ξ**5 + dSal
+    salinity = a0 + a1 * ξ + a2 * ξ**2 + a3 * ξ**3 + a4 * ξ**4 + a5 * ξ**5 + dSal
 
     return float(salinity)
 
@@ -88,7 +90,9 @@ def water_vapor_pressure(T, S):
     """
     T = temperature2K(T)
 
-    pH2O = np.exp(24.4543 - 67.4509*(100/T) - 4.8489*np.log(T/100) - 0.000544*S)
+    pH2O = np.exp(
+        24.4543 - 67.4509 * (100 / T) - 4.8489 * np.log(T / 100) - 0.000544 * S
+    )
     return pH2O
 
 
@@ -123,7 +127,6 @@ def ppm2uatm(xCO2, p_equ, input='wet', T=None, S=None):
     else:
         raise OSError("Input must be either 'dry' or 'wet'.")
 
-    pCO2_wet_equ = xCO2*(p_equ - pH2O)
+    pCO2_wet_equ = xCO2 * (p_equ - pH2O)
 
     return pCO2_wet_equ
-

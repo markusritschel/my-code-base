@@ -77,7 +77,7 @@ def pressure2mbar(p):
 
 def temperature2K(T):
     """Convert temperatures given in °C into Kelvin.
-    If `T` is a :class:`pandas.Series` object, only values larger than 200 are converted. 
+    If `T` is a :class:`pandas.Series` object, only values larger than 200 are converted.
     All others are assumed to be already in Kelvin.
 
     Examples

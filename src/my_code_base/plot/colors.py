@@ -12,6 +12,7 @@ import numpy as np
 
 log = logging.getLogger(__name__)
 
+
 def hex_to_rgb(value: str) -> tuple:
     """Convert hex to rgb colors
 
@@ -23,21 +24,21 @@ def hex_to_rgb(value: str) -> tuple:
     Returns
     -------
         list length 3 of RGB values
-        
+
     Examples
     --------
-    >>> hex_to_rgb('#f00')   # red
+    >>> hex_to_rgb('#f00')  # red
     (255, 0, 0)
-    >>> hex_to_rgb('fff')    # white
+    >>> hex_to_rgb('fff')  # white
     (255, 255, 255)
     """
     value = value.strip("#")  # removes hash symbol if present
-    
+
     if len(value) == 3:
-        value = ''.join(c*2 for c in value)
-    elif len(value)!=6:
+        value = ''.join(c * 2 for c in value)
+    elif len(value) != 6:
         raise ValueError("HEX value must be of length 3 or 6.")
-    return tuple(int(value[i:i+2], 16) for i in range(0, 6, 2))
+    return tuple(int(value[i : i + 2], 16) for i in range(0, 6, 2))
 
 
 def rgb_to_dec(value: list[float]) -> tuple[float]:
@@ -50,16 +51,18 @@ def rgb_to_dec(value: list[float]) -> tuple[float]:
     Returns
     -------
         list (length 3) of decimal values
-        
+
     Example
     -------
     >>> rgb_to_dec((255, 0, 0))
     (1.0, 0.0, 0.0)
     """
-    return tuple([v/255 for v in value])
+    return tuple([v / 255 for v in value])
 
 
-def build_continuous_cmap(hex_list: list[str], float_list=None, N=256, name='my_cmap') -> mcolors.LinearSegmentedColormap:
+def build_continuous_cmap(
+    hex_list: list[str], float_list=None, N=256, name='my_cmap'
+) -> mcolors.LinearSegmentedColormap:
     """Create and return a color map that can be used in heat map figures.
     If `float_list` is not provided, colour map graduates linearly between each color in hex_list.
     If `float_list` is provided, each color in `hex_list` is mapped to the respective location in `float_list`.
@@ -81,10 +84,10 @@ def build_continuous_cmap(hex_list: list[str], float_list=None, N=256, name='my_
 
     cdict = dict()
     for num, col in enumerate(['red', 'green', 'blue']):
-        col_list = [[float_list[i],
-                     rgb_list[i][num],
-                     rgb_list[i][num]]
-                    for i in range(len(float_list))]
+        col_list = [
+            [float_list[i], rgb_list[i][num], rgb_list[i][num]]
+            for i in range(len(float_list))
+        ]
         cdict[col] = col_list
     cmap = mcolors.LinearSegmentedColormap(name, segmentdata=cdict, N=N)
     return cmap
@@ -99,5 +102,5 @@ def scale_lightness(color: tuple, amount: float):
     rgb = mcolors.to_rgb(c)
     h, l, s = colorsys.rgb_to_hls(*rgb[:3])
     # manipulate h, l, s values and return as rgb
-    lightness = min(1, amount*l)
+    lightness = min(1, amount * l)
     return colorsys.hls_to_rgb(h=h, l=lightness, s=s)

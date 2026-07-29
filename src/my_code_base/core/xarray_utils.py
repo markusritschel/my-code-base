@@ -15,10 +15,10 @@ log = logging.getLogger(__name__)
 @xr.register_dataset_accessor("history")
 class HistoryAccessor:
     """Accessor for managing the 'history' attribute of xarray objects.
-    
+
     This class provides methods to add and manipulate the 'history' attribute
     of xarray Dataset or DataArray objects with timestamps.
-    
+
     Parameters
     ----------
     xr_obj: xarray.Dataset or xarray.DataArray
@@ -53,11 +53,12 @@ class HistoryAccessor:
 
         Example
         -------
-        >>> da.history.add("New entry to history")        # doctest: +SKIP
-        >>> da.attrs['history']                           # doctest: +SKIP
+        >>> da.history.add("New entry to history")  # doctest: +SKIP
+        >>> da.attrs['history']  # doctest: +SKIP
         '...: New entry to history; '
         """
         from datetime import datetime
+
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self._obj.attrs['history'] += f"{timestamp}: {msg}; "
         log.debug("Wrote '%s' to history", msg)
@@ -70,16 +71,18 @@ def compress_xarray(*args, **kwargs):
     return xr_compress(*args, **kwargs)
 
 
-def xr_compress(data: xr.Dataset | xr.DataArray, complevel: int) -> xr.Dataset | xr.DataArray:
+def xr_compress(
+    data: xr.Dataset | xr.DataArray, complevel: int
+) -> xr.Dataset | xr.DataArray:
     """Compress :class:`xarray.Dataset` or :class:`xarray.DataArray`.
-    
+
     Parameters
     ----------
     data:
         Data to compress.
     complevel:
         Compression level.
-    
+
     Returns
     -------
     xr.Dataset | xr.DataArray
@@ -94,7 +97,9 @@ def xr_compress(data: xr.Dataset | xr.DataArray, complevel: int) -> xr.Dataset |
     return data
 
 
-@deprecated("Will be removed in a future version. Use :func:`xarray.DataArray.get_axis_num()` instead.")
+@deprecated(
+    "Will be removed in a future version. Use :func:`xarray.DataArray.get_axis_num()` instead."
+)
 def get_dim_index(da: xr.DataArray, dim: str) -> int:
     """Get the index of a dimension in a DataArray.
 
@@ -103,7 +108,7 @@ def get_dim_index(da: xr.DataArray, dim: str) -> int:
 
     Parameters
     ----------
-    da : 
+    da :
         DataArray to get the dimension index from.
     dim : str
         Dimension name.

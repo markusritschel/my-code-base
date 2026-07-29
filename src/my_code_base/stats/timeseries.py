@@ -223,13 +223,20 @@ def extend_annual_series(ds):
 
     Example
     -------
-    >>> ds = xr.Dataset({'time': pd.date_range('2000-01-01', '2001-12-31', freq='ME'),
-    ...                  'value': np.random.rand(24)})
+    >>> ds = xr.Dataset(
+    ...     {
+    ...         'time': pd.date_range('2000-01-01', '2001-12-31', freq='ME'),
+    ...         'value': np.random.rand(24),
+    ...     }
+    ... )
     >>> extended_ds = extend_annual_series(ds)
     """
     if "year" not in ds.dims:
-        ds = (ds.assign_coords(year=("time", ds.time.dt.year.values))
-              .swap_dims({"time": "year"})).drop_vars(["time"])
+        ds = (
+            ds.assign_coords(year=("time", ds.time.dt.year.values)).swap_dims(
+                {"time": "year"}
+            )
+        ).drop_vars(["time"])
 
     assert "year" in ds.dims, "Dataset needs to have `year` as dimension"
 
@@ -252,7 +259,7 @@ def zero_crossings(x):
 
     Example
     -------
-    >>> x = np.array([1, 2, -1, -2, 1, 2])     # crossing at 2 -> -1 and -2 -> 1
+    >>> x = np.array([1, 2, -1, -2, 1, 2])  # crossing at 2 -> -1 and -2 -> 1
     >>> zero_crossings(x)
     array([1, 3])
     """
@@ -495,5 +502,3 @@ def ndof_lag1_autocorrelation(x, y):
     n_eff = effective_sample_size(x, y)
     dof = n_eff - 2
     return dof
-
-

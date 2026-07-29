@@ -13,8 +13,6 @@ import pandas as pd
 log = logging.getLogger(__name__)
 
 
-
-
 @singledispatch
 def inv(x):
     """Invert a quadratic-shape :class:`numpy.ndarray` object."""
@@ -37,7 +35,7 @@ def empirical_covariance(x, bias=False):
         \\Sigma = \\frac{1}{\\text{dof}} DD^\\intercal
 
     where :math:`D` is the matrix of the anomalies (:math:`x-\\mu`) and dof is the degrees of freedom.
-    Since for the matrix of the anomalies the mean has to be build first, one degree of freedom is gone. 
+    Since for the matrix of the anomalies the mean has to be build first, one degree of freedom is gone.
     Therefore, for the empirical covariance matrix, the normalization is usually done by ``(m-1)``.
 
     Depending on the parameter ``bias``, the degrees of freedom (``dof``) are either ``m`` or ``(m-1)``.
@@ -77,8 +75,7 @@ def empirical_covariance(x, bias=False):
     """
     X = x.T
     µ = X.mean(axis=0)
-    D = (X - µ)
+    D = X - µ
     dof = X.shape[0] if bias else (X.shape[0] - 1)
     Σ = D.T.dot(D) / dof
     return Σ
-

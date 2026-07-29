@@ -40,6 +40,7 @@ class _ColumnGroupBy:
             if isinstance(result, pd.DataFrame):
                 return result.T
             return result
+
         return wrapper
 
 
@@ -53,9 +54,11 @@ class EnsembleAccessor(ABC):
         """Return the key template"""
         template = self._obj.attrs.get('_ens_key_template')
         if not template:
-            raise KeyError("key_template not set. Make sure the attributes of the "
-                           "'member' coordinate comprise a 'key_template' value. "
-                           "You can set this via ds.ens.key_template = 'your.template'.")
+            raise KeyError(
+                "key_template not set. Make sure the attributes of the "
+                "'member' coordinate comprise a 'key_template' value. "
+                "You can set this via ds.ens.key_template = 'your.template'."
+            )
         return template
 
     @key_template.setter
@@ -63,8 +66,10 @@ class EnsembleAccessor(ABC):
         if '.' not in template_string:
             raise ValueError("Elements must be divided by a dot (.).")
         if 'member' in template_string.split('.'):
-            raise ValueError("key_template must not contain 'member'! "
-                             "Please choose a different identifier.")
+            raise ValueError(
+                "key_template must not contain 'member'! "
+                "Please choose a different identifier."
+            )
         self._obj.attrs['_ens_key_template'] = template_string
 
     @property
@@ -76,25 +81,28 @@ class EnsembleAccessor(ABC):
         self._obj.attrs['_ens_member_keys'] = value
 
     @abstractmethod
-    def _init_member_keys(self):
-        ...
+    def _init_member_keys(self): ...
 
     def _set_member_keys(self, member_values):
         self._verify_member_keys(member_values)
-        member_table = _build_member_mapping_table(member_values, self.key_template.split('.'))
+        member_table = _build_member_mapping_table(
+            member_values, self.key_template.split('.')
+        )
         self.member_keys = member_table
 
     def _verify_member_keys(self, member_values):
         def _consistent_key_pattern():
             number_of_keys = [len(x.split('.')) for x in member_values]
             return len(set(number_of_keys)) == 1
+
         if not _consistent_key_pattern():
-            raise ValueError("Column keys must show the same pattern. "
-                             "Not all column names have the same number of keys.")
-        
+            raise ValueError(
+                "Column keys must show the same pattern. "
+                "Not all column names have the same number of keys."
+            )
+
         if len(set(member_values)) != len(member_values):
             log.warning("Member IDs are not all different!")
-
 
     def groupby(self, key):
         """Group the object by a member key. Member keys are initialized beforehand."""
@@ -133,8 +141,8 @@ class PandasEnsembleAccessor(EnsembleAccessor):
 @xr.register_dataset_accessor("ens")
 class XarrayEnsembleAccessor(EnsembleAccessor):
     """An :class:`xarray.Dataset` accessor supporting the grouping of ensemble members by
-    model id and similar. The `member` coordinate in the :class:`xr.Dataset` must have a 
-    `key_template` attribute of the form 'source_id.member_id.grid_label', following the 
+    model id and similar. The `member` coordinate in the :class:`xr.Dataset` must have a
+    `key_template` attribute of the form 'source_id.member_id.grid_label', following the
     structure of the entries of the 'member' coordinate.
     """
 
