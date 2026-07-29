@@ -1,0 +1,5 @@
+# Bulk reformats — skip these when running `git blame`.
+# Enable with: git config blame.ignoreRevsFile .git-blame-ignore-revs
+
+# style: apply ruff format across src and tests
+c1ee32fc79564fdc7121a613ea31bc33f45fae1f
