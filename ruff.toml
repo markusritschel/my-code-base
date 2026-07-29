@@ -13,7 +13,7 @@ exclude = ["docs/", "notebooks/", "build/", ".venv/", "venv/", "htmlcov/"]
 
 # ── Formatter ──────────────────────────────────────────────────────────────────
 [format]
-quote-style = "preserve"
+quote-style = "double"
 indent-style = "space"
 docstring-code-format = true
 
@@ -30,12 +30,26 @@ select = [
     "C901", # McCabe complexity   — flag functions exceeding the complexity threshold (see below)
     "N",    # pep8-naming         — enforce PEP 8 naming conventions
     "UP",   # pyupgrade           — modernize to newer Python syntax automatically
+    "DTZ",  # flake8-datetimez    — enforce timezone-aware datetimes (critical for scientific data pipelines)
     "NPY",  # NumPy               — NumPy-specific anti-patterns (numpy is a core dependency)
-    "PD",   # pandas-vet          — pandas-specific anti-patterns (pandas is a core dependency)
     "PERF", # Perflint            — performance anti-patterns (relevant for array-heavy code)
     "PT",   # flake8-pytest-style — consistent pytest patterns across the test suite
     "RUF",  # Ruff-specific       — additional best-practice rules unique to Ruff
 ]
+
+# Rule families NOT included in baseline — enable per-project as needed:
+#
+#   "ANN"   — type annotation enforcement (too strict for exploratory research code)
+#   "ERA"   — commented-out code detection (researchers comment out experiments)
+#   "T20"   — print statement detection (ubiquitous in scripts/pipelines)
+#   "PL"    — pylint rules incl. PLR0913 too-many-arguments (complex scientific APIs)
+#   "FIX"   — fixme/todo markers (common in research iteration)
+#   "TD"    — structured TODO enforcement (same reason)
+#   "S"     — bandit security (relevant for web apps, rarely for research pipelines)
+#   "SIM"   — simplification suggestions (useful but can be noisy)
+#   "PD"    — pandas-vet: cannot distinguish xarray from pandas objects, so `.values`,
+#             `.notnull()` and `.stack()` on DataArrays are all flagged as false positives
+#   "PIE"   — miscellaneous lint; the one rule it fired here (PIE804) was not worth the family
 
 ignore = [
     # Formatting — deferred to `ruff format`, which handles these automatically
@@ -43,7 +57,7 @@ ignore = [
     "E701",  # multiple statements on one line — formatter handles this
 
     # Q (flake8-quotes) is intentionally not selected: quote style is owned by `ruff format`
-    # (quote-style = "preserve"). Enabling Q alongside the formatter causes conflicts.
+    # (quote-style = "double"). Enabling Q alongside the formatter causes conflicts.
 
     # Style choices
     "E402",  # module-level import not at top of file — path manipulation before imports is common in data science code
