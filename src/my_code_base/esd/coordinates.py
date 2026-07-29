@@ -17,9 +17,7 @@ def adjust_lons(ds, lon_name="lon"):
     # is reattached explicitly after the rename below.
     attributes = ds[lon_name].attrs.copy()
 
-    ds["_longitude_adjusted"] = xr.where(
-        ds[lon_name] > 180, ds[lon_name] - 360, ds[lon_name]
-    )
+    ds["_longitude_adjusted"] = xr.where(ds[lon_name] > 180, ds[lon_name] - 360, ds[lon_name])
 
     # reassign the new coordinates to as the main lon coordinates
     # and sort DataArray using new coordinate values
