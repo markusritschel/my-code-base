@@ -45,7 +45,15 @@ class _ColumnGroupBy:
 
 
 class EnsembleAccessor(ABC):
+    """Base accessor providing the grouping of ensemble members by key.
+
+    Subclasses only need to implement :meth:`_init_member_keys`, which tells the accessor
+    where the member identifiers live on the concrete container (columns for a
+    :class:`pandas.DataFrame`, the `member` coordinate for an :class:`xarray.Dataset`).
+    """
+
     def __init__(self, data_obj) -> None:
+        """Attach the accessor to `data_obj`."""
         super().__init__()
         self._obj = data_obj
 
@@ -73,6 +81,7 @@ class EnsembleAccessor(ABC):
 
     @property
     def member_keys(self):
+        """Return the member mapping table, or None if it has not been initialized yet."""
         return self._obj.attrs.get("_ens_member_keys")
 
     @member_keys.setter
@@ -127,10 +136,17 @@ def _build_member_mapping_table(member_values, member_id_elements):
 
 @pd.api.extensions.register_dataframe_accessor("ens")
 class PandasEnsembleAccessor(EnsembleAccessor):
+    """A :class:`pandas.DataFrame` accessor supporting the grouping of ensemble members by key.
+
+    The members are expected to be the columns of the DataFrame.
+    """
+
     def _init_member_keys(self):
+        """Derive the member keys from the DataFrame's columns."""
         self._set_member_keys(self._obj.columns)
 
     def groupby(self, key):
+        """Group the columns by a member key, transposing so the result stays column-oriented."""
         self._init_member_keys()
         return _ColumnGroupBy(self._obj.T.groupby(self.member_keys[key]))
 

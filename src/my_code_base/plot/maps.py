@@ -50,7 +50,14 @@ def register_geoaxes_accessor(accessor_name):
 
 
 class GeoAxesAccessor(ABC):
+    """Base accessor attaching cartopy helpers to a :class:`~cartopy.mpl.geoaxes.GeoAxes`.
+
+    Subclasses implement the projection-specific parts (gridlines and features) and are
+    bound to an axes via the :func:`register_geoaxes_accessor` decorator.
+    """
+
     def __init__(self, ax):
+        """Attach the accessor to the :class:`~cartopy.mpl.geoaxes.GeoAxes` `ax`."""
         log.debug("Initialize accessor")
         self.geo_axes = ax
         self._projection = self._get_cartopy_projection()
@@ -117,10 +124,12 @@ class GeoAxesAccessor(ABC):
         self.geo_axes.set_extent(extent, crs)
 
     @abstractmethod
-    def add_gridlines(self): ...
+    def add_gridlines(self):
+        """Draw the graticule appropriate for the accessor's projection."""
 
     @abstractmethod
-    def add_features(self): ...
+    def add_features(self):
+        """Draw the cartopy features (land, ocean, coastlines, ...) on the axes."""
 
 
 @register_geoaxes_accessor("polar")

@@ -93,6 +93,22 @@ def build_continuous_cmap(
 
 
 def scale_lightness(color: tuple, amount: float):
+    """Scale the lightness of a color by `amount` and return it as an RGB tuple.
+
+    Parameters
+    ----------
+    color: tuple or str
+        Either a matplotlib color name or anything :func:`matplotlib.colors.to_rgb`
+        understands (RGB(A) tuple, hex string, ...).
+    amount: float
+        Factor applied to the lightness channel. Values < 1 darken, values > 1 lighten.
+        The result is clipped at full lightness.
+
+    Examples
+    --------
+    >>> scale_lightness("white", 0.5)
+    (0.5, 0.5, 0.5)
+    """
     # convert rgb to hls
     try:
         c = mcolors.cnames[color]
