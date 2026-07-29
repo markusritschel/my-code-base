@@ -86,48 +86,6 @@ def add_metadata(func):
     return wrapper
 
 
-class BunchDict(dict):
-    """BunchDict is a subclass of the built-in dict class that allows
-    accessing dictionary keys as attributes.
-
-    This class overrides the `__getattr__` and `__setattr__` methods to
-    provide attribute-style access to dictionary keys.
-    When an attribute is accessed, it is treated as a dictionary key
-    and the corresponding value is returned.
-    When an attribute is set, it is treated as a dictionary key and
-    the corresponding value is updated.
-
-    .. note::
-        This is now also implemented in :class:`sklearn.utils.Bunch`
-
-    Example
-    -------
-    >>> bd = BunchDict()
-    >>> bd['key'] = 'value'
-    >>> print(bd.key)
-    value
-    >>> bd.key = 'new value'
-    >>> print(bd['key'])
-    new value
-    """
-
-    def __getattr__(self, attr):
-        return self[attr]
-
-    def __setattr__(self, attr, value):
-        self[attr] = value
-
-
-def get_obj_type_str(obj):
-    """Transform the output of `type` to a simplified descriptor:
-
-    Turns
-        "<class 'xarray.core.dataset.Dataset'>"
-    into "Dataset"
-    """
-    return str(type(obj)).split("'")[1].split('.')[-1]
-
-
 @add_metadata
 @functools.singledispatch
 def save(obj, path, *args, **kwargs):
@@ -261,3 +219,45 @@ def order_of_magnitude(x: int | float | np.ndarray | pd.Series) -> np.ndarray:
     oom = np.floor(np.log10(x))
     # oom = (np.int32(np.log10(np.abs(x))) + 1)
     return np.array(oom)
+
+
+class BunchDict(dict):
+    """BunchDict is a subclass of the built-in dict class that allows
+    accessing dictionary keys as attributes.
+
+    This class overrides the `__getattr__` and `__setattr__` methods to
+    provide attribute-style access to dictionary keys.
+    When an attribute is accessed, it is treated as a dictionary key
+    and the corresponding value is returned.
+    When an attribute is set, it is treated as a dictionary key and
+    the corresponding value is updated.
+
+    .. note::
+        This is now also implemented in :class:`sklearn.utils.Bunch`
+
+    Example
+    -------
+    >>> bd = BunchDict()
+    >>> bd["key"] = "value"
+    >>> print(bd.key)
+    value
+    >>> bd.key = "new value"
+    >>> print(bd["key"])
+    new value
+    """
+
+    def __getattr__(self, attr):  # noqa: D105
+        return self[attr]
+
+    def __setattr__(self, attr, value):  # noqa: D105
+        self[attr] = value
+
+
+def get_obj_type_str(obj):
+    """Transform the output of `type` to a simplified descriptor:
+
+    Turns
+        "<class 'xarray.core.dataset.Dataset'>"
+    into "Dataset"
+    """
+    return str(type(obj)).split("'")[1].split(".")[-1]
