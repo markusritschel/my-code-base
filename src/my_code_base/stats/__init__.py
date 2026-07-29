@@ -6,5 +6,7 @@
 #
 import logging
 
+from .xarray_utils import StatsAccessor, TSAccessor  # noqa: F401 — register accessors
+
 log = logging.getLogger(__name__)
 

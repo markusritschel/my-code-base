@@ -4,13 +4,14 @@
 # Date:   2024-06-19
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #
+from functools import singledispatchmethod
 import logging
 
+from multipledispatch import dispatch
 import numpy as np
 import pandas as pd
-import xarray as xr
-from multipledispatch import dispatch
 from scipy import stats
+import xarray as xr
 
 from .timeseries import extend_annual_series, weighted_annual_mean, xr_deseasonalize
 
@@ -34,6 +35,40 @@ def _has_seasonal_frequency(obj, dim="time"):
     return not freq.startswith(("A", "Y", "AS", "YS"))
 
 
+@xr.register_dataset_accessor("ts")
+@xr.register_dataarray_accessor("ts")
+class TSAccessor:
+    """Accessor for time-series reshaping operations on xarray data."""
+
+    def __init__(self, obj):
+        self._obj = obj
+
+    def _is_annual(self):
+        """Check if the xarray object has a 'year' dimension."""
+        return "year" in self._obj.dims
+
+    def fill_years(self):
+        """Fill annual values into monthly resolution.
+
+        Takes data with a ``year`` dimension and expands it so that all
+        12 months within each year carry the annual value.
+
+        Returns
+        -------
+        xarray.Dataset or xarray.DataArray
+
+        Raises
+        ------
+        KeyError
+            If the data does not have ``year`` as a dimension.
+        """
+        if not self._is_annual():
+            raise KeyError(
+                "'year' dimension not found. Data must have 'year' as a dimension."
+            )
+        return extend_annual_series(self._obj)
+
+
 @xr.register_dataset_accessor("stats")
 @xr.register_dataarray_accessor("stats")
 class StatsAccessor:
@@ -54,7 +89,7 @@ class StatsAccessor:
     def __init__(self, obj):
         self._obj = obj
 
-    @dispatch(str)
+    @singledispatchmethod
     def weighted_mean(self, dim):
         """
         Calculate the weighted annual mean (taking days of months into account).
@@ -71,37 +106,34 @@ class StatsAccessor:
 
         """
         log.debug(f"Identified single dimension {dim}. Building weighted annual mean.")
-        return weighted_annual_mean(self._obj)
 
-    def _is_annual(self):
+    @weighted_mean.register
+    def _(self, dim: str, ffill: bool = True):
+        weighted_mean = weighted_annual_mean(self._obj)
+        if ffill:
+            return extend_annual_series(weighted_mean)
+        else:
+            time_coords = pd.to_datetime(weighted_mean.year, format="%Y")
+            weighted_mean = weighted_mean.assign_coords(
+                time=("year", time_coords)
+            ).swap_dims({"year": "time"})
+
+        return weighted_mean
+
+    @weighted_mean.register(list)
+    @weighted_mean.register(tuple)
+    def _(self, dims):
         """
-        Check if the xarray object has a 'year' dimension.
-
-        Returns
-        -------
-        bool
-            True if the xarray object has a 'year' dimension, False otherwise.
+        Calculate the spatial weighted field average.
         """
-        return 'year' in self._obj.dims
-
-    def fill_months_with_annual_value(self):
-        """
-        Fill the xarray object with annual values for each month.
-
-        Returns
-        -------
-        xarray.Dataset or xarray.DataArray
-            The xarray object with extended annual series.
-
-        Raises
-        ------
-        ValueError
-            If the time series is not of yearly frequency.
-        """
+        log.debug(
+            f"Identified multiple dimensions {dims}. Building spatial weighted mean."
+        )
         ds = self._obj
-        if not self._is_annual():
-            raise ValueError("Time series is not of yearly frequency.")
-        return extend_annual_series(ds)
+        weights = np.cos(np.deg2rad(ds.lat))
+        weights.name = "weights"
+        ds_weighted = ds.weighted(weights)
+        return ds_weighted.mean(dims)
 
 
 def xr_linregress(x, y, dim='time', dof=None, deseasonalize: bool = True):

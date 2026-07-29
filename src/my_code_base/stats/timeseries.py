@@ -199,6 +199,7 @@ def pd_seasonal_decompose(x, freq=12):
     return df[["raw", "trend", "seasonality", "detrended", "residuals"]]
 
 
+# TODO: make this a method or property of the weighted_annual_mean
 def extend_annual_series(ds):
     """
     Fill a time series with only annual values (one such timeseries could be generated
@@ -359,6 +360,15 @@ def integral_timescale(data, dt=1):
     autocorr = autocorr[autocorr.size // 2 :]
     autocorr = autocorr / autocorr.max()
 
+    # Integrate until zero crossing
+    # τ = 0.0
+    # for i in range(len(autocorr)):
+    #     if autocorr[i] < 0:
+    #         break
+    #     # if i + 1 < len(autocorr):   # redundant?
+    #     # Trapezoidal rule for Integral
+    #     R = (autocorr[i] + autocorr[i + 1]) / 2
+    #     τ += R * dt
 
     autocorr = _mask_after_first_zero_crossing(autocorr)
     autocorr = np.nan_to_num(autocorr)
