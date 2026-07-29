@@ -3,7 +3,14 @@
 # eMail:  git@markusritschel.de
 # Date:   2024-03-03
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#
+"""Utility functions for saving objects with metadata and data manipulation.
+
+This module provides utilities for:
+- Saving various object types (matplotlib figures, pandas DataFrames, xarray Datasets) with metadata
+- Finding nearest values and computing orders of magnitude
+- Working with bin boundaries and a dictionary class with attribute access
+"""
+
 import functools
 import logging
 
@@ -40,18 +47,18 @@ def add_metadata(func):
 
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
-        kwargs.setdefault('add_hash', False)
+        kwargs.setdefault("add_hash", False)
 
         meta = collect_metadata()
-        kwargs['metadata'] = meta
+        kwargs["metadata"] = meta
 
         args = list(args)
         obj = args[0]
         path = Path(args[1])
-        suffix = ''
-        if kwargs.pop('add_hash'):
+        suffix = ""
+        if kwargs.pop("add_hash"):
             suffix += f"_{meta.git_commit}"
-        output_path = f'{path.parent}/{path.stem}{suffix}{path.suffix}'
+        output_path = f"{path.parent}/{path.stem}{suffix}{path.suffix}"
         args[1] = output_path
 
         obj_type = get_obj_type_str(obj)
@@ -67,15 +74,13 @@ def add_metadata(func):
         line_number = frame.f_lineno  # - 1   # TODO: <-- check!
         relative_code_path = os.path.relpath(code_filename)
         git_commit = (
-            subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD'])
-            .decode('ascii')
-            .strip()
+            subprocess.check_output(["git", "rev-parse", "--short", "HEAD"]).decode("ascii").strip()
         )
 
         metadata = {}
-        metadata['relative_code_path'] = relative_code_path
-        metadata['line_number'] = str(line_number)
-        metadata['git_commit'] = git_commit
+        metadata["relative_code_path"] = relative_code_path
+        metadata["line_number"] = str(line_number)
+        metadata["git_commit"] = git_commit
         return BunchDict(metadata)
 
     return wrapper
@@ -153,11 +158,11 @@ def save(obj, path, *args, **kwargs):
 
     Examples
     --------
-    >>> ds = xr.tutorial.load_dataset('air_temperature')  # doctest: +SKIP
-    >>> save(ds, '/tmp/mynetcdf.nc', add_hash=True)  # doctest: +SKIP
+    >>> ds = xr.tutorial.load_dataset("air_temperature")  # doctest: +SKIP
+    >>> save(ds, "/tmp/mynetcdf.nc", add_hash=True)  # doctest: +SKIP
     >>> !ncdump -h /tmp/mynetcdf_500e15f.nc | grep history     # doctest: +SKIP
     :history = "2024-06-12 16:18:16: File saved by myscript.py#3 @git-commit:500e15f;"
-    >>> save(my_object, '/tmp/myobj')  # doctest: +SKIP
+    >>> save(my_object, "/tmp/myobj")  # doctest: +SKIP
     NotImplementedError: Cannot save object of type <class 'type'> using `save` method. Please use the native method.
     """
     raise NotImplementedError(
@@ -173,7 +178,7 @@ def _(fig, path, *args, **kwargs):
 
 @save.register(pd.DataFrame)
 def _(df, path, *args, **kwargs):
-    del kwargs['metadata']  # df.to_csv cannot interpret `metadata`
+    del kwargs["metadata"]  # df.to_csv cannot interpret `metadata`
     df.to_csv(path, *args, **kwargs)
 
 
@@ -181,7 +186,7 @@ def _(df, path, *args, **kwargs):
 def _(ds, path, *args, **kwargs):
     from .xarray_utils import HistoryAccessor  # noqa: F401
 
-    metadata = kwargs.pop('metadata')
+    metadata = kwargs.pop("metadata")
     msg = f"File saved by {metadata['relative_code_path']}#{metadata['line_number']} @git-commit:{metadata['git_commit']}"
     ds = ds.history.add(msg)
     ds.to_netcdf(path, *args, **kwargs)
