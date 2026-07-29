@@ -3,9 +3,10 @@ repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.15.13
     hooks:
-      # - id: ruff-format  # format code (equivalent to running `ruff format`)
+      # Linter first (it rewrites imports etc.), formatter second to clean up the result.
       - id: ruff         # lint and autofix (equivalent to running `ruff check --fix`)
         args: [--fix]
+      - id: ruff-format  # format code (equivalent to running `ruff format`)
   - repo: https://github.com/astral-sh/uv-pre-commit
     rev: 0.11.6
     hooks:
