@@ -3,3 +3,6 @@
 
 # style: apply ruff format across src and tests
 c1ee32fc79564fdc7121a613ea31bc33f45fae1f
+
+# style: switch to double quotes and apply ruff format
+36f32c7453003905a70b77fcc556baa42f7af28c
