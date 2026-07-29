@@ -92,6 +92,7 @@ def rename_obs(ds, rename_dict=None):
         warnings.warn(
             "Input dictionary empty.",
             UserWarning,
+            stacklevel=2,
         )
     else:
         for di in rename_dict.keys():
