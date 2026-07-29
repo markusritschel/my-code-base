@@ -112,10 +112,11 @@ def scale_lightness(color: tuple, amount: float):
     # convert rgb to hls
     try:
         c = mcolors.cnames[color]
-    except:
+    except (KeyError, TypeError):
+        # not a named color (KeyError), or an unhashable input such as an RGB array (TypeError)
         c = color
     rgb = mcolors.to_rgb(c)
-    h, l, s = colorsys.rgb_to_hls(*rgb[:3])
+    hue, lightness, sat = colorsys.rgb_to_hls(*rgb[:3])
     # manipulate h, l, s values and return as rgb
-    lightness = min(1, amount * l)
-    return colorsys.hls_to_rgb(h=h, l=lightness, s=s)
+    lightness = min(1, amount * lightness)
+    return colorsys.hls_to_rgb(h=hue, l=lightness, s=sat)

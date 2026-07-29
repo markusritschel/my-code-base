@@ -52,11 +52,13 @@ def weighted_annual_mean(ds: xr.Dataset | xr.DataArray):
     def check_for_frequency(ds):
         try:
             estimated_frequency = xr.infer_freq(ds.time)
-            if not estimated_frequency.startswith("M"):
-                log.warning("Frequency seems to be not monthly. Consider another averaging method.")
-        except:
+        except ValueError:
+            # fewer than three timestamps — nothing to infer from
+            estimated_frequency = None
+        if estimated_frequency is None:
             log.warning("Cannot infer frequency")
-            return
+        elif not estimated_frequency.startswith("M"):
+            log.warning("Frequency seems to be not monthly. Consider another averaging method.")
 
     check_for_frequency(ds)
 
