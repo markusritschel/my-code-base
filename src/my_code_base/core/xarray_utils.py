@@ -57,9 +57,9 @@ class HistoryAccessor:
         >>> da.attrs["history"]  # doctest: +SKIP
         '...: New entry to history; '
         """
-        from datetime import datetime
+        from datetime import datetime, timezone
 
-        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
         self._obj.attrs["history"] += f"{timestamp}: {msg}; "
         log.debug("Wrote '%s' to history", msg)
         return self._obj
