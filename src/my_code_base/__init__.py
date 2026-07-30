@@ -6,7 +6,6 @@
 """Provide global path variables, version information, and utility functions for the package."""
 
 from pathlib import Path
-import sys
 
 from dotenv import find_dotenv, load_dotenv
 
@@ -24,5 +23,3 @@ jupyter_startup_script = BASE_DIR / "notebooks/jupyter_startup.ipy"
 dotenv_path = find_dotenv()
 # load up the entries as environment variables
 load_dotenv(dotenv_path)
-
-sys.path.append(str(BASE_DIR / "scripts"))

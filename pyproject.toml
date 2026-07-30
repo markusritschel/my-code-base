@@ -10,15 +10,11 @@ version = "0.1.0"
 requires-python = ">=3.10"
 dependencies = [
   "cartopy",
-  "click",
   "dask",
   "Deprecated",
-  "docopt",
   "ipykernel",
   "ipython",
   "ipywidgets",
-  "jupytext",
-  "jupyterbook-latex",
   "jupyterlab",
   "jupytext",
   "lxml",
@@ -26,24 +22,23 @@ dependencies = [
   "markdown",
   "matplotlib",
   "mpl_axes_aligner",
-  "mystmd",
-  "nodejs",
   "numpy",
   "pandas",
-  "pandoc",
   "pooch",
   "python-dotenv",
   "rich",
   "scipy",
   "tqdm",
-  "typer",
   "xarray",
   "xarrayutils",
   "multipledispatch>=1.0.0",
+  "click",
 ]
 
+# All three CLI flavours expose the entry point as `app`.
 [project.scripts]
 my-code-base = "my_code_base.cli:app"
+
 
 
 [dependency-groups]
@@ -113,7 +108,10 @@ testpaths = [
 addopts = [
   "--doctest-modules",
   "--doctest-continue-on-failure",
-  "-ra -v",
+  # NOTE: one flag per list entry. "-ra -v" as a single entry is parsed as
+  # `-r` with the value "a -v", which silently swallows the -v.
+  "-ra",
+  "-v",
   "--cov=./src",
   "--cov-report=xml",
   "--cov-report=html",
