@@ -113,6 +113,11 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 "**/__main__.py"       = ["D"]
 "**/cli.py"            = ["D101", "D102", "D103"]
 
+# Unit conversions: the trailing symbol is the unit (K, C), not camelCase — see the
+# N803/N806 rationale above. Scoped to this file so genuine `def MyFunction()` slips
+# elsewhere in the package are still caught.
+"**/units.py"          = ["N802"]
+
 # Scripts: no docstring enforcement, allow print statements (T201 applies once
 # you enable the T20 family above)
 "scripts/**"           = ["D", "T201"]
